@@ -1,6 +1,7 @@
 \documentclass{sig-alternate}
 \usepackage{color}
 
+
 %%%% User-defined macros
 \newcommand{\lam}{\lambda}
 \newcommand{\mycomment}[1]{\textcolor{red}{#1}}
@@ -73,10 +74,63 @@ Emma Ireland\\
 
 
 \section{Fuzzy Genetic Algorithm Implementation}
+The focus of the research is on detecting new or unknown types of attacks in a network. The intrusion detection system is able to identify normal network activity as well as classify different attack types using a fuzzy genetic algorithm. This kind of algorithm is able to learn new attacks, and has a high detection rate. The system used is evaluated in terms of detection speed, detection rate, and false alarm rate.
+
+
 
 \subsection{RLD09 Data Set}
+The KDD99 dataset is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09. To create the data set, the authors captured network data from the Computer Engineering Department at King Mongkut's University of Technology Thonburi, in Bangkok, Thailand. The data has around ten million preprocessed data packets. It has 17 different types of attacks, as well as normal network activity. The attacks can be divided into denial of service attacks and probe attacks. A packet sniffer was used to get information about TCP, UDP, and ICMP headers from protocol packets. Then this information is processed into 12 features by counting connections between a source IP and destination IP. Some example features include the number of: packets, source ports, and destination ports. The following are examples of data records, where each one has 12 feature values.
+
+\begin{itemize}
+\item 21,21,15,0,21,0,0,0,0,0,0,0, attack
+\item 102,2,2,0,0,1,102,0,0,0,0,0, normal
+\end{itemize}
+
+
+
 
 \subsection{Algorithm Overview}
+The algorithm that is used in~\cite{6496342, 6559603} first randomly finds a rule. Then the rule is improved in the training phase. After that, the rules are used to classify the data into classes in the testing phase. The pseudo code below describes the fuzzy genetic algorithm that is used. 
+
+\mycomment{Ask Nic how to put in algorithm.}
+
+The fitness function to be maximized is:
+\begin{equation*}
+fitness function = \frac{\alpha}{A} - \frac{\beta}{B}
+\end{equation*}
+In the implementation, a population size of 10 was used for each generation. An individual in the population represents a possible detection rule. The two best individuals from a present generation are preserved for the next generation. The other individuals in the new generation come from single-point crossover.
+
+
+
+
+\subsection{Fuzzy Algorithm}
+In order to measure the probability of an attack, a trapezoidal shape was used in the algorithm. The trapezoidal shape has four parameters: a, b, c, and d. The following algorithm calculates the probability of being attacked:
+
+\mycomment{Ask Nic how to put in algorithm.}
+
+\mycomment{Put in trapezoidal shape figure.}
+
+
+
+\subsection{Features and Rules}
+The KDD99 dataset is composed of 41 features. The authors of~\cite{6496342, 6559603} used the following eight features in their system: duration, src\_bytes, num\_failed\_logins, root\_shell, num\_access\_files, srv\_count, serror\_rate, same\_srv\_rate.
+
+The value of each feature is normalized to be a number between 0.0 and 7.0, and then is encoded into blocks of binary strings. See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. A rule has 12 blocks of features, and at the end of the string is the type of attack. 
+
+\begin{figure}
+\centering
+\caption{Fuzzy encoding for a feature}
+\begin{tabular}{|c|c|c|c|} \hline
+010 & 011 & 100 & 101\\
+a & b & c & d\\
+\hline\end{tabular}
+\label{fig:fuzEncodingForFeature}
+\end{figure}
+
+One record is passed into a rule. Each feature in a record is matched to one block of the rule. The parameters of each block measure the probability of an attack using the trapezoidal fuzzy rule shape. The probabilities of each block are then combined, and the average of the probabilities is compared with a threshold to determine if the record is an attack class or normal class. Then the predicted result is compared with the actual result.
+
+
+
 
 \subsection{Experimental Design and Results}
 
