@@ -58,10 +58,28 @@ Emma Ireland\\
 \section{Background}
 
 \subsection{Types of Intrusion Detection Systems}
+There are two types of intrusion detection systems: \emph{host based} and \emph{network based}. Host based intrusion detection systems look at and analyze information that is on a single host or multiple host systems, such as the contents of file systems and system calls to determine if there is a possible threat to the system. Network based intrusion detection looks at information that is from the network. Network based is useful for analyzing the traffic of multiple systems all at once. This type of intrusion detection system analyzes packets that travel through the network.~\cite{DBLP:journals/corr/abs-1204-1336}
+
+
+
 
 \subsection{Types of Networking Attacks}
+There are four different types of networking attacks: \emph{denial of service}, \emph{remote to user attacks}, \emph{user to root attacks}, and \emph{probing}. Each attack that happens on a network can be placed into one of these categories. 
+
+Denial of service attacks happen when an attacker makes a machine inaccessible to a user by making it too busy to serve legitimate network requests. Remote to user attacks happen when an attacker sends packets to a machine over the network in order to get access to things a local user would have on the machine. User to root attacks happen when an attacker starts out with access on the machine and then tries to gain root access to the system. Probing happens when an attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used in such a way that they compromise the system.~\cite{DBLP:journals/corr/abs-1204-1336}
+
+
+
 
 \subsection{Detection Methodologies}
+There are two different ways of detecting attacks: \emph{signature-based detection} and \emph{anomaly-based detection}. 
+
+A signature is a pattern that corresponds to a known attack. Signature-based detection compares well-known patterns of attacks that are already in the intrusion detection system against captured events in order to identify a possible attack. It is a simple and effective way to detect known attacks. A disadvantage of it is that it is an ineffective way of detecting unknown attacks. Signature-based detection is also called \emph{knowledge-based detection} or \emph{misuse detection}.~\cite{Liao201316}
+
+An anomaly is something that deviates from what is normal. Anomaly-based detection looks for patterns of activity that are rare and uncommon. It is an effective way to detect new vulnerabilities. Some disadvantages of this type of system is that they are expensive and they can detect an intrusive behavior as being normal because of insufficient data. Anomaly-based detection is also called \emph{behavior-based detection}.~\cite{DBLP:journals/corr/abs-1204-1336}
+
+
+
 
 \subsection{Genetic Algorithm}
 
@@ -78,8 +96,9 @@ The focus of the research is on detecting new or unknown types of attacks in a n
 
 
 
+
 \subsection{RLD09 Data Set}
-The KDD99 dataset is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09. To create the data set, the authors captured network data from the Computer Engineering Department at King Mongkut's University of Technology Thonburi, in Bangkok, Thailand. The data has around ten million preprocessed data packets. It has 17 different types of attacks, as well as normal network activity. The attacks can be divided into denial of service attacks and probe attacks. A packet sniffer was used to get information about TCP, UDP, and ICMP headers from protocol packets. Then this information is processed into 12 features by counting connections between a source IP and destination IP. Some example features include the number of: packets, source ports, and destination ports. The following are examples of data records, where each one has 12 feature values.
+The KDD99 data set is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09. To create the data set, the authors captured network data from the Computer Engineering Department at King Mongkut's University of Technology Thonburi, in Bangkok, Thailand. The data has around ten million preprocessed data packets. It has 17 different types of attacks, as well as normal network activity. The attacks can be divided into denial of service attacks and probe attacks. A packet sniffer was used to get information about TCP, UDP, and ICMP headers from protocol packets. Then this information is processed into 12 features by counting connections between a source IP and destination IP. Some example features include the number of: packets, source ports, and destination ports. The following are examples of data records, where each one has 12 feature values.
 
 \begin{itemize}
 \item 21,21,15,0,21,0,0,0,0,0,0,0, attack
@@ -102,8 +121,6 @@ In the implementation, a population size of 10 was used for each generation. An 
 
 
 
-
-\subsection{Fuzzy Algorithm}
 In order to measure the probability of an attack, a trapezoidal shape was used in the algorithm. The trapezoidal shape has four parameters: a, b, c, and d. The following algorithm calculates the probability of being attacked:
 
 \mycomment{Ask Nic how to put in algorithm.}
@@ -112,8 +129,9 @@ In order to measure the probability of an attack, a trapezoidal shape was used i
 
 
 
+
 \subsection{Features and Rules}
-The KDD99 dataset is composed of 41 features. The authors of~\cite{6496342, 6559603} used the following eight features in their system: duration, src\_bytes, num\_failed\_logins, root\_shell, num\_access\_files, srv\_count, serror\_rate, same\_srv\_rate.
+The KDD99 data set is composed of 41 features. The authors of~\cite{6496342, 6559603} used the following eight features in their system: duration, src\_bytes, num\_failed\_logins, root\_shell, num\_access\_files, srv\_count, serror\_rate, same\_srv\_rate.
 
 The value of each feature is normalized to be a number between 0.0 and 7.0, and then is encoded into blocks of binary strings. See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. A rule has 12 blocks of features, and at the end of the string is the type of attack. 
 
