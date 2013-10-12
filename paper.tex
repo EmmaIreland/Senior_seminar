@@ -81,6 +81,12 @@ An anomaly is something that deviates from what is normal. Anomaly-based detecti
 
 
 
+\subsection{False Positives and False Negatives}
+\emph{False positives} and {False negatives} are two values that are used to evaluate the accuracy of an intrusion detection system. A false positive happens when an intrusion detection system incorrectly identifies normal activity as being an attack. A false negative happens when an intrusion detection system fails to identify harmful activity.~\cite{Liao201316}
+
+
+
+
 \subsection{Genetic Algorithm}
 
 \subsection{Fuzzy Logic}
@@ -151,7 +157,26 @@ One record is passed into a rule. Each feature in a record is matched to one blo
 
 
 \subsection{Experimental Design and Results}
+The experiments that the authors of~\cite{6496342, 6559603} performed used a total of 16,000 records of normal activity and 10,500 records of attack activity. Of the attack activity, 4,000 of them were denial of service attacks and 6,500 were probe attacks.
 
+In the first experiment, the fuzzy genetic algorithm was used to create denial of service and probe detection rules and then the rules were verified with known attack types. 10,000 records were used for the training set and all 26,500 records were used for the testing set. The two steps in the training process were to find a denial of service rule, and find a probe rule from the training set. Both of these rules were then used in the testing process to identify attacks from the testing data set. The following algorithm was used in the testing process:
+
+\mycomment{Ask Nic how to put in algorithm.}
+
+The detection rate of denial of service attacks in training was 91.64\% and the detection rate of probe attacks in training was 94.79\%. The detection rate of the testing data set increased to 97.92\%. The false positive rate was 1.13\% and the false negative rate was 4.10\%. Detection of an attack happened 2-3 seconds after the packet data arrived at the intrusion detection system. Results from this experiment are shown in Table~\ref{tab:fuzGenExp1}.
+
+\mycomment{Fix table}
+
+\begin{table}
+\caption{Results from Experiment 1}
+\begin{tabular}{|ccccccc|} \hline
+ & Attack & Normal & Total Records & FP & FN & DR\\
+DoS Training & 1499 & 8501 & 10000 & 1.46 & 47.50 & 91.64\\
+Probe Training & 2496 & 7504 & 10000 & 1.83 & 15.38 & 94.79\\
+Testing & 10500 & 1600 & 26500 & 1.13 & 4.10 & 97.92\\
+\hline\end{tabular}
+\label{tab:fuzGenExp1}
+\end{table}
 
 
 
