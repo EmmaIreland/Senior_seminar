@@ -80,7 +80,7 @@ An anomaly is something that deviates from what is normal. Anomaly-based detecti
 
 
 \subsection{False Positives and False Negatives}
-\emph{False positives} and {False negatives} are two values that are used to evaluate the accuracy of an intrusion detection system. A false positive happens when an intrusion detection system incorrectly identifies normal activity as being an attack. A false negative happens when an intrusion detection system fails to identify harmful activity.~\cite{Liao201316}
+\emph{False positives} and \emph{False negatives} are two values that are used to evaluate the accuracy of an intrusion detection system. A false positive happens when an intrusion detection system incorrectly identifies normal activity as being an attack. A false negative happens when an intrusion detection system fails to identify harmful activity.~\cite{Liao201316}
 
 
 
@@ -207,15 +207,15 @@ Case & Attacks & Tree DR & & Genetic DR & \\ \hline
 5 & Http Flood & 85.7& Avg =          & 100 & Avg =\\
   & RCP Scan  & 92.3 & \textbf{99.94} & 91.80 & 97.50\\
   & Fin Scan  & 99.8 &                & 98.20 &\\
-  
 \hline\end{tabular}
 \label{tab:fuzGenExp2}
 \end{table}
 
 
 
+
 \subsubsection{Experiments using Both RLD09 and KDD99}
-The authors of~\cite{6496342, 6559603} also ran experiments that compared the RLD09 data set with the KDD99 data set. They used the KDD99 10\% version file for both the training dataset and testing dataset. The number of records of normal and attack activity for the two data sets are shown in Table~\ref{tab:RecordsForKDD99}.
+The authors of~\cite{6496342, 6559603} also ran experiments that used and compared the RLD09 data set with the KDD99 data set. They used the KDD99 10\% version file for both the training dataset and testing dataset. The number of records of normal and attack activity for the KDD99 data set is shown in Table~\ref{tab:RecordsForKDD99}, and the number of records of normal and attack activity for the RLD09 data is shown in Table~\ref{tab:RecordsForRLD09}.
 
 \begin{table}
 \caption{Number of Records for KDD99}
@@ -227,10 +227,70 @@ DoS & 158,597 & 158,503\\
 Probe & 1,550 & 1,674\\
  & &\\
  Total & 199,534 & 199,514\\
-
 \hline\end{tabular}
 \label{tab:RecordsForKDD99}
 \end{table}
+
+
+\begin{table}
+\caption{Number of Records for RLD09}
+\begin{tabular}{|lll|} \hline
+Attack & Training & Testing\\
+Type   & Data set & Data set\\ \hline
+Normal & 8,000 & 16,000\\
+DoS & 2,400 & 4,000\\
+Probe & 3,900 & 6,500\\
+ & &\\
+ Total & 14,300 & 26,500\\
+\hline\end{tabular}
+\label{tab:RecordsForRLD09}
+\end{table}
+
+The authors of~\cite{6496342, 6559603} first trained and tested the fuzzy genetic algorithm with the KDD99 data set. There were 6 different types of denial of service attacks and 4 different types of probe attacks. The detection rate of the KDD99 data set was 98.72\%, and it had a false negative rate of 1.55\%. Then 26,500 records of the RLD09 data set were used as the training set. The detection rate was 97.97\%. The results of this experiment are shown in Table~\ref{tab:bothSetsResults}.
+
+\begin{table}
+\caption{KDD99 and RLD09 Results}
+\begin{tabular}{|cccccc|} \hline
+Data & Testing & Testing & False    & False    & Detection\\
+set  & Attack  & Normal  & Positive & Negative & Rate\\ \hline
+KDD99 & 160,117 & 39,337 & 0.13 & 1.55 & 98.72\\
+RLD09 & 10,500 & 16,000 & 1.14 & 3.39 & 97.97\\
+\hline\end{tabular}
+\label{tab:bothSetsResults}
+\end{table}
+
+The next experiment was the use of the KDD99 training set with the fuzzy genetifc algorithm to separate the data into two classes. Then each specific attack type was extracted and combined with normal activity. Ten tests were run, and Table~\ref{tab:kddAttacks} shows the accuracy of detecting some of the cases. The results showed that the detection rate of most of the cases were greater than 93\%. The results also showed that the behavior of the attacks were highly distinctive from normal activity. There were only two cases that had low detection rates, one of which is case 1 in Table~\ref{tab:kddAttacks}.
+
+\begin{table}
+\caption{Results for KDD99 with Certain Attacks}
+\begin{tabular}{|cccccc|} \hline
+Test & Attack & Type & FP & FN & DR\\
+Case & Name   &&&&\\ \hline
+1 & Back & DoS & 85.33 & 0.00 & 16.56\\
+2 & Land & DoS & 0.39 & 0.00 & 99.61\\
+3 & Smurf & DoS & 0.76 & 0.10 & 99.73\\
+4 & Portsweep & Probe & 6.40 & 0.00 & 93.66\\
+5 & Satan & Probe & 0.74 & 3.75 & 99.22\\
+\hline\end{tabular}
+\label{tab:kddAttacks}
+\end{table}
+
+The final experiment that was run used only the RLD09 data set with the fuzzy genetic algorithm. 17 tests were run, and Table~\ref{tab:rldAttacks} shows the accuracy of detecting some of the cases. The results showed that the detection rate of a majority of the cases were greater than 97.5\%. Again, there were only two cases that had low detection rates, one of which is case 2 in Table~\ref{tab:rldAttacks}.
+
+\begin{table}
+\caption{Results for RLD99 with Certain Attacks}
+\begin{tabular}{|cccccc|} \hline
+Test & Attack & Type & FP & FN & DR\\
+Case & Name   &&&&\\ \hline
+1 & Smurf & DoS & 0.02 & 0 & 99.98\\
+2 & UDP Flood & DoS & 11.06 & 0 & 89.59\\
+3 & Ackscan & Probe & 0.03 & 0 & 99.97\\
+4 & Ipscan & Probe & 13.01 & 16.4 & 86.89\\
+5 & Synscan & Probe & 0.65 & 4.2 & 99.24\\
+\hline\end{tabular}
+\label{tab:rldAttacks}
+\end{table}
+
 
 
 
