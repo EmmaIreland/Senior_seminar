@@ -41,11 +41,9 @@ Emma Ireland\\
 \end{abstract}
 
 % A category with the (minimum) three required fields
-%\category{H.4}{Information Systems Applications}{Miscellaneous}
-%A category including the fourth, optional field follows...
-%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+\category{}{Security and Privacy}{Intrusion Detection Systems}
 
-%\terms{Delphi theory}
+\terms{}
 
 \keywords{Intrusion detection, genetic algorithm, fuzzy logic}
 
@@ -139,6 +137,8 @@ In order to measure the probability of an attack, a trapezoidal shape was used i
 \subsection{Features and Rules}
 The KDD99 data set is composed of 41 features. The authors of~\cite{6496342, 6559603} used the following eight features in their system: duration, src\_bytes, num\_failed\_logins, root\_shell, num\_access\_files, srv\_count, serror\_rate, same\_srv\_rate.
 
+\mycomment{Explain the 8 features}
+
 The value of each feature is normalized to be a number between 0.0 and 7.0, and then is encoded into blocks of binary strings. See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. A rule has 12 blocks of features, and at the end of the string is the type of attack. 
 
 \begin{figure}
@@ -157,6 +157,7 @@ One record is passed into a rule. Each feature in a record is matched to one blo
 
 
 \subsection{Experimental Design and Results}
+\subsubsection{Experiments using Only RLD09}
 The experiments that the authors of~\cite{6496342, 6559603} performed used a total of 16,000 records of normal activity and 10,500 records of attack activity. Of the attack activity, 4,000 of them were denial of service attacks and 6,500 were probe attacks.
 
 In the first experiment, the fuzzy genetic algorithm was used to create denial of service and probe detection rules and then the rules were verified with known attack types. 10,000 records were used for the training set and all 26,500 records were used for the testing set. The two steps in the training process were to find a denial of service rule, and find a probe rule from the training set. Both of these rules were then used in the testing process to identify attacks from the testing data set. The following algorithm was used in the testing process:
@@ -178,6 +179,58 @@ Testing & 10500 & 1600 & 26500 & 1.13 & 4.10 & 97.92\\
 \label{tab:fuzGenExp1}
 \end{table}
 
+In the second experiment, seven tests were run. For each test case there were 13 attack types plus normal activity that were in the training data set. Three attack types were used for the unknown testing data set. For example, the first test case used the training data set that does not have Advance Port Scan, Ack Scan, and Xmas Tree, (which are all probe attacks). These three attacks were then used for the testing data set. Table~\ref{tab:fuzGenExp2} shows some of the results from the fuzzy genetic algorithm and a decision tree algorithm. The fuzzy genetic algorithm has an accuracy of at least 95\% in identifying unknown attacks. When compared with the decision tree algorithm, the fuzzy genetic algorithm has a higher detection rate in all cases except 3 and 5. It can be seen that in cases 2 and 4 the decision tree has low detection rates, while the fuzzy genetic algorithm has much higher detection rates.
+
+
+\begin{table}
+\caption{Unknown Attack Experiment}
+\begin{tabular}{|lllcrl|} \hline
+Test & Unknown & Decision & & Fuzzy & \\
+Case & Attacks & Tree DR & & Genetic DR & \\ \hline
+
+1 & Advance Port Scan & 99.7 & Avg = & 100 & Avg =\\
+  & Ack Scan          & 100  & 98.33 & 100 & 100\\
+  & Xmas Tree         & 95.3 &       & 100 &\\ \hline
+
+2 & UDP Flood & \textbf{26.7} & Avg = & \textbf{100} & Avg =\\
+  & Host Scan & 98.15         & 46.65 & 99.20        & 99.80\\
+  & UDP Scan  & \textbf{17.6} &       & \textbf{100} &\\ \hline
+
+3 & Jping    & 100 & Avg =          & 99.20 & Avg =\\
+  & Syn Scan & 99.1& \textbf{99.70} & 96.60 & 98.75\\
+  & Fin Scan & 100 &                & 100 &\\ \hline
+
+4 & UDP Flood & \textbf{26.6} & Avg = & \textbf{100} & Avg =\\
+  & RCP Scan  & 91.56         & 70.35 & 92.60        & 98.15\\
+  & Fin Scan  & 99.8          &       & 100          &\\ \hline
+
+5 & Http Flood & 85.7& Avg =          & 100 & Avg =\\
+  & RCP Scan  & 92.3 & \textbf{99.94} & 91.80 & 97.50\\
+  & Fin Scan  & 99.8 &                & 98.20 &\\
+  
+\hline\end{tabular}
+\label{tab:fuzGenExp2}
+\end{table}
+
+
+
+\subsubsection{Experiments using Both RLD09 and KDD99}
+The authors of~\cite{6496342, 6559603} also ran experiments that compared the RLD09 data set with the KDD99 data set. They used the KDD99 10\% version file for both the training dataset and testing dataset. The number of records of normal and attack activity for the two data sets are shown in Table~\ref{tab:RecordsForKDD99}.
+
+\begin{table}
+\caption{Number of Records for KDD99}
+\begin{tabular}{|lll|} \hline
+Attack & Training & Testing\\
+Type   & Data set & Data set\\ \hline
+Normal & 39,387 & 39,337\\
+DoS & 158,597 & 158,503\\
+Probe & 1,550 & 1,674\\
+ & &\\
+ Total & 199,534 & 199,514\\
+
+\hline\end{tabular}
+\label{tab:RecordsForKDD99}
+\end{table}
 
 
 
