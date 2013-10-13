@@ -45,7 +45,7 @@ Emma Ireland\\
 
 \terms{}
 
-\keywords{Intrusion detection, genetic algorithm, fuzzy logic}
+\keywords{Intrusion detection, genetic algorithm, fuzzy logic, KDD99, RLD09}
 
 \section{Introduction}
 
@@ -96,7 +96,7 @@ An anomaly is something that deviates from what is normal. Anomaly-based detecti
 
 
 \section{Fuzzy Genetic Algorithm Implementation}
-The focus of the research is on detecting new or unknown types of attacks in a network. The intrusion detection system is able to identify normal network activity as well as classify different attack types using a fuzzy genetic algorithm. This kind of algorithm is able to learn new attacks, and has a high detection rate. The system used is evaluated in terms of detection speed, detection rate, and false alarm rate.
+The focus of the research is on detecting new or unknown types of attacks in a network. The intrusion detection system is able to identify normal network activity as well as classify different attack types using a fuzzy genetic algorithm. This kind of algorithm is able to learn new attacks, and has a high detection rate. The system used is evaluated in terms of detection speed, detection rate, and false alarm rate.~\cite{6496342, 6559603}
 
 
 
@@ -115,7 +115,49 @@ The KDD99 data set is 14 years old, and newer attack types are not included in i
 \subsection{Algorithm Overview}
 The algorithm that is used in~\cite{6496342, 6559603} first randomly finds a rule. Then the rule is improved in the training phase. After that, the rules are used to classify the data into classes in the testing phase. The pseudo code below describes the fuzzy genetic algorithm that is used. 
 
-\mycomment{Ask Nic how to put in algorithm.}
+\mycomment{Figure out how to put in algorithm.}
+
+for each record
+
+   for each rule
+
+      for each attribute
+         
+         prob = fuzzy();
+
+         totalprob = totalprob + prob;
+      
+      If (totalprob > threshold)
+
+         class is attack;
+
+      else
+
+         class is normal;
+
+
+      compare the predicted result with actual result
+
+\mycomment{put in alpha and beta symbols}
+
+      find A, B, alpha, and beta,
+
+
+   calculate fitness
+
+   // create next generation
+
+   preserve\_best()
+
+   crossover()
+
+   mutation()
+
+
+// A is total number of attack records. B is total number of normal records. alpha is total number of attack records correctly identified as attack. beta is total number of normal records incorrectly classified as attack (false positive).
+
+
+
 
 The fitness function to be maximized is:
 \begin{equation*}
@@ -127,7 +169,28 @@ In the implementation, a population size of 10 was used for each generation. An 
 
 In order to measure the probability of an attack, a trapezoidal shape was used in the algorithm. The trapezoidal shape has four parameters: a, b, c, and d. The following algorithm calculates the probability of being attacked:
 
-\mycomment{Ask Nic how to put in algorithm.}
+\mycomment{Figure out how to put in algorithm.}
+
+if (data value is between b and c)
+
+   prob =1.0
+   
+else if (data value is between a and b)
+\begin{equation*}
+   prob = \frac{data - a}{b-a}
+\end{equation*}
+
+else if (data value is between c and d)
+\begin{equation*}
+   prob = \frac{d-data}{d-c}
+\end{equation*}
+
+else
+
+   prob = 0.0
+
+
+
 
 \mycomment{Put in trapezoidal shape figure.}
 
@@ -137,7 +200,10 @@ In order to measure the probability of an attack, a trapezoidal shape was used i
 \subsection{Features and Rules}
 The KDD99 data set is composed of 41 features. The authors of~\cite{6496342, 6559603} used the following eight features in their system: duration, src\_bytes, num\_failed\_logins, root\_shell, num\_access\_files, srv\_count, serror\_rate, same\_srv\_rate.
 
-\mycomment{Explain the 8 features}
+duration is the length of the connection in seconds. src\_bytes is the number of bytes sent from source to destination. num\_failed\_logins is the number of failed login attempts. root\_shell returns 1 if root shell is obtained and 0 otherwise. num\_access\_files is the number of operations on access control files. srv\_count is the number of connections to the same service as the current connection in the past two seconds. serror\_rate is the percentage of connections that have ``SYN" errors.
+\mycomment{What are SYN errors?}
+ same\_srv\_rate is the percentage of connections to the same service.~\cite{KDD99Features}
+
 
 The value of each feature is normalized to be a number between 0.0 and 7.0, and then is encoded into blocks of binary strings. See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. A rule has 12 blocks of features, and at the end of the string is the type of attack. 
 
@@ -162,11 +228,21 @@ The experiments that the authors of~\cite{6496342, 6559603} performed used a tot
 
 In the first experiment, the fuzzy genetic algorithm was used to create denial of service and probe detection rules and then the rules were verified with known attack types. 10,000 records were used for the training set and all 26,500 records were used for the testing set. The two steps in the training process were to find a denial of service rule, and find a probe rule from the training set. Both of these rules were then used in the testing process to identify attacks from the testing data set. The following algorithm was used in the testing process:
 
-\mycomment{Ask Nic how to put in algorithm.}
+\mycomment{Figure out how to put in algorithm.}
+
+If (dos\_rule = yes or probe\_rule = yes)
+
+   This record is an attack;
+
+else
+
+   This record is normal;
+
+
 
 The detection rate of denial of service attacks in training was 91.64\% and the detection rate of probe attacks in training was 94.79\%. The detection rate of the testing data set increased to 97.92\%. The false positive rate was 1.13\% and the false negative rate was 4.10\%. Detection of an attack happened 2-3 seconds after the packet data arrived at the intrusion detection system. Results from this experiment are shown in Table~\ref{tab:fuzGenExp1}.
 
-\mycomment{Fix table}
+\mycomment{Fix tables}
 
 \begin{table}
 \caption{Results from Experiment 1}
@@ -297,6 +373,74 @@ Case & Name   &&&&\\ \hline
 \section{Genetic Algorithm Implementation}
 
 \subsection{Algorithm Overview}
+The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used a genetic algorithm to make their intrusion detection system. The system is divided into two phases: a precalculation phase and a detection phase. In the precalculation phase, a set of chromosomes are created using training data. Then this set of chromosomes is used in the detection phase for comparison. The following algorithm is used in the precalculation phase:
+
+\mycomment{Figure out how to put in algorithm.}
+
+Algorithm : Initialize chromosomes for comparison
+
+Input : Network audit data (for training)
+
+Output : A set of chromosomes
+
+Range = 0.125
+
+For each training data
+
+   If it has neighboring chromosome within Range
+
+      Merge it with the nearest chromosome
+
+   Else
+
+      Create new chromosome with it
+
+   End if
+
+End for 
+
+
+In the detection phase, a population is created for test data and then the type of the data is predicted. The set of chromosomes that was created in the precalculation phase is used in the detection phase to find the fitness of each chromosome in the population. The following algorithm is used in the detection phase:
+
+\mycomment{Figure out how to put in algorithm.}
+
+Algorithm : Predict data/intrusion type (using GA)
+
+Input : Network audit data (for testing), Precalculated set of chromosomes
+
+Output : Type of data.
+
+Initialize the population
+
+CrossoverRate = 0.15, MutationRate = 0.35
+
+While number of generation is not reached
+   
+   For each chromosome in the population
+      
+      For each precalculated chromosome
+         
+         Find fitness
+      
+      End for
+
+      Assign optimal fitness as the fitness of that chromosome
+   
+   End for
+   
+   Remove some chromosomes with worse fitness
+   
+   Apply crossover to the selected pair of chromosomes of the population
+
+   Apply mutation to each chromosome of the population
+
+End while 
+
+
+The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used the KDD99 data set. For the training data set, the KDD99 10\% version file was used, and for the testing data set, the KDD99 corrected version file was used. 
+
+
+
 
 \subsection{Experimental Design and Results}
 
