@@ -1,5 +1,7 @@
 \documentclass{sig-alternate}
 \usepackage{color}
+\usepackage{algorithmic}
+\usepackage{algorithm}
 
 
 %%%% User-defined macros
@@ -116,51 +118,64 @@ The KDD99 data set is 14 years old, and newer attack types are not included in i
 
 
 
+\subsection{Fuzzy Algorithm}
+In order to measure the probability of an attack, a trapezoidal shape was used in the algorithm. The trapezoidal shape has four parameters: a, b, c, and d. 
+\mycomment{Put in trapezoidal shape figure.} Algorithm~\ref{alg:fuzAlg} calculates the probability of being attacked.
+
+\begin{algorithm}
+\caption{Fuzzy Algorithm}
+\label{alg:fuzAlg}
+\begin{algorithmic}
+\IF{data value is between b and c}
+  \STATE{prob = 1.0}
+\ELSIF{data value is between a and b}
+  \STATE{
+    prob = $(\textrm{data}-a)/(b-a)$
+  }
+\ELSIF{data value is between c and d}
+  \STATE{
+    prob = $(d-\textrm{data})/(d-c)$
+  }
+\ELSE \STATE{prob = 0.0}
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
 \subsection{Algorithm Overview}
-The algorithm that is used in~\cite{6496342, 6559603} first randomly finds a rule. Then the rule is improved in the training phase. After that, the rules are used to classify the data into classes in the testing phase. The pseudo code below describes the fuzzy genetic algorithm that is used. 
+The algorithm that is used in~\cite{6496342, 6559603} first randomly finds a rule. Then the rule is improved in the training phase. After that, the rules are used to classify the data into classes in the testing phase. Algorithm~\ref{alg:fuzGenAlg} describes the fuzzy genetic algorithm that is used. 
 
-\mycomment{Figure out how to put in algorithm.}
+\begin{algorithm}
+\caption{Fuzzy Genetic Algorithm}
+\label{alg:fuzGenAlg}
+\begin{algorithmic}
+\FOR{each record}
 
-for each record
-
-   for each rule
-
-      for each attribute
-         
-         prob = fuzzy();
-
-         totalprob = totalprob + prob;
-      
-      If (totalprob > threshold)
-
-         class is attack;
-
-      else
-
-         class is normal;
-
-
-      compare the predicted result with actual result
-
-\mycomment{put in alpha and beta symbols}
-
-      find A, B, alpha, and beta,
-
-
-   calculate fitness
-
-   // create next generation
-
-   preserve\_best()
-
-   crossover()
-
-   mutation()
-
-
-// A is total number of attack records. B is total number of normal records. alpha is total number of attack records correctly identified as attack. beta is total number of normal records incorrectly classified as attack (false positive).
-
-
+  \FOR{each rule}
+    \FOR{each attribute}
+      \STATE{prob = fuzzy();}
+      \STATE{totalprob = totalprob + prob;}
+    \ENDFOR
+    
+    \IF{totalprob > threshold} 
+      \STATE{class is attack;}
+      \ELSE \STATE{class is normal;}
+    \ENDIF
+  \ENDFOR
+  
+  \STATE{compare the predicted result with actual result}
+  \STATE{find A, B, $\alpha$, and $\beta$}
+  \STATE{// A is total number of attack records. B is total number of normal records. $\alpha$ is total number of attack records correctly identified as attack. $\beta$ is total number of normal records incorrectly classified as attack.}
+\ENDFOR
+\STATE{calculate fitness}
+\STATE{//create next generation}
+\STATE{preserve\_best()}
+\STATE{crossover()}
+\STATE{mutation()}
+\end{algorithmic}
+\end{algorithm}
 
 
 The fitness function to be maximized is:
@@ -168,35 +183,6 @@ The fitness function to be maximized is:
 fitness function = \frac{\alpha}{A} - \frac{\beta}{B}
 \end{equation*}
 In the implementation, a population size of 10 was used for each generation. An individual in the population represents a possible detection rule. The two best individuals from a present generation are preserved for the next generation. The other individuals in the new generation come from single-point crossover.
-
-
-
-In order to measure the probability of an attack, a trapezoidal shape was used in the algorithm. The trapezoidal shape has four parameters: a, b, c, and d. The following algorithm calculates the probability of being attacked:
-
-\mycomment{Figure out how to put in algorithm.}
-
-if (data value is between b and c)
-
-   prob =1.0
-   
-else if (data value is between a and b)
-\begin{equation*}
-   prob = \frac{data - a}{b-a}
-\end{equation*}
-
-else if (data value is between c and d)
-\begin{equation*}
-   prob = \frac{d-data}{d-c}
-\end{equation*}
-
-else
-
-   prob = 0.0
-
-
-
-
-\mycomment{Put in trapezoidal shape figure.}
 
 
 
