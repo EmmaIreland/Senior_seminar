@@ -87,11 +87,11 @@ An anomaly is something that deviates from what is normal. Anomaly-based detecti
 
 
 \subsection{Rules}
-Rules are represented by IF-THEN statements with the following format:
+Rules are represented by IF-THEN statements in the following format:
 
-IF (cond1) AND...AND (condm) THEN class = ci
+If <condition> then <action>
 
-\mycomment{Write more here and figure out how to format the rule}
+\mycomment{Write more here}
 
 
 
@@ -122,7 +122,9 @@ In an experiment, the researchers divide the data set into two subsets, a \emph{
 \subsection{Setup}
 The authors of~\cite{6496342, 6559603} used 8 out of the 41 KDD99 features in their system: duration, src\_bytes, num\_failed\_logins, root\_shell, num\_access\_files, srv\_count, serror\_rate, same\_srv\_rate.
 
-Duration is the length of the connection in seconds. src\_bytes is the number of bytes sent from source to destination. num\_failed\_logins is the number of failed login attempts. root\_shell returns 1 if root shell is obtained and 0 otherwise. num\_access\_files is the number of operations on access control files. srv\_count is the number of connections to the same service as the current connection in the past two seconds. serror\_rate is the percentage of connections that have ``SYN" errors.
+Duration is the length of the connection in seconds. 
+
+src\_bytes is the number of bytes sent from source to destination. num\_failed\_logins is the number of failed login attempts. root\_shell returns 1 if root shell is obtained and 0 otherwise. num\_access\_files is the number of operations on access control files. srv\_count is the number of connections to the same service as the current connection in the past two seconds. serror\_rate is the percentage of connections that have ``SYN" errors.
 \mycomment{What are SYN errors?}
  same\_srv\_rate is the percentage of connections to the same service.~\cite{KDD99Features}
 
@@ -166,13 +168,11 @@ a & b & c & d\\
 \label{fig:fuzEncodingForFeature}
 \end{figure}
 
-One record (either an attack or normal activity) is passed into a rule. Each feature in a record is matched to one block of the rule. The parameters of each block measure the probability of an attack using the trapezoidal fuzzy rule shape. The probabilities of each block are then combined by taking the average of the probabilities and comparing them with a threshold to determine if the record is an attack class or normal class.
-
 
 
 
 \subsection{Algorithm Overview}
-The algorithm that is used in~\cite{6496342, 6559603} first randomly generates a rule. Then the rule is improved in the training phase. After that, the rules are used to classify the data into classes in the testing phase. Algorithm~\ref{alg:fuzGenAlg} describes the fuzzy genetic algorithm that is used. 
+The algorithm that is used in~\cite{6496342, 6559603} first randomly generates a rule. Then the rule is improved in the training phase. After that, the rules are used to classify the data into classes in the testing phase. Algorithm~\ref{alg:fuzGenAlg} describes the fuzzy genetic algorithm that is used. One record (either an attack or normal activity) is passed into a rule. Each feature in a record is matched to one block of the rule. The parameters of each block measure the probability of an attack using the trapezoidal fuzzy rule shape. The probabilities of each block are then combined by taking the average of the probabilities and comparing them with a threshold to determine if the record is an attack class or normal class.
 
 \begin{algorithm}
 \caption{Fuzzy Genetic Algorithm}
@@ -181,7 +181,7 @@ The algorithm that is used in~\cite{6496342, 6559603} first randomly generates a
 \FOR{each record}
 
   \FOR{each rule}
-    \FOR{each attribute}
+    \FOR{each feature}
       \STATE{prob = fuzzy();}
       \STATE{totalprob = totalprob + prob;}
     \ENDFOR
@@ -402,7 +402,9 @@ In the detection phase, a population is created for test data and then the type 
     \FOR{each precalculated chromosome}
       \STATE{Find fitness}
     \ENDFOR
-    \STATE{Assign optimal fitness as the fitness of that chromosome}
+    \STATE{Assign optimal fitness as the fitness of that 
+    
+    chromosome}
   \ENDFOR
   \STATE{Remove some chromosomes with worse fitness}
   \STATE{Apply crossover to the selected pair of chromosomes of the population}
@@ -411,13 +413,12 @@ In the detection phase, a population is created for test data and then the type 
 \end{algorithmic}
 \end{algorithm}
 
-The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used the KDD99 data set. For the training data set, the KDD99 10\% version file was used, and for the testing data set, the KDD99 corrected version file was used. 
-
 
 
 
 \subsection{Experimental Design and Results}
-
+The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used the KDD99 data set. For the training data set, the KDD99 10\% version file was used, and for the testing data set, the KDD99 corrected version file was used. 
+\mycomment{Write more here}
 
 
 
