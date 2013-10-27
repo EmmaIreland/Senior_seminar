@@ -137,8 +137,14 @@ The focus of~\cite{6496342, 6559603} is on detecting new or unknown types of att
 
 
 \subsection{Fuzzy Algorithm}
-In order to measure the probability that a record is an attack, a trapezoidal shape was used in the algorithm. The trapezoidal shape has four parameters: $a, b, c$, and $d$. 
-\mycomment{Put in trapezoidal shape figure.} Algorithm~\ref{alg:fuzAlg} calculates the probability of a record being an attack.
+In order to measure the probability that a record is an attack, a trapezoidal shape was used in the algorithm. This is shown in Figure~\ref{fig:trapFigure}. The trapezoidal shape has four parameters: $a, b, c$, and $d$. Algorithm~\ref{alg:fuzAlg} calculates the probability of a record being an attack.
+
+\begin{figure}
+\centering
+\psfig{file=trapFigure.jpg}
+\caption{Trapezoidal shape with 4 parameters where $a\leq b\leq c\leq d$}
+\label{fig:trapFigure}
+\end{figure}
 
 \mycomment{Figure out how to float algorithms.}
 \begin{algorithm}
@@ -160,18 +166,28 @@ In order to measure the probability that a record is an attack, a trapezoidal sh
 \end{algorithmic}
 \end{algorithm}
 
-The four parameters a, b, c, and d are encoded into blocks of binary strings, where each block is a feature with values between 0.0 and 7.0. See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. A rule has 12 blocks of features, and at the end of the string is the type of attack.
-\mycomment{Put in an example/figure of a rule.}
+The four parameters a, b, c, and d are encoded into blocks of binary strings, where each block is a feature with values between 0.0 and 7.0. See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. A rule has 12 blocks of features, and at the end of the string is the type of attack. An example of this is Figure~\ref{fig:rule}.
 
 \begin{figure}
 \centering
 \caption{Fuzzy encoding for a feature}
-\begin{tabular}{|c|c|c|c|} \hline
+\begin{tabular}{|cccc|} \hline
 010 & 011 & 100 & 101\\
-a & b & c & d\\
+a=2 & b=3 & c=4 & d=5\\
 \hline\end{tabular}
 \label{fig:fuzEncodingForFeature}
 \end{figure}
+
+\begin{figure*}
+\centering
+\caption{A rule with 12 blocks of features}
+\begin{tabular}{|cccc|c|cccc|c|} \hline
+010 & 011 & 100 & 101   & ...... & 010 & 011 & 101 & 111   & DoS\\
+a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\ 
+    &     & Block 1&    &        &     & Block 12& &       & Type\\
+\hline\end{tabular}
+\label{fig:rule}
+\end{figure*}
 
 
 
