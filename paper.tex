@@ -81,17 +81,27 @@ An anomaly is something that deviates from what is normal. Anomaly-based detecti
 
 
 
-\subsection{Genetic Algorithm}
+\subsection{Rules}
+Rules are a way in which elements of one set are separated into different sets, or classes, in order to differentiate between normal connections and attacks. Rules are represented by if-then statements in the following format: If <\emph{condition}> then <\emph{action}>.~\cite{bapuji2012soft} Rules can specify the details of a packet such as the IP address, port number and protocal. If a packet matches any of the rules in the intrusion detection system then the system will take appropriate action, which may include stopping the connection or logging off the system.~\cite{DBLP:journals/corr/abs-1204-6416}
+
+
+
 
 \subsection{Fuzzy Logic}
+Attacks on systems do not always have a fixed patter, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. A fuzzy logic rule has the following format: If <\emph{condition}> then <\emph{consequence}>, where \emph{condition} is a fuzzy variable, and \emph{consequence} is a fuzzy set. An example of this is: if the number of packets with the same destination address is high, then the pattern is unusual. To determine what is considered high, the values of the packets are divided into fuzzy sets. In Figure~\ref{fig:triangleFigure} there are three sets: low (region A), medium (region B), and high (region C). 
+\begin{figure}
+\centering
+\psfig{file=triangleFigure.JPG}
+\caption{Fuzzy shape with three sets: low (A), medium (B), and high (C)}
+\label{fig:triangleFigure}
+\end{figure}
+The x-axis are the values in the fuzzy set (number of packets), and the y-axis is the membership function, which determines the region. For example, if the number of packets with the same destination address is 15 then this will be considered as low for a degree of 0.4, but will be considered medium or high for other degrees. If the number of packets is determined to be high, then the connection will be aborted.~\cite{DBLP:journals/corr/abs-1204-6416}
 
 
-\subsection{Rules}
-Rules are represented by IF-THEN statements in the following format:
 
-If <condition> then <action>
 
-\mycomment{Write more here}
+\subsection{Genetic Algorithm}
+
 
 
 
