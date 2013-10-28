@@ -2,6 +2,7 @@
 \usepackage{color}
 \usepackage{algorithmic}
 \usepackage{algorithm}
+\usepackage{multirow}
 
 
 %%%% User-defined macros
@@ -66,7 +67,7 @@ There are two types of intrusion detection systems: \emph{host based} and \emph{
 \subsection{Types of Networking Attacks}
 There are four main types of networking attacks that this paper will address: \emph{denial of service}, \emph{remote to user attacks}, \emph{user to root attacks}, and \emph{probing}. Each attack that happens on a network can be placed into one of these categories.~\cite{DBLP:journals/corr/abs-1204-1336}
 
-Denial of service (DoS) attacks happen when an attacker makes a machine inaccessible to a user by making it too busy to serve legitimate requests. For example, many systems lock out a user from an account after a certain number of failed login attempts. An attacker would be able to use this to prevent legitimate users from logging in.~\cite{DoSAttacks} Remote to user attacks happen when an attacker sends packets to a machine over the network in order to gain access to things a local user would have on the machine. An example is when an attacker tries to gain access to a machine by guessing possible usernames and passwords. User to root attacks happen when an attacker starts out with access on the machine and then tries to gain root access to the system. For example, if a program expects a user to input their name, the programmer has to decide how many characters that name buffer will require. Assume the program allocates 20 characters for the name buffer. Suppose the user's name has 35 characters. The last 15 characters will overflow the buffer, which will then overwrite the instructions that are to be executed next. An attacker can cause commands to be executed by manipulating the data that overflows. Probing happens when an attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used to compromise the system.~\cite{DBLP:journals/corr/abs-1204-1336, typesOfAttacks}
+Denial of service (DoS) attacks happen when an attacker makes a machine inaccessible to a user by making it too busy to serve legitimate requests. For example, many systems lock out a user from an account after a certain number of failed login attempts. An attacker would be able to use this to prevent legitimate users from logging in.~\cite{DoSAttacks} Remote to user (R2L) attacks happen when an attacker sends packets to a machine over the network in order to gain access to things a local user would have on the machine. An example is when an attacker tries to gain access to a machine by guessing possible usernames and passwords. User to root (U2R) attacks happen when an attacker starts out with access on the machine and then tries to gain root access to the system. For example, if a program expects a user to input their name, the programmer has to decide how many characters that name buffer will require. Assume the program allocates 20 characters for the name buffer. Suppose the user's name has 35 characters. The last 15 characters will overflow the buffer, which will then overwrite the instructions that are to be executed next. An attacker can cause commands to be executed by manipulating the data that overflows. Probing happens when an attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used to compromise the system.~\cite{DBLP:journals/corr/abs-1204-1336, typesOfAttacks}
 
 
 
@@ -413,7 +414,7 @@ In the detection phase, a population is created for test data and then the type 
 \WHILE{number of generation is not reached}
   \FOR{each chromosome in the population}
     \FOR{each precalculated chromosome}
-      \STATE{Find fitness}
+      \STATE{Find fitness // Fitness function is the standard deviation equation with distance}
     \ENDFOR
     \STATE{Assign optimal fitness as the fitness of that 
     
@@ -430,9 +431,70 @@ In the detection phase, a population is created for test data and then the type 
 
 
 \subsection{Experimental Design and Results}
-The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used the KDD99 data set. For the training data set, the KDD99 10\% version file was used, and for the testing data set, the KDD99 corrected version file was used. 
-\mycomment{Write more here}
+The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used the KDD99 data set. They used only the numerical features of the KDD99 data set (34 out of 41 total features). For the training data set, the KDD99 10\% version file was used, and for the test data set, the KDD99 corrected version file was used. Table~\ref{tab:numberOfRecords} shows the number of records of normal and attack activity in the training and test sets.
 
+\begin{table}
+\center
+\caption{Number of records}
+\begin{tabular}{lll}
+  & Training & Testing \\ 
+Normal & 97,280 & 60,593\\
+Probe  & 4,107  & 4,166\\
+DoS	   & 391,458 & 229,853\\
+U2R    & 52      & 228\\
+R2L    & 1,124   & 16,189\\
+Total  & 494,021 & 311,029\\
+\end{tabular}
+\center
+\label{tab:numberOfRecords}
+\end{table}
+
+In the detection phase, an initial population is created and then is compared with each chromosome that was created in the training phase. Crossover and mutation happen in the population in order to create a new population. The results from running the genetic algorithm are shown in Tables~\ref{tab:genAlgResults} and~\ref{tab:genAlgResults2}. The detection rate was 94.9\%. The false positive rate was 30.5\%. The false negative rate was 5\%. The true negative rate was 69.5\%.
+
+\begin{table*}
+\center
+\caption{Results for Genetic Algorithm Experiment}
+\begin{tabular}{cccccccc}
+& & \multicolumn{5}{ c }{Predicted label} \\ 
+& & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \cline{3-8}
+\multicolumn{1}{ c }{\multirow{2}{*}{Actual class} } &
+\multicolumn{1}{ c| }{Normal} & 42138 & 1421 & 15835 & 486 & 713 & 69.5\\
+\multicolumn{1}{ c  }{}                        &
+\multicolumn{1}{ c| }{Probe} & 398 & 2963 & 654 & 2 & 149 & 71.1   \\
+\multicolumn{1}{ c  }{\multirow{2}{*}{} } &
+\multicolumn{1}{ c| }{Dos} & 921 & 432 & 228489 & 1 & 10 & 99.4\\
+\multicolumn{1}{ c  }{}                        &
+\multicolumn{1}{ c| }{U2R} & 146 & 21 & 8 & 43 & 10 & 18.9\\
+\multicolumn{1}{ c  }{}                        &
+\multicolumn{1}{ c| }{R2L} & 11191 & 578 & 3398 & 141 & 881 & 5.4\\
+
+\multicolumn{1}{ c  }{}                        &
+\multicolumn{1}{ c| }{} &  &  &  &  &  & \\
+
+\multicolumn{1}{ c  }{\% Correct}                        &
+\multicolumn{1}{ c| }{} & 76.9 & 54.7 & 92.0 & 6.4 & 50.0 \\
+\end{tabular}
+\center
+\label{tab:genAlgResults}
+\end{table*}
+
+\begin{table*}
+\center
+\caption{Results for Genetic Algorithm Experiment}
+\begin{tabular}{cccc}
+%\cline{3-8}
+& & \multicolumn{2}{ c }{Predicted label} \\ 
+& & Normal & Intrusion\\ \cline{3-4}
+\multicolumn{1}{ c }{\multirow{2}{*}{Actual class} } &
+\multicolumn{1}{ c| }{Normal} & True Negative (42,138) & False Positive (18,455)\\
+\multicolumn{1}{ c  }{}                        &
+\multicolumn{1}{ c| }{Probe} & False Negative (12,528) & True Positive (237,908)\\
+\end{tabular}
+\center
+\label{tab:genAlgResults2}
+\end{table*}
+
+The authors of~\cite{DBLP:journals/corr/abs-1204-1336} compared their results with the winning entry of the KDD99 Classifier Learning Contest~\cite{KDD99Contest}, and found that they had a better detection rate for denial of service and user to root attacks than the winning entry.
 
 
 
