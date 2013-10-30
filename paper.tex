@@ -53,7 +53,7 @@ This paper describes two different ways of training an intrusion detection syste
 \section{Introduction}
 An attack on important and confidential data is a concern for many people, so it is important to have a way to detect and analyze these attacks. A way of detecting attacks is by using an intrusion detection system. An intrusion detection system is a device that monitors network activities for malicious or abnormal behaviors and then produces reports~\cite{DBLP:journals/corr/abs-1204-1336}. There are various ways of training the intrusion detection system about the possible threats. Two different ways, which I will talk about in this paper, are the use of genetic algorithms and fuzzy logic.
 
-In Section~\ref{sec:background} I will give some background on intrusion detection systems. I will explain the types of intrusion detection systems, the main types of networking attacks, and ways of detecting attacks. I will explain what \emph{rules} are in Section~\ref{sec:rules}, and then give information on fuzzy logic and genetic algorithms in Sections~\ref{sec:fuzzyLogic} and~\ref{sec:GA}. I will then explain two data sets that are used in intrusion detection. After that, I will explain the measures that are used in determining the accuracy of an intrusion detection system.
+In Section~\ref{sec:background} I will give some background on intrusion detection. I will explain the main types of networking attacks in Section~\ref{sec:typesAttacks}, and ways of detecting attacks in Section~\ref{sec:detectionMeth}. In Section~\ref{sec:dataSets} I will explain two data sets that are used in intrusion detection. I will explain what \emph{rules} are in Section~\ref{sec:rules}, and then give information on fuzzy logic and genetic algorithms in Sections~\ref{sec:fuzzyLogic} and~\ref{sec:GA}. After that, I will explain the measures that are used in determining the accuracy of an intrusion detection system in Section~\ref{sec:PosNeg}. In Section~\ref{sec:genAlgImp} I will explain the use of a genetic algorithm in an intrusion detection system, and in Section~\ref{sec:fuzGenAlgImp} I will explain the use of a fuzzy genetic algorithm. Section~\ref{sec:conclusion} has some conclusions about the use of genetic algorithms and fuzzy genetic algorithms in intrusion detection systems.
 
 
 
@@ -111,7 +111,7 @@ Rules are a way in which elements of one set are separated into different sets, 
 
 \subsection{Fuzzy Logic}
 \label{sec:fuzzyLogic}
-Attacks on systems do not always have a fixed patter, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. A fuzzy logic rule has the following format: If <\emph{condition}> then <\emph{consequence}>, where \emph{condition} is a fuzzy variable, and \emph{consequence} is a fuzzy set. An example of this is: if the number of packets with the same destination address is high, then the pattern is unusual. To determine what is considered high, the values of the packets are divided into fuzzy sets. In Figure~\ref{fig:triangleFigure} there are three sets: low (region A), medium (region B), and high (region C). 
+Attacks on systems do not always have a fixed pattern, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. A fuzzy logic rule has the following format: If <\emph{condition}> then <\emph{consequence}>, where \emph{condition} is a fuzzy variable, and \emph{consequence} is a fuzzy set. An example of this is: if the number of packets with the same destination address is high, then the pattern is unusual. To determine what is considered high, the values of the packets are divided into fuzzy sets. In Figure~\ref{fig:triangleFigure} there are three sets: low (region A), medium (region B), and high (region C). 
 \begin{figure}
 \centering
 \psfig{file=triangleFigure.JPG}
@@ -122,12 +122,13 @@ The x-axis are the values in the fuzzy set (number of packets), and the y-axis i
 
 
 
+\vspace{0.30cm}
 
 \subsection{Genetic Algorithm}
 \label{sec:GA}
-Genetic algorithms are a search technique used to find solutions to problems \emph{Mutation}, \emph{selection}, and \emph{crossover} are used to evolve and improve rules.
+Genetic algorithms are a search technique used to find solutions to problems. \emph{Mutation}, \emph{selection}, and \emph{crossover} are used to evolve and improve rules.
 
-Mutation is where random bits in a solution are changed. Selection is where solutions that have a better \emph{fitness} are chosen over the other solutions. The fitness function determines the quality of a particular solution. Crossover is where two solutions swap one of their characteristics with the other to form two new solutions.
+Mutation is where random bits in an \emph{individual}, or possible solution, are changed. Selection is where individuals that have a better \emph{fitness} are chosen over the other individuals. The fitness function determines the quality of a particular individual. Crossover is where two individuals swap one of their characteristics with the other to form two new individuals.
 
 The solution to a problem is represented as a chromosome. First, a randomly generated population of chromosomes is created. According to the characteristics of the problem, the positions of each chromosome are encoded as bits, characters, or numbers. Then mutation, selection, and crossover are applied to each generation and eventually the best solution is found.~\cite{DBLP:journals/corr/abs-1204-6416}
 
@@ -197,6 +198,7 @@ The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used the KDD99 data set. 
 \begin{table}
 \center
 \caption{Number of records}
+\vspace{0.20cm}
 \begin{tabular}{lll}
   & Training & Testing \\ 
 Normal & 97,280 & 60,593\\
@@ -214,6 +216,7 @@ Total  & 494,021 & 311,029\\
 \begin{table*}
 \center
 \caption{Results for Genetic Algorithm Experiment}
+\vspace{0.20cm}
 \begin{tabular}{cccccccc}
 & & \multicolumn{5}{ c }{Predicted label} \\ 
 & & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \cline{3-8}
@@ -242,6 +245,7 @@ Total  & 494,021 & 311,029\\
 \begin{table*}
 \center
 \caption{Results for Genetic Algorithm Experiment}
+\vspace{0.20cm}
 \begin{tabular}{cccc}
 %\cline{3-8}
 & & \multicolumn{2}{ c }{Predicted label} \\ 
@@ -304,6 +308,7 @@ The four parameters a, b, c, and d are encoded into blocks of binary strings, wh
 \begin{figure}
 \centering
 \caption{Fuzzy encoding for a feature}
+\vspace{0.20cm}
 \begin{tabular}{|cccc|} \hline
 010 & 011 & 100 & 101\\
 a=2 & b=3 & c=4 & d=5\\
@@ -314,6 +319,7 @@ a=2 & b=3 & c=4 & d=5\\
 \begin{figure*}
 \centering
 \caption{A rule with 12 blocks of features}
+\vspace{0.20cm}
 \begin{tabular}{|cccc|c|cccc|c|} \hline
 010 & 011 & 100 & 101   & ...... & 010 & 011 & 101 & 111   & DoS\\
 a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\ 
@@ -380,6 +386,7 @@ The detection rate of denial of service attacks in training was 91.64\% and the 
 \begin{table*}
 \center
 \caption{Results from Experiment 1}
+\vspace{0.20cm}
 \begin{tabular}{ccccccc}
  & Attack & Normal & Total Records & FP (\%) & FN (\%) & DR (\%)\\
 DoS Training & 1499 & 8501 & 10000 & 1.46 & 47.50 & 91.64\\
@@ -390,11 +397,12 @@ Testing & 10500 & 16000 & 26500 & 1.13 & 4.10 & 97.92\\
 \center
 \end{table*}
 
-In the second experiment, seven tests were run. For each test case there were 13 attack types plus normal activity that were in the training data set. Three attack types were used for the unknown testing data set. For example, test case 1 used the training data set that does not have Advance Port Scan, Ack Scan, and Xmas Tree, which are all probe attacks. These three attacks were then used for the testing data set. Table~\ref{tab:fuzGenExp2} shows some of the results from the fuzzy genetic algorithm and a decision tree algorithm, which is another common way of addressing these problems. For further information, see~\cite{decisionTree}. When compared with the decision tree algorithm, the fuzzy genetic algorithm has a higher detection rate in all cases except 3 and 5. It can be seen that in cases 2 and 4 the decision tree has low detection rates, while the fuzzy genetic algorithm has much higher detection rates.
+In the second experiment, seven tests were run. For each test case there were 13 attack types plus normal activity that were in the training data set. Three attack types were used for the unknown testing data set. For example, test case 1 used the training data set that does not have Advance Port Scan, Ack Scan, and Xmas Tree, which are all probe attacks. These three attacks were then used for the testing data set. Table~\ref{tab:fuzGenExp2} shows some of the results from the fuzzy genetic algorithm and a decision tree algorithm, which is another common way of addressing these problems. For further information on decision trees, see~\cite{decisionTree}. When compared with the decision tree algorithm, the fuzzy genetic algorithm has a higher detection rate in all cases except 3 and 5. It can be seen that in cases 2 and 4 the decision tree has low detection rates, while the fuzzy genetic algorithm has much higher detection rates.
 
 
 \begin{table}
 \caption{Unknown Attack Experiment}
+\vspace{0.20cm}
 \begin{tabular}{llll}
 Test & Unknown & Decision & Fuzzy\\
 Case & Attacks & Tree DR (\%)  & Genetic DR (\%)\\ \hline
@@ -432,6 +440,7 @@ The authors of~\cite{6496342, 6559603} first trained and tested the fuzzy geneti
 
 \begin{table}
 \caption{KDD99 and RLD09 Results}
+\vspace{0.20cm}
 \begin{tabular}{cccccc}
 Data set & Attack & Normal & FP (\%) & FN (\%) & DR (\%)\\ \hline
 KDD99 & 160,117 & 39,337 & 0.13 & 1.55 & 98.72\\
@@ -444,6 +453,7 @@ The next experiment was the use of the KDD99 training set with the fuzzy genetif
 
 \begin{table}
 \caption{Results for KDD99 with Certain Attacks}
+\vspace{0.20cm}
 \begin{tabular}{cccccc}
 Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 1 & Back & DoS & 85.33 & 0.00 & 16.56\\
@@ -458,6 +468,7 @@ The final experiment that was run used only the RLD09 data set with the fuzzy ge
 
 \begin{table}
 \caption{Results for RLD99 with Certain Attacks}
+\vspace{0.20cm}
 \begin{tabular}{cccccc}
 Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 1 & Smurf & DoS & 0.02 & 0 & 99.98\\
