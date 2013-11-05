@@ -13,6 +13,7 @@
 % Or whatever. Note that the encoding and the font should match. If T1
 % does not look nice, try deleting the line with the fontenc.
 \usepackage{amsmath}
+\usepackage{algorithmic}
 
 \newcommand{\linespace}{\vskip 0.25cm}
 
@@ -180,12 +181,72 @@
 \begin{frame}
   \frametitle{Measuring the probability of a record being an attack}
 
+  \begin{columns}
+  \begin{column}{0.4\textwidth}
+  \begin{itemize}
+  	\item Trapezoidal shape
+  \end{itemize}
+  
+  \includegraphics[width=0.95\textwidth]{../trapFigure.jpg}
+  
+  \begin{itemize}
+	\item The parameters are the values of a feature.
+  \end{itemize}  
+  
+  \end{column}
+
+
+  \begin{column}{0.6\textwidth}
+  \begin{itemize}
+  	\item Fuzzy algorithm
+  \end{itemize}
+  
+\begin{algorithmic}
+\IF{data value is between $b$ and $c$}
+  \STATE{prob = 1.0}
+\ELSIF{data value is between $a$ and $b$}
+  \STATE{
+    prob = $(\textrm{data}-a)/(b-a)$
+  }
+\ELSIF{data value is between $c$ and $d$}
+  \STATE{
+    prob = $(d-\textrm{data})/(d-c)$
+  }
+\ELSE \STATE{prob = 0.0}
+\ENDIF
+\end{algorithmic}
+
+  \end{column}
+  \end{columns}
 \end{frame}
 
 
 \begin{frame}
 	\frametitle{Encoding of features and rules}
+	\begin{itemize}
+	\item The four parameters are encoded into blocks.
+	\item Each block is a feature with values between 0.0 and 7.0.
+	\end{itemize}
 	
+\begin{figure}
+\begin{tabular}{|cccc|} \hline
+010 & 011 & 100 & 101\\
+a=2 & b=3 & c=4 & d=5\\
+\hline\end{tabular}
+\end{figure}
+
+	\begin{itemize}
+	\item A rule has 12 blocks of features, at the end is the type of attack.
+	\end{itemize}
+
+\begin{figure}
+\begin{tabular}{|cccc|c|cccc|c|} \hline
+010 & 011 & 100 & 101   & ...... & 010 & 011 & 101 & 111   & DoS\\
+a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\ 
+    &     & Block 1&    &        &     & Block 12& &       & Type\\
+\hline\end{tabular}
+\end{figure}
+
 \end{frame}
 
 
