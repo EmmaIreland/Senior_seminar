@@ -74,10 +74,10 @@
 
 \section*{Overview}
 
-\subsection*{The big picture}
+\subsection*{The Big Picture}
 
 \begin{frame}
-  \frametitle{The big picture}
+  \frametitle{The Big Picture}
   
   \begin{columns}
   \begin{column}{0.6\textwidth}
@@ -108,15 +108,15 @@
 \section[Background]{Background}
 \subsection{Types of Networking Attacks}
 \begin{frame}
-  \frametitle{title here}
-
+  \frametitle{Types of Networking Attacks}
+Explain DoS, remote to user, user to root, probe
 \end{frame}
 
 
 \subsection{Detection Methodologies}
 \begin{frame}
-  \frametitle{title}
-
+  \frametitle{Detection Methodologies}
+Explain signature-based and anomaly-based detection
 \end{frame}
 
 
@@ -141,7 +141,7 @@
 
 
 \begin{frame}
-  \frametitle{Some features of KDD99}
+  \frametitle{Some Features of KDD99}
 	\begin{enumerate}
 		\item duration: length of the normal or attack activity
 in seconds.
@@ -159,35 +159,70 @@ in seconds.
 
 \begin{frame}
   \frametitle{RLD09}
-
+	\begin{itemize}
+		\item RLD09 was created because KDD99 is 14 years old.
+		\item Data was captured from a university in Bangkok, Thailand.
+		\item The data has 10 million data packets.
+		\item 17 different types of attacks - divided into denial of service attacks, probe attacks. It also has normal activity.
+		\item 12 features, which include the number of packets, source ports, and destination ports.
+	\end{itemize}
 \end{frame}
 
 
 \subsection{Rules}
 \begin{frame}
-  \frametitle{title}
+  \frametitle{Rules}
+	\begin{itemize}
+		\item Elements of one set are separated into different sets in order to differentiate between normal connections and attacks.
 
+		\linespace
+		\linespace
+		
+		\item If <\emph{condition}> then <\emph{action}>.
+		
+		\linespace
+		\linespace
+				
+		\item Specify the details of a packet such as the IP address or port number.
+		\item If a packet matches any of the rules in the intrusion detection system, the system will take appropriate action, which may include stopping the connection or logging off the system.
+		
+	\end{itemize}
 \end{frame}
 
 
 \subsection{Fuzzy Logic}
 \begin{frame}
-  \frametitle{title}
+  \frametitle{Fuzzy Logic}
+  \begin{columns}
+  \begin{column}{0.6\textwidth}
+  \begin{itemize}
+  	\item Used to detect patterns that have a behavior that is between normal and unusual.
+  	\item Fuzzy logic rule: If <\emph{condition}> then <\emph{consequence}>.
+  	\begin{itemize}
+  		\item \emph{condition} is a fuzzy variable
+  		\item \emph{consequence} is a fuzzy set
+  	\end{itemize}
+  \end{itemize}  
+  \end{column}
+
+  \begin{column}{0.4\textwidth}
+  \includegraphics[width=0.95\textwidth]{../triangleFigure.JPG}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+\subsection{Genetic Algorithms}
+\begin{frame}
+  \frametitle{Genetic Algorithms}
 
 \end{frame}
 
 
-\subsection{Genetic Algorithm}
+\subsection{Determining the Accuracy of an Algorithm}
 \begin{frame}
-  \frametitle{title}
-
-\end{frame}
-
-
-\subsection{Determining the accuracy of an algorithm}
-\begin{frame}
-  \frametitle{title}
-
+  \frametitle{Determining the Accuracy of an Algorithm}
+Explain training and test set, false positive, false negative, true positive, true negative, detection rate.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -196,14 +231,20 @@ in seconds.
 \section[Genetic Algorithm Implementation]{Genetic Algorithm Implementation}
 \subsection{Algorithm Overview}
 \begin{frame}
-  \frametitle{title here}
+  \frametitle{Algorithm Overview}
 
 \end{frame}
 
 
 \subsection{Experimental Design and Results}
 \begin{frame}
-  \frametitle{title}
+  \frametitle{Experimental Design}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Results}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -212,10 +253,25 @@ in seconds.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section[Fuzzy Genetic Algorithm Implementation]{Fuzzy Genetic Algorithm Implementation}
 
+\subsection{Main Points of Research}
+\begin{frame}
+  \frametitle{Main Points of Research}
+	\begin{itemize}
+		\item Detecting new or unknown types of attacks in a network.
+		\item The intrusion detection system used is able to identify normal network activity as well as attacks using a fuzzy genetic algorithm.
+		
+		\linespace
+		\linespace
+		
+		\item Ran experiments using only RLD09, and experiments using KDD99 and RLD09 together.
+	\end{itemize}
+\end{frame}
+
+
 \subsection{Fuzzy Algorithm}
 
 \begin{frame}
-  \frametitle{Measuring the probability of a record being an attack}
+  \frametitle{Measuring the Probability of a Record Being an Attack}
 
   \begin{columns}
   \begin{column}{0.4\textwidth}
@@ -258,7 +314,7 @@ in seconds.
 
 
 \begin{frame}
-	\frametitle{Encoding of features and rules}
+	\frametitle{Encoding of Features and Rules}
 	\begin{itemize}
 	\item The four parameters are encoded into blocks.
 	\item Each block is a feature with values between 0.0 and 7.0.
@@ -289,7 +345,7 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 \subsection{Algorithm Overview}
 
 \begin{frame}
-	\frametitle{title}
+	\frametitle{Algorithm Overview}
 	
 \end{frame}
 
@@ -297,7 +353,36 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 \subsection{Experimental Design and Results}
 
 \begin{frame}
-	\frametitle{title}
+	\frametitle{Experiments Using Only RLD09}
+Experiment 1
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Experiments Using Only RLD09}
+Experiment 2
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Experiments Using Both RLD09 and KDD99}
+Experiment 1
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Experiments Using Both RLD09 and KDD99}
+Experiment 2
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Experiments Using Both RLD09 and KDD99}
+Experiment 3
 	
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
