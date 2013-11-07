@@ -193,20 +193,30 @@ in seconds.
 \subsection{Fuzzy Logic}
 \begin{frame}
   \frametitle{Fuzzy Logic}
-  \begin{columns}
-  \begin{column}{0.6\textwidth}
+
   \begin{itemize}
   	\item Used to detect patterns that have a behavior that is between normal and unusual.
-  	\item Fuzzy logic rule: If <\emph{condition}> then <\emph{consequence}>.
+  	\item If <\emph{condition}> then <\emph{consequence}>.
   	\begin{itemize}
-  		\item \emph{condition} is a fuzzy variable
-  		\item \emph{consequence} is a fuzzy set
+  		\item \emph{condition} is a fuzzy variable and \emph{consequence} is a fuzzy set
   	\end{itemize}
-  \end{itemize}  
+  	\item If the number of packets with the same destination address is 20, and $a$=10, $b$=25, $c$=45, then the degree=.6 and the region=B so the number of packets=medium.
+  \end{itemize} 
+  
+  \begin{columns}
+  \begin{column}{0.4\textwidth}
+      \includegraphics[width=0.95\textwidth]{../triangleFigure.JPG} 
   \end{column}
 
-  \begin{column}{0.4\textwidth}
-  \includegraphics[width=0.95\textwidth]{../triangleFigure.JPG}
+  \begin{column}{0.6\textwidth}
+  \begin{algorithmic}
+	\IF{x is between $a$ and $b$}
+		\STATE{degree = $(\textrm{x}-a)/(b-a)$}
+	\ELSIF{x is between $b$ and $c$}
+		\STATE{degree = $(c-\textrm{x})/(c-b)$}
+	\ELSE \STATE{degree = 0.0}
+	\ENDIF
+  \end{algorithmic}
   \end{column}
   \end{columns}
 \end{frame}
@@ -289,9 +299,9 @@ Explain training and test set, false positive, false negative, true positive, tr
 
 
   \begin{column}{0.6\textwidth}
-  \begin{itemize}
-  	\item Fuzzy algorithm
-  \end{itemize}
+%  \begin{itemize}
+%  	\item Fuzzy algorithm
+%  \end{itemize}
   
 \begin{algorithmic}
 \IF{data value is between $b$ and $c$}
