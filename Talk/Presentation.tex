@@ -186,7 +186,14 @@ in seconds.
 \subsection{Determining the Accuracy of an Algorithm}
 \begin{frame}
   \frametitle{Determining the Accuracy of an Algorithm}
-Explain false positive, false negative, true positive, true negative, detection rate.
+	\begin{itemize}
+		\item False positive (FP): intrusion detection system incorrectly identifies normal activity as being an attack. 
+		\item False negative (FN): intrusion detection system fails to identify harmful activity. 
+		\item True positive (TP): intrusion detection system correctly identifies activities to be attacks. 
+		\item True negative (TN): intrusion detection system correctly
+identifies activities to be normal.
+		\item Detection rate (DR): the number of true positives divided by the total number of intrusions that happen.
+	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -322,15 +329,16 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 
 \begin{frame}
 	\frametitle{Experiments}
-A variety of experiments were run. Two experiments used just RLD09, and three experiments used KDD99 and RLD09 together.
-	
+	\begin{itemize}
+		\item A variety of experiments were run. Two experiments used just RLD09, and three experiments used KDD99 and RLD09 together.
+		\item The experiments used a total of 16,000 records of normal activity and 10,500 records of attack activity. Of the attack records, 4,000 were denial of service attacks and 6,500 were probe attacks.
+	\end{itemize}
 \end{frame}
 
 
 \begin{frame}
 	\frametitle{Experiments Using Only RLD09}
 Experiment 1
-	
 \end{frame}
 
 
