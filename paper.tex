@@ -51,9 +51,9 @@ This paper describes two different ways of training an intrusion detection syste
 \keywords{Intrusion detection, genetic algorithm, fuzzy logic, KDD99, RLD09, computer security}
 
 \section{Introduction}
-An attack on important and confidential data is a concern for many people, so it is important to have a way to detect and analyze these attacks. A way of detecting attacks is by using an intrusion detection system. An intrusion detection system is a device that monitors network activities for malicious or abnormal behaviors and then produces reports~\cite{DBLP:journals/corr/abs-1204-1336}. There are various ways of training the intrusion detection system about the possible threats. Two different ways, which I will talk about in this paper, are the use of genetic algorithms and fuzzy logic.
+An attack on important and confidential data is a concern for many people, so it is important to have a way to detect and analyze these attacks. A way of detecting attacks is by using an intrusion detection system. An intrusion detection system is a device that monitors network activities for malicious or abnormal behaviors and then produces reports and alerts~\cite{DBLP:journals/corr/abs-1204-1336}. There are various ways of training the intrusion detection system about possible threats. Two approaches that I will talk about in this paper are the use of genetic algorithms and fuzzy logic.
 
-In Section~\ref{sec:background} I will give some background on intrusion detection. I will explain the main types of networking attacks in Section~\ref{sec:typesAttacks}, and ways of detecting attacks in Section~\ref{sec:detectionMeth}. In Section~\ref{sec:dataSets} I will explain two data sets that are used in intrusion detection. I will explain what \emph{rules} are in Section~\ref{sec:rules}, and then give information on fuzzy logic and genetic algorithms in Sections~\ref{sec:fuzzyLogic} and~\ref{sec:GA}. After that, I will explain the measures that are used in determining the accuracy of an intrusion detection system in Section~\ref{sec:PosNeg}. In Section~\ref{sec:genAlgImp} I will explain the use of a genetic algorithm in an intrusion detection system, and in Section~\ref{sec:fuzGenAlgImp} I will explain the use of a fuzzy genetic algorithm. Section~\ref{sec:conclusion} has some conclusions about the use of genetic algorithms and fuzzy genetic algorithms in intrusion detection systems.
+In Section~\ref{sec:background} I will give some background on intrusion detection. I will explain the main types of networking attacks in Section~\ref{sec:typesAttacks}, and ways of detecting attacks in Section~\ref{sec:detectionMeth}. In Section~\ref{sec:dataSets} I will describe two data sets that are used in intrusion detection. I will explain what \emph{rules} are in Section~\ref{sec:rules}, and then give information on fuzzy logic and genetic algorithms in Sections~\ref{sec:fuzzyLogic} and~\ref{sec:GA}. After that, I will explain the measures that are used in determining the accuracy of an intrusion detection system in Section~\ref{sec:PosNeg}. In Section~\ref{sec:genAlgImp} I will explain the use of a genetic algorithm in an intrusion detection system, and in Section~\ref{sec:fuzGenAlgImp} I will explain the use of a fuzzy genetic algorithm. Section~\ref{sec:conclusion} has some conclusions about the use of genetic algorithms and fuzzy genetic algorithms in intrusion detection systems.
 
 
 
@@ -65,7 +65,7 @@ In Section~\ref{sec:background} I will give some background on intrusion detecti
 \label{sec:typesAttacks}
 There are four main types of networking attacks that this paper will address: \emph{denial of service}, \emph{remote to user attacks}, \emph{user to root attacks}, and \emph{probing}. Each attack that happens on a network can be placed into one of these categories.~\cite{DBLP:journals/corr/abs-1204-1336}
 
-Denial of service (DoS) attacks happen when an attacker makes a machine inaccessible to a user by making it too busy to serve legitimate requests. For example, many systems lock out a user from an account after a certain number of failed login attempts. An attacker would be able to use this to prevent legitimate users from logging in.~\cite{DoSAttacks} Remote to user (R2L) attacks happen when an attacker sends packets to a machine over the network in order to gain access to things a local user would have on the machine. An example is when an attacker tries to gain access to a machine by guessing possible usernames and passwords. User to root (U2R) attacks happen when an attacker starts out with access on the machine and then tries to gain root access to the system. For example, if a program expects a user to input their name, the programmer has to decide how many characters that name buffer will require. Assume the program allocates 20 characters for the name buffer. Suppose the user's name has 35 characters. The last 15 characters will overflow the buffer, which will then overwrite the instructions that are to be executed next. An attacker can cause commands to be executed by manipulating the data that overflows. Probing happens when an attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used to compromise the system.~\cite{DBLP:journals/corr/abs-1204-1336, typesOfAttacks}
+Denial of service (DoS) attacks happen when an attacker makes a machine inaccessible to a user by making it too busy to serve legitimate requests. For example, many systems lock out a user from an account after a certain number of failed login attempts. An attacker would be able to use this to prevent legitimate users from logging in~\cite{DoSAttacks}. Remote to user (R2L) attacks happen when an attacker sends packets to a machine over the network in order to gain access to things a local user would have on the machine. An example is when an attacker tries to gain access to a machine by guessing possible usernames and passwords. User to root (U2R) attacks happen when an attacker starts out with access on the machine and then tries to gain root access to the system. For example, if a program expects a user to input their name, the programmer has to decide how many characters that name buffer will require. Assume the program allocates 20 characters for the name buffer. Suppose the user's name has 35 characters. The last 15 characters will overflow the buffer, which could then overwrite the instructions that are to be executed next. An attacker can cause commands to be executed by manipulating the data that overflows. Probing happens when an attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used to compromise the system.~\cite{DBLP:journals/corr/abs-1204-1336, typesOfAttacks}
 
 
 
@@ -76,16 +76,17 @@ There are two different ways of detecting attacks: \emph{signature-based detecti
 
 A signature is a pattern that corresponds to a known attack. Signature-based detection compares well-known patterns of attacks that are already in the intrusion detection system against captured events in order to identify a possible attack. It is a simple and effective way to detect known attacks. Signature-based detection is also called \emph{knowledge-based detection} or \emph{misuse detection}.~\cite{Liao201316}
 
-An anomaly is something that deviates from what is normal. Anomaly-based detection looks for patterns of activity that are rare and uncommon. It is an effective way to detect new attacks. Anomaly-based detection is also called \emph{behavior-based detection}.~\cite{DBLP:journals/corr/abs-1204-1336}
+Anomaly-based detection looks for patterns of activity that are rare and uncommon. It is an effective way to detect new attacks. Anomaly-based detection is also called \emph{behavior-based detection}.~\cite{DBLP:journals/corr/abs-1204-1336}
 
 
 
 
 \subsection{Data Sets}
 \label{sec:dataSets}
-Two different data sets are used in this paper: KDD99 and RLD09. The KDD99 data set is a benchmark data set that was generated by simulating a military network environment in 1999~\cite{6559603}. It has long been a standard data set for intrusion detection. The data in the set is classified as normal or attack activity. KDD99 uses 41 \emph{features}, which are properties of a \emph{record} (either an attack or normal activity), that are used to describe the activity. 
+Two different data sets are used in this paper: KDD99 and RLD09. The KDD99 data set is a benchmark data set that was generated by simulating a military network environment in 1999~\cite{6559603}. It has long been a standard data set for intrusion detection. The data in the set is classified as normal or attack activity. KDD99 uses 41 \emph{features}, which are properties of a \emph{record} (either an attack or normal activity), that are used to describe the activity and help to distinguish normal connections from attacks. 
 
-The authors of~\cite{6496342, 6559603} used 8 out of the 41 KDD99 features~\cite{KDD99} in their system: 
+In research conducted by P. Jongsuebsuk, N. Wattanapongsakorn, and
+C. Charnsripinyo~\cite{6496342, 6559603}, 8 out of the 41 KDD99 features~\cite{KDD99} were used in their system:
 \begin{enumerate}
   \item duration: the length of the normal or attack activity in seconds.
   \item src\_bytes: the number of bytes sent from source to destination. Source is the user who may or may not be an attacker, and destination is the server being potentially attacked.
@@ -97,7 +98,8 @@ The authors of~\cite{6496342, 6559603} used 8 out of the 41 KDD99 features~\cite
   \item same\_srv\_rate: the percentage of connections to the same service.
 \end{enumerate}
 
-The KDD99 data set is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09, to use in their experiments. To create the data set, the authors captured network data from the Computer Engineering Department at King Mongkut's University of Technology Thonburi, in Bangkok, Thailand. The data has around ten million preprocessed data \emph{packets}. A packet is a unit of data that is carried throughout a network~\cite{networkPacket}. RLD09 has 17 different types of attacks that can be divided into denial of service attacks and probe attacks. It also has normal network activity. RLD09 uses 12 features, which include the number of packets, source ports, and destination ports.
+The KDD99 data set is 14 years old, and newer attack types are not included in it because of its age. Because of this, P. Jongsuebsuk, N. Wattanapongsakorn, and
+C. Charnsripinyo~\cite{6496342, 6559603} created their own data set, RLD09, to use in their experiments. To create the data set, the authors captured network data from the Computer Engineering Department at King Mongkut's University of Technology Thonburi, in Bangkok, Thailand. The data has around ten million preprocessed data \emph{packets}. A packet is a unit of data that is carried throughout a network~\cite{networkPacket}. RLD09 has 17 different types of attacks that can be divided into denial of service attacks and probe attacks. It also has normal network activity. RLD09 uses 12 features, which include the number of packets, source ports, and destination ports.
 
 
 
@@ -111,7 +113,7 @@ Rules are a way in which elements of one set are separated into different sets, 
 
 \subsection{Fuzzy Logic}
 \label{sec:fuzzyLogic}
-Attacks on systems do not always have a fixed pattern, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. A fuzzy logic rule has the following format: If <\emph{condition}> then <\emph{consequence}>, where \emph{condition} is a fuzzy variable, and \emph{consequence} is a fuzzy set. An example of this is: if the number of packets with the same destination address is high, then the pattern is unusual. To determine what is considered high, the values of the packets are divided into fuzzy sets. In Figure~\ref{fig:triangleFigure} there are three sets: low (region A), medium (region B), and high (region C). 
+Attacks on systems do not always have a fixed pattern, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. A fuzzy logic rule has the following format: If <\emph{condition}> then <\emph{consequence}>, where \emph{condition} is a fuzzy variable, and \emph{consequence} is a fuzzy set. For example: if the number of packets with the same destination address is high, then the pattern is unusual. To determine what is considered high, the values of the packets are divided into fuzzy sets. In Figure~\ref{fig:triangleFigure} there are three sets: low (region A), medium (region B), and high (region C). 
 \begin{figure}
 \centering
 \psfig{file=triangleFigure.JPG}
@@ -122,7 +124,6 @@ The x-axis are the values in the fuzzy set (number of packets), and the y-axis i
 
 
 
-\vspace{0.30cm}
 
 \subsection{Genetic Algorithm}
 \label{sec:GA}
@@ -150,7 +151,7 @@ The \emph{detection rate} (DR) of an intrusion detection system is the number of
 \label{sec:genAlgImp}
 
 \subsection{Algorithm Overview}
-The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used a genetic algorithm to make their intrusion detection system. The system is divided into two phases: a precalculation phase and a detection phase. In the precalculation phase, a set of chromosomes are created using training data. Then this set of chromosomes is used in the detection phase for comparison. Algorithm~\ref{alg:precalc} is used in the precalculation phase.
+In research conducted by M. S. Hoque, M. A. Mukit, and M. A. N. Bikas~\cite{DBLP:journals/corr/abs-1204-1336}, a genetic algorithm was used to make their intrusion detection system. The system is divided into two phases: a precalculation phase and a detection phase. In the precalculation phase, a set of chromosomes are created using training data. Then this set of chromosomes is used in the detection phase for comparison. Algorithm~\ref{alg:precalc} is used in the precalculation phase.
 
 \begin{algorithm}
 \caption{Major steps in precalculation}
@@ -184,7 +185,9 @@ In the detection phase, a population is created for test data. Selection, crosso
   \ENDFOR
   \STATE{Remove some chromosomes with worse fitness}
   \STATE{Apply crossover to the selected pair of chromosomes of the population}
-  \STATE{Apply mutation to each chromosome of the population}
+  \STATE{Apply mutation to each chromosome of the 
+  
+  population~//~mutation rate~=~0.35}
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
@@ -360,7 +363,7 @@ The algorithm that is used in~\cite{6496342, 6559603} first randomly generates r
 \STATE{//create next generation}
 \STATE{preserve\_best()}
 \STATE{crossover()}
-\STATE{mutation()}
+\STATE{mutation() // mutation rate~=~0.30}
 \end{algorithmic}
 \end{algorithm}
 
@@ -369,6 +372,8 @@ The fitness function to be maximized is:
 \begin{equation*}
 \textrm{fitness function} = \frac{\alpha}{A} - \frac{\beta}{B}
 \end{equation*}
+$A$ is total number of attack records. $B$ is total number of normal records. $\alpha$ is total number of attack records correctly identified as attack. $\beta$ is total number of normal records incorrectly classified as attack.
+
 In this implementation, a population size of 10 was used for each generation. An individual in the population represents a possible detection rule. The two best individuals from a present generation are preserved for the next generation. The other individuals in the new generation come from mutation and single-point crossover.
 
 
@@ -436,7 +441,7 @@ Case & Attacks & Tree DR (\%)  & Genetic DR (\%)\\ \hline
 \subsubsection{Experiments using Both RLD09 and KDD99}
 The authors of~\cite{6496342, 6559603} also ran experiments that used and compared the RLD09 data set with the KDD99 data set. They used the KDD99 10\% version file~\cite{KDD99} for both the training dataset and testing dataset.
 
-The authors of~\cite{6496342, 6559603} first trained and tested the fuzzy genetic algorithm with the KDD99 data set. There were 6 different types of denial of service attacks and 4 different types of probe attacks. The detection rate of the KDD99 data set was 98.72\%. Then 26,500 records of the RLD09 data set were used as the training set. The detection rate was 97.97\%. The results of this experiment are shown in Table~\ref{tab:bothSetsResults}.
+The authors of~\cite{6496342, 6559603} first trained and tested the fuzzy genetic algorithm (Algorithm~\ref{alg:fuzGenAlg}) with the KDD99 data set. There were 6 different types of denial of service attacks and 4 different types of probe attacks. The detection rate of the KDD99 data set was 98.72\%. Then 26,500 records of the RLD09 data set were used as the training set. The detection rate was 97.97\%. The results of this experiment are shown in Table~\ref{tab:bothSetsResults}.
 
 \begin{table}
 \caption{KDD99 and RLD09 Results}
