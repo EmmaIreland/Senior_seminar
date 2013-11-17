@@ -48,7 +48,7 @@
 }
 
 % The text in square brackets is the short version of the date if you need that.
-\date[December '13] % (optional)
+\date[December 2013] % (optional)
 {December 2013 \\ UMM CSci Senior Seminar Conference}
 
 % Delete this, if you do not want the table of contents to pop up at
@@ -262,24 +262,26 @@ consequence is a certainty factor.
 
 \begin{frame}
   \frametitle{Measuring the Probability of a Record Being an Attack}
+	\begin{itemize}	
+	\item Feature: duration, 6 seconds.
+	\end{itemize}
+%  \begin{columns}
+%  \begin{column}{0.6\textwidth}
+  \includegraphics[width=0.95\textwidth]{../trapFigExample.pdf}
+%  \end{column}
 
-  \begin{columns}
-  \begin{column}{0.6\textwidth}
-  \includegraphics[width=0.95\textwidth]{../TrapezoidFigure.pdf}
-  \end{column}
+%  \begin{column}{0.4\textwidth}
+%  Example:
+%  \begin{itemize}
+%  	\item Feature: duration (length of the activity in seconds).
+%  	\item a=1, b=3, c=5, d=7
+%  	\item The length of the activity is 6 seconds (between c and d).
+%  	\linespace
+%  	\item prob = $\frac{d-\textrm{data}}{d-c}$ = $\frac{7-6}{7-5}$ = 0.5
+%  \end{itemize}
 
-  \begin{column}{0.4\textwidth}
-  Example:
-  \begin{itemize}
-  	\item Feature: duration (length of the activity in seconds).
-  	\item a=1, b=3, c=5, d=7
-  	\item The length of the activity is 6 seconds (between c and d).
-  	\linespace
-  	\item prob = $\frac{d-\textrm{data}}{d-c}$ = $\frac{7-6}{7-5}$ = 0.5
-  \end{itemize}
-
-  \end{column}
-  \end{columns}
+%  \end{column}
+%  \end{columns}
 \end{frame}
 
 
@@ -303,12 +305,12 @@ a=2 & b=3 & c=4 & d=5\\
 
 \begin{figure}
 \begin{small}
-
 \begin{tabular}{|cccc|c|cccc|c|} \hline
 010 & 011 & 100 & 101   & ...... & 010 & 011 & 101 & 111   & DoS\\
 a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\ 
     &     & Block 1&    &        &     & Block 12& &       & Type\\
 \hline\end{tabular}
+\caption{Based on [Jongsuebsuk-Wattanapongsakorn-Charnsripinyo, 2013]}
 \end{small}
 \end{figure}
 
@@ -563,30 +565,35 @@ Total & 494,021 & 311,029\\
 
 \begin{frame}
   \frametitle{Results}
-\begin{table}
-\begin{small}
-\begin{tabular}{cccccccc}
-& & \multicolumn{5}{ c }{Predicted} \\
-& & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \cline{3-8}
-\multicolumn{1}{ c }{\multirow{2}{*}{Actual} } &
-\multicolumn{1}{ c| }{Normal} & 42138 & 1421 & 15835 & 486 & 713 & 69.5\\
-\multicolumn{1}{ c }{} &
-\multicolumn{1}{ c| }{Probe} & 398 & 2963 & 654 & 2 & 149 & 71.1 \\
-\multicolumn{1}{ c }{\multirow{2}{*}{} } &
-\multicolumn{1}{ c| }{Dos} & 921 & 432 & 228489 & 1 & 10 & 99.4\\
-\multicolumn{1}{ c }{} &
-\multicolumn{1}{ c| }{U2R} & 146 & 21 & 8 & 43 & 10 & 18.9\\
-\multicolumn{1}{ c }{} &
-\multicolumn{1}{ c| }{R2L} & 11191 & 578 & 3398 & 141 & 881 & 5.4\\
+%\begin{table}
+%\begin{small}
+%\begin{tabular}{cccccccc}
+%& & \multicolumn{5}{ c }{Predicted} \\
+%& & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \cline{3-8}
+%\multicolumn{1}{ c }{\multirow{2}{*}{Actual} } &
+%\multicolumn{1}{ c| }{Normal} & 42138 & 1421 & 15835 & 486 & 713 & 69.5\\
+%\multicolumn{1}{ c }{} &
+%\multicolumn{1}{ c| }{Probe} & 398 & 2963 & 654 & 2 & 149 & 71.1 \\
+%\multicolumn{1}{ c }{\multirow{2}{*}{} } &
+%\multicolumn{1}{ c| }{Dos} & 921 & 432 & 228489 & 1 & 10 & 99.4\\
+%\multicolumn{1}{ c }{} &
+%\multicolumn{1}{ c| }{U2R} & 146 & 21 & 8 & 43 & 10 & 18.9\\
+%\multicolumn{1}{ c }{} &
+%\multicolumn{1}{ c| }{R2L} & 11191 & 578 & 3398 & 141 & 881 & 5.4\\
 
-\multicolumn{1}{ c }{} &
-\multicolumn{1}{ c| }{} & & & & & & \\
+%\multicolumn{1}{ c }{} &
+%\multicolumn{1}{ c| }{} & & & & & & \\
 
-\multicolumn{1}{ c }{\% Correct} &
-\multicolumn{1}{ c| }{} & 76.9 & 54.7 & 92.0 & 6.4 & 50.0 \\
-\end{tabular}
-\end{small}
-\end{table}
+%\multicolumn{1}{ c }{\% Correct} &
+%\multicolumn{1}{ c| }{} & 76.9 & 54.7 & 92.0 & 6.4 & 50.0 \\
+%\end{tabular}
+%\end{small}
+%\end{table}
+	\begin{figure}
+  \includegraphics[width=0.95\textwidth]{../resultsForGA.JPG}
+  \caption{From [Hoque-Mukit-Bikas, 2012]}
+  	\end{figure}
+
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -599,6 +606,7 @@ Total & 494,021 & 311,029\\
 
 \begin{itemize}
   \item The use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks.
+  \item The genetic algorithm had a high detection rate for denial of service attacks.
   \item The fuzzy genetic algorithm had a higher detection rate than a decision tree algorithm in most cases.
   \item Fuzzy genetic algorithms are good at detecting unknown attacks.
 \end{itemize}
@@ -626,7 +634,34 @@ Total & 494,021 & 311,029\\
 	
 	\begin{thebibliography}{lskdjf}
 	
+	\begin{small}
+	\bibitem{6496342}
+Jongsuebsuk, P. and Wattanapongsakorn, N. and Charnsripinyo, C.
+\newblock Network intrusion detection with Fuzzy Genetic Algorithm for unknown attacks.
+\newblock In \emph{2013 International Conference on Information Networking (ICOIN)}, pages 1-5, 2013.
+	
+	
+	\bibitem{6559603}
+Jongsuebsuk, P. and Wattanapongsakorn, N. and Charnsripinyo, C.
+\newblock Real-time intrusion detection with fuzzy genetic algorithm.
+\newblock In \emph{2013 10th International Conference on Electrical Engineering/Electronics, Computer, Telecommunications and Information Technology (ECTI-CON)}, pages 1-6, 2013.
+	
+	
+	\bibitem{DBLP:journals/corr/abs-1204-1336}
+Mohammad Sazzadul Hoque, Md. Abdul Mukit, Md. Abu Naser Bikas.
+\newblock An Implementation of Intrusion Detection System Using Genetic Algorithm.
+\newblock \emph{CoRR}, abs/1204.1336, 2012.
+	\end{small}
+	
   	\end{thebibliography}
+  	
+  	\linespace
+  	
+  	\begin{center}
+  	\begin{small}
+  	See my Senior Seminar paper for additional references.
+  	\end{small}
+  	\end{center}
 	
 \end{frame} 
 
