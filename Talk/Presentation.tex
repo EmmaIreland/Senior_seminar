@@ -215,15 +215,6 @@ in seconds.
 \subsection{Determining the Accuracy of an Algorithm}
 \begin{frame}
   \frametitle{Determining the Accuracy of an Algorithm}
-%	\begin{itemize}
-%		\item False positive (FP): intrusion detection system incorrectly identifies normal activity as being an attack. 
-%		\item False negative (FN): intrusion detection system fails to identify harmful activity. 
-%		\item True positive (TP): intrusion detection system correctly identifies activities to be attacks. 
-%		\item True negative (TN): intrusion detection system correctly
-%identifies activities to be normal.
-%		\item Detection rate (DR): number of intrusions detected by the system divided
-%by the total number of intrusions that happen.
-%	\end{itemize}
 \begin{table}
 \begin{tabular}{cccc}
 & & \multicolumn{2}{ c }{Predicted} \\
@@ -236,7 +227,7 @@ in seconds.
 \end{table}
 \linespace
 	\begin{itemize}
-		\item Detection rate (DR): number of intrusions detected by the system divided by the total number of intrusions that happen.
+		\item Detection rate (DR): 
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -521,17 +512,6 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section[Using Genetic Algorithms]{Using Genetic Algorithms}
-\subsection{Algorithm Overview}
-\begin{frame}
-  \frametitle{Algorithm Overview}
-	\begin{itemize}
-		\item The system is divided into 2 phases: a precalculation phase and a detection phase.
-		\item In the precalculation phase, a set of chromosomes are created using training data. It takes network data as an input and outputs a set of chromosomes. Then this set of chromosomes is used in the detection phase.
-		\item In the detection phase, selection, crossover, and mutation occur, and then the type of the data (whether it is an attack or normal behavior) is predicted.
-	\end{itemize}
-\end{frame}
-
-
 \subsection{Experimental Design and Results}
 \begin{frame}
   \frametitle{Experimental Design}
@@ -547,7 +527,7 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
   
   \begin{column}{0.5\textwidth}
   \begin{table}
-\caption{Number of records}
+\caption{ }
 \begin{tabular}{lll}
   & Training & Testing \\
 Normal & 97,280 & 60,593\\
@@ -589,10 +569,11 @@ Total & 494,021 & 311,029\\
 %\end{tabular}
 %\end{small}
 %\end{table}
-	\begin{figure}
-  \includegraphics[width=0.95\textwidth]{../resultsForGA.JPG}
-  \caption{From [Hoque-Mukit-Bikas, 2012]}
-  	\end{figure}
+
+%	\begin{figure}
+%  \includegraphics[width=0.95\textwidth]{../resultsForGA.JPG}
+%  \caption{From [Hoque-Mukit-Bikas, 2012]}
+%  	\end{figure}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -606,7 +587,7 @@ Total & 494,021 & 311,029\\
 
 \begin{itemize}
   \item The use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks.
-  \item The genetic algorithm had a high detection rate for denial of service attacks.
+%  \item The genetic algorithm had a high detection rate for denial of service attacks.
   \item The fuzzy genetic algorithm had a higher detection rate than a decision tree algorithm in most cases.
   \item Fuzzy genetic algorithms are good at detecting unknown attacks.
 \end{itemize}
