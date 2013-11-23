@@ -53,7 +53,7 @@ Intrusion detection systems provide one way of detecting attacks on systems, by 
 \keywords{Intrusion detection, genetic algorithms, fuzzy logic, KDD99, RLD09, computer security}
 
 \section{Introduction}
- \mycomment{WORK ON INTRODUCTION} The CSci computer lab at the University of Minnesota, Morris gets large numbers of login attempts that are attempts at intrusion. An attacker could be trying to gain root access to the system, which would then give them the ability to do things like delete files of other users and change user passwords. If the university had an intrusion detection system, it would be possible to classify those attempts into legitimate and illegitimate attempts to login. Then it would be possible to block IP addresses that are generating large numbers of attacks.
+ \mycomment{work on introduction} The CSci computer lab at the University of Minnesota, Morris gets large numbers of login attempts that are attempts at intrusion. An attacker could be trying to gain root access to the system, which would then give them the ability to do things like delete files of other users and change user passwords. If the university had an intrusion detection system, it would be possible to classify those attempts into legitimate and illegitimate attempts to login. Then it would be possible to block IP addresses that are generating large numbers of attacks.
 
 An attack on systems is a concern for many people, so it is important to have a way to detect and analyze these attacks. Intrusion detection systems provide one way of detecting attacks by monitoring network activities for malicious or abnormal behaviors and then producing reports and alerts~\cite{DBLP:journals/corr/abs-1204-1336}. There are various ways of training the intrusion detection system about possible threats. Two approaches that I will talk about in this paper are genetic algorithms and fuzzy logic.
 
@@ -98,7 +98,7 @@ In the research discussed in Section~\ref{sec:fuzGenAlgImp}~\cite{6496342, 65596
   \item num\_access\_files: the number of operations on access control files. Access control files specify which users are granted access to objects and what operations are allowed on the objects. An example would be (Alice, delete), which would give Alice permission to delete the file.~\cite{accessControl}
   \item srv\_count: the number of connections in other records.
   \item serror\_rate: the percentage of connections that have ``SYN" errors. When a client attempts to connect to a server, it first sends a SYN (synchronize) message to the server. The server then acknowledges the request by sending a SYN-ACK to the client. The connection is established when the client sends an ACK back to the server. A SYN error is a failure to get an ACK back.~\cite{TCP}
-  \item same\_srv\_rate: the percentage of connections to the same service. \mycomment{Have example of service}
+  \item same\_srv\_rate: the percentage of connections to the same service.
 \end{enumerate}
 
 The KDD99 data set is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09, to use in their experiments. To create the data set, the authors captured network data from a university in Bangkok, Thailand. As well as normal network activity, RLD09 has 17 different types of attacks which can be classified as either denial of service attacks or probe attacks. RLD09 uses 12 features. For further information about the features, see~\cite{6496342, 6559603}.
@@ -280,7 +280,7 @@ In the first experiment, the fuzzy genetic algorithm was used to create separate
 
 \begin{table*}
 \center
-\caption{Results from Experiment 1, using only RLD09~\cite{6496342}}
+\caption{Results from Experiment 1, using only RLD09~\cite{6496342}.}
 \vspace{0.20cm}
 \begin{tabular}{ccccccc}
  & Attack & Normal & Total Records & FP (\%) & FN (\%) & DR (\%)\\
@@ -296,7 +296,7 @@ In the second experiment,~\cite{6496342} pulled some types of attacks out of the
 
 
 \begin{table}
-\caption{Unknown Attack Experiment, using only RLD09~\cite{6496342}}
+\caption{Unknown Attack Experiment, using only RLD09~\cite{6496342}.}
 \vspace{0.20cm}
 \begin{tabular}{llll}
 Test & Unknown & Decision & Fuzzy\\
@@ -326,7 +326,7 @@ Case & Attacks & Tree DR (\%)  & Genetic DR (\%)\\ \hline
   & RCP Scan (Probe)  & 70.35 & 98.15\\
   & Fin Scan (Probe)  &       &\\ \hline
 
-7 & Http Flood (DoS) & Avg =          & Avg =\\
+7 & HTTP Flood (DoS) & Avg =          & Avg =\\
   & RCP Scan (Probe)  & 99.94 & 97.50\\
   & Fin Scan (Probe) &                &\\
 \hline\end{tabular}
@@ -355,29 +355,32 @@ RLD09 & 10,500 & 16,000 & 1.14 & 3.39 & 97.97\\
 The next experiment used the fuzzy genetic algorithm to classify types of attacks in the KDD99 data set. They used the KDD99 training set, with 158,597 records of denial of service attacks and 1,500 records of probe attacks. Ten tests were run, and Table~\ref{tab:kddAttacks} shows the accuracy of detecting some of the cases. The results showed that the detection rate of eight out of ten cases were greater than 93\%. There were only two cases that had low detection rates, one of which is case 1 in Table~\ref{tab:kddAttacks}. The two low detection rates were 16.56\% and 15.58\%, both of which were denial of service attacks.
 
 \begin{table}
-\caption{Results for KDD99 with Certain Attacks~\cite{6559603}}
+\caption{Results for KDD99 with Certain Attacks. 10 tests were run in total, 5 are shown here.~\cite{6559603}}
 \vspace{0.20cm}
 \begin{tabular}{cccccc}
 Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 1 & Back & DoS & 85.33 & 0.00 & 16.56\\
 2 & Smurf & DoS & 0.76 & 0.10 & 99.73\\
-3 & Portsweep & Probe & 6.40 & 0.00 & 93.66\\
-4 & Satan & Probe & 0.74 & 3.75 & 99.22\\
+3 & Neptune & DoS & 0.15 & 0.34 & 99.75\\
+4 & Portsweep & Probe & 6.40 & 0.00 & 93.66\\
+5 & Satan & Probe & 0.74 & 3.75 & 99.22\\
 \end{tabular}
 \label{tab:kddAttacks}
 \end{table}
 
-The final experiment that was run used only the RLD09 data set with the fuzzy genetic algorithm to classify types of attacks. 17 tests were run, and Table~\ref{tab:rldAttacks} shows the accuracy of detecting some of the cases. The results showed that the detection rate of a majority of the cases were greater than 97.5\%. Again, there were only two test cases that had low detection rates, one of which is case 2 in Table~\ref{tab:rldAttacks}. The two low detection rates were 89.59\% (denial of service), and 86.89\% (probe).
+The final experiment that was run used only the RLD09 data set with the fuzzy genetic algorithm to classify types of attacks. 17 tests were run, and Table~\ref{tab:rldAttacks} shows the accuracy of detecting some of the cases. The results showed that the detection rate of 15 out of 17 cases were greater than 97\%. Again, there were only two test cases that had low detection rates, cases 3 and 5 in Table~\ref{tab:rldAttacks}. The two low detection rates were 89.59\% (denial of service), and 86.89\% (probe).
 
 \begin{table}
-\caption{Results for RLD09 with Certain Attacks~\cite{6559603}}
+\caption{Results for RLD09 with Certain Attacks. 17 tests were run in total, 6 are shown here.~\cite{6559603}}
 \vspace{0.20cm}
 \begin{tabular}{cccccc}
 Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
-1 & Smurf & DoS & 0.02 & 0 & 99.98\\
-2 & UDP Flood & DoS & 11.06 & 0 & 89.59\\
-3 & Ackscan & Probe & 0.03 & 0 & 99.97\\
-4 & Synscan & Probe & 0.65 & 4.2 & 99.24\\
+1 & HTTP Flood & DoS & 0.36 & 3.5 & 99.46\\
+2 & Smurf & DoS & 0.02 & 0 & 99.98\\
+3 & UDP Flood & DoS & 11.06 & 0 & 89.59\\
+4 & Fin Scan & Probe & 2.58 & 0 & 97.50\\
+5 & IP Scan & Probe & 13.01 & 16.4 & 86.89\\
+6 & Syn Scan & Probe & 0.65 & 4.2 & 99.24\\
 \end{tabular}
 \label{tab:rldAttacks}
 \end{table}
@@ -396,8 +399,7 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 \section{Using Genetic Algorithms}
 \label{sec:genAlgImp}
 
-\subsection{Algorithm Overview}
-The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used a genetic algorithm to develop an IDS.
+The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used a genetic algorithm to develop an IDS. They didn't explain their research that well and left a lot of things out, so I will just be describing their results.
 
 
 
@@ -407,7 +409,7 @@ The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used the KDD99 data set. 
 
 \begin{table}
 \center
-\caption{Training and testing records used in~\cite{DBLP:journals/corr/abs-1204-1336}}
+\caption{Training and testing records used in~\cite{DBLP:journals/corr/abs-1204-1336}.}
 \vspace{0.20cm}
 \begin{tabular}{lll}
   & Training & Testing \\ 
@@ -429,7 +431,7 @@ The results from running the genetic algorithm are shown in Table~\ref{tab:genAl
 
 \begin{table*}
 \center
-\caption{Results for GA Experiment in~\cite{DBLP:journals/corr/abs-1204-1336}}
+\caption{Results for GA Experiment in~\cite{DBLP:journals/corr/abs-1204-1336}.}
 \vspace{0.20cm}
 \begin{tabular}{cc|cccccc}
 & & & & Predicted & & & \\
@@ -468,7 +470,7 @@ The results from running the genetic algorithm are shown in Table~\ref{tab:genAl
 
 \begin{table}
 \center
-\caption{Accuracy of the GA in~\cite{DBLP:journals/corr/abs-1204-1336}}
+\caption{Accuracy of the GA in~\cite{DBLP:journals/corr/abs-1204-1336}.}
 \vspace{0.20cm}
 \begin{tabular}{l|ll}
 & & Predicted\\
@@ -482,11 +484,11 @@ Attack & FN: 12,528. 5\% & TP: 237,908. 94.9\%  \\
 
 
 The authors of~\cite{DBLP:journals/corr/abs-1204-1336} compared their results (Table~\ref{tab:genAlgResults}) with the winning entry of the KDD99 Classifier Learning Contest~\cite{KDD99Contest}, which can be seen in Table~\ref{tab:winningEntry}. The winning entry used a decision tree algorithm. The winning entry had a higher detection rate for normal activity, probe attacks, and remote to user attacks. The authors of~\cite{DBLP:journals/corr/abs-1204-1336} found that they had a better detection rate for denial of service and user to root attacks than the winning entry. For the winning entry, the detection rate of denial of service was 97.1\%, and for user to root it was 13.2\%. In~\cite{DBLP:journals/corr/abs-1204-1336} the detection rate of denial of service was 99.4\% and for user to root it was 18.9\%. The authors of~\cite{DBLP:journals/corr/abs-1204-1336} provide no information about the statistical significance of these improvements.
-
+\mycomment{compare~\cite{DBLP:journals/corr/abs-1204-1336} with~\cite{6496342, 6559603}}
 
 \begin{table*}
 \center
-\caption{Results for the Winning Entry of the KDD99 Classifier Learning Contest}
+\caption{Results for the Winning Entry of the KDD99 Classifier Learning Contest.}
 \vspace{0.20cm}
 \begin{tabular}{c|cccccc}
 & & & & Predicted & & \\
@@ -509,7 +511,7 @@ R2L &  14527 & 294 & 0 & 8 & 1360 & 8.4\\
 \label{sec:conclusion}
 This paper showed that the use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks. The genetic algorithm that was used in~\cite{DBLP:journals/corr/abs-1204-1336} had a high detection rate for denial of service attacks. When compared with the winning entry of the KDD99 Classifier Learning Contest, it was shown to have a better detection rate for both denial of service and user to root attacks. The fuzzy genetic algorithm that was used in~\cite{6496342, 6559603} had a higher detection rate than a decision tree algorithm in most cases. It was also shown that fuzzy genetic algorithms are good at detecting unknown attacks. 
 
-
+\mycomment{fix references}
 
 %\section{Acknowledgments}
 
