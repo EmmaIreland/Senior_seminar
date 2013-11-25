@@ -3,6 +3,10 @@
 \usepackage{algorithmic}
 \usepackage{algorithm}
 
+\usepackage{natbib}
+\setlength{\bibsep}{3pt}
+
+
 %%%% User-defined macros
 \newcommand{\lam}{\lambda}
 \newcommand{\mycomment}[1]{\textcolor{red}{#1}}
@@ -38,9 +42,7 @@ Emma Ireland\\
 
 \maketitle
 \begin{abstract}
-Intrusion detection systems provide one way of detecting attacks on systems, by monitoring network activities for malicious or abnormal behaviors. This paper describes two different ways of training an intrusion detection system about possible attacks to a system: genetic algorithms and fuzzy logic. The use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks. I will describe an approach to using fuzzy genetic algorithms and compare those results with results obtained using a decision tree. I will then describe the results from using a genetic algorithm and compare those with the winning entry of the KDD99 Classifier Learning Contest.
-\mycomment{work on abstract}
-
+Intrusion detection systems provide one way of detecting attacks on systems, by monitoring network activities for malicious or abnormal behaviors. This paper describes two ways of training an intrusion detection system to recognize possible attacks on a system: genetic algorithms and fuzzy logic. I will describe an approach to using fuzzy genetic algorithms and compare those results with results obtained using a decision tree. I will then describe the results from using a traditional genetic algorithm and compare those with the winning entry of the KDD99 Classifier Learning Contest, as well as with the fuzzy genetic algorithm. These results show that the use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks.
 \end{abstract}
 
 % A category with the (minimum) three required fields
@@ -51,11 +53,11 @@ Intrusion detection systems provide one way of detecting attacks on systems, by 
 \keywords{Intrusion detection, genetic algorithms, fuzzy logic, KDD99, RLD09, computer security}
 
 \section{Introduction}
- \mycomment{work on introduction} The CSci computer lab at the University of Minnesota, Morris gets large numbers of login attempts that are attempts at intrusion. An attacker could be trying to gain root access to the system, which would then give them the ability to do things like delete files of other users and change user passwords. If the university had an intrusion detection system, it would be possible to classify those attempts into legitimate and illegitimate attempts to login. Then it would be possible to block IP addresses that are generating large numbers of attacks.
+The CSci computer lab at the University of Minnesota, Morris gets large numbers of login attempts that are attempts at intrusion. An attacker could be trying to gain root access to the system, which would then give them the ability to do things like delete files of other users and change user passwords. If the university had an intrusion detection system (IDS), it would be possible to classify those attempts into legitimate and illegitimate attempts to login. Then it would be possible to block IP addresses that are generating large numbers of attacks.
 
-An attack on systems is a concern for many people, so it is important to have a way to detect and analyze these attacks. Intrusion detection systems provide one way of detecting attacks by monitoring network activities for malicious or abnormal behaviors and then producing reports and alerts~\cite{DBLP:journals/corr/abs-1204-1336}. There are various ways of training the intrusion detection system about possible threats. Two approaches that I will talk about in this paper are genetic algorithms and fuzzy logic.
+An attack on systems is a concern for many people, so it is important to have a way to detect and analyze these attacks. Intrusion detection systems provide one way of detecting attacks by monitoring network activities for malicious or abnormal behaviors and then producing reports, alerts, and actions~\cite{DBLP:journals/corr/abs-1204-1336}. There are various ways of training an IDS about possible threats. Two approaches that I will talk about in this paper are genetic algorithms and fuzzy logic.
 
-In Section~\ref{sec:background} I will give some background on intrusion detection and genetic algorithms. I will describe the main types of networking attacks in Section~\ref{sec:typesAttacks}, and ways of detecting attacks in Section~\ref{sec:detectionMeth}. In Section~\ref{sec:dataSets} I will describe two data sets that are commonly used in intrusion detection. After that, I will describe the measures that are used in determining the accuracy of an intrusion detection system in Section~\ref{sec:PosNeg}. I will then give information on genetic algorithms in Section~\ref{sec:GA}. In Section~\ref{sec:fuzGenAlgImp} I will describe the use of a fuzzy genetic algorithm in an intrusion detection system, and in Section~\ref{sec:genAlgImp} I will describe the results of using a genetic algorithm. Section~\ref{sec:conclusion} has some conclusions about the use of genetic algorithms and fuzzy genetic algorithms in intrusion detection systems.
+In Section~\ref{sec:background} I will give some background on intrusion detection. I will describe the main types of networking attacks in Section~\ref{sec:typesAttacks}, and ways of detecting attacks in Section~\ref{sec:detectionMeth}. In Section~\ref{sec:dataSets} I will describe two data sets that are commonly used in intrusion detection. After that,  in Section~\ref{sec:PosNeg} I will describe the measures that are used in determining the accuracy of an IDS. I will then provide an overview on genetic algorithms in Section~\ref{sec:GA}. In Section~\ref{sec:fuzGenAlgImp} I will describe the use of a fuzzy genetic algorithm in an IDS, and in Section~\ref{sec:genAlgImp} I will describe the results of using a traditional genetic algorithm. Section~\ref{sec:conclusion} provides some conclusions about the use of genetic algorithms and fuzzy genetic algorithms in intrusion detection systems.
 
 
 
@@ -89,42 +91,40 @@ Two different data sets are used in this paper to evaluate the performance of in
 
 In the research discussed in Section~\ref{sec:fuzGenAlgImp}~\cite{6496342, 6559603}, eight of the 41 KDD99 features were used based on research done in~\cite{Fries:2008:FAN:1388969.1389037}. These eight features are:
 \begin{enumerate}
+\setlength{\itemsep}{1pt}
   \item duration: the length of the record in seconds.
   \item src\_bytes: the number of bytes sent from source to destination. Source is the user who may or may not be an attacker, and destination is the server being potentially attacked.
   \item num\_failed\_logins: the number of failed login attempts in this record.
-  \item root\_shell: returns 1 if root shell is obtained, which means that the user is able to log in as root. If root shell is not obtained, 0 is returned.
+  \item root\_shell: returns 1 if root shell is obtained, else it returns 0.
   \item num\_access\_files: the number of operations on access control files. Access control files specify which users are granted access to objects and what operations are allowed on the objects. An example would be (Alice, delete), which would give Alice permission to delete the file.~\cite{accessControl}
   \item srv\_count: the number of connections in other records.
   \item serror\_rate: the percentage of connections that have ``SYN" errors. When a client attempts to connect to a server, it first sends a SYN (synchronize) message to the server. The server then acknowledges the request by sending a SYN-ACK to the client. The connection is established when the client sends an ACK back to the server. A SYN error is a failure to get an ACK back.~\cite{TCP}
   \item same\_srv\_rate: the percentage of connections to the same service.
 \end{enumerate}
 
-The KDD99 data set is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09, to use in their experiments. To create the data set, the authors captured network data from a university in Bangkok, Thailand. As well as normal network activity, RLD09 has 17 different types of attacks which can be classified as either denial of service attacks or probe attacks. RLD09 uses 12 features. For further information about the features, see~\cite{6496342, 6559603}.
+The KDD99 data set is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09, to use in their experiments. To create the data set, the authors captured network data from a university in Bangkok, Thailand. As well as normal network activity, RLD09 has 17 different types of attacks which can be classified as either denial of service attacks or probe attacks. RLD09 uses 12 features. For further information about the features, see~\cite{6496342}.
 
-In the research discussed in Section~\ref{sec:genAlgImp}, the authors of ~\cite{DBLP:journals/corr/abs-1204-1336} used only the numerical features of the KDD99 data set (34 out of 41 total features).
+In the research discussed in Section~\ref{sec:genAlgImp}, the authors of ~\cite{DBLP:journals/corr/abs-1204-1336} used only the numerical features of KDD99 (34 out of 41).
 
+In a machine learning experiment, a common technique is to divide the data set into two subsets, a \emph{training set} and a \emph{testing set}. The given algorithm is then trained on the training set to look for patterns. These patterns are then verified using the test set.~\cite{bc1_ecindm}
 
 
 
 \subsection{Determining the Accuracy of an Algorithm}
 \label{sec:PosNeg}
-In a machine learning experiment, a common technique is to divide the data set into two subsets, a \emph{training set} and a \emph{testing set}. The given algorithm is then trained on the training set to look for patterns. These patterns are then verified using the test set.~\cite{bc1_ecindm} Four different measures are then used to determine the accuracy of the algorithm in question.
-
-The \emph{false negative} (FN) rate is the percentage that attacks are misclassified from the total number of attack records. The \emph{false positive} (FP) rate is the percentage that normal records are classified as attacks from the total number of normal records. The \emph{true negative} (TN) rate is the percentage that normal records are classified correctly from the total number of normal records. The \emph{true positive} (TP) rate is the percentage that attacks are classified correctly from the total number of attack records.~\cite{6496342, bc1_ecindm}
-
-
-%A \emph{false positive} (FP) happens when an IDS incorrectly identifies normal activity as being an attack. A \emph{false negative} (FN) happens when an IDS fails to identify harmful activity. A \emph{true positive} (TP) happens when an IDS correctly identifies activities to be attacks. A \emph{true negative} (TN) happens when an IDS correctly identifies activities to be normal.~\cite{ids}
+Four measures are used to determine the accuracy of an algorithm. The \emph{false negative} (FN) rate is the percentage that attacks are misclassified from the total number of attack records. The \emph{false positive} (FP) rate is the percentage that normal records are classified as attacks from the total number of normal records. The \emph{true negative} (TN) rate is the percentage that normal records are classified correctly from the total number of normal records. The \emph{true positive} (TP) rate is the percentage that attacks are classified correctly from the total number of attack records.~\cite{6496342, bc1_ecindm}
 
 
 
-
-\subsection{Genetic Algorithms}
+\section{Genetic Algorithms}
 \label{sec:GA}
-\mycomment{Work on this section} Genetic algorithms (GA) are a search technique used to find solutions to problems. Operations analogous to biological \emph{mutation}, \emph{selection}, and \emph{crossover} are used to evolve and improve rules.
+Genetic algorithms (GAs) are a search technique used to find solutions to problems. Operations analogous to biological \emph{mutation}, \emph{selection}, and \emph{crossover} are used to evolve and improve solutions.
 
-Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings. First, a randomly generated population of rules is created. Then mutation, selection, and crossover are applied to each generation until an acceptable solution is found or some time limit is exceeded.
+Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings. For example, in an IDS rules are represented as bit strings, and then they are used to classify an event as an attack or normal traffic, see Section~\ref{sec:fuzzyRulesAndAlgorithm} for more information. First, a randomly generated population of potential solutions is created. Then mutation, selection, and crossover are applied to each generation until an acceptable solution is found or some time limit is exceeded.
 
-Mutation is where random bits in an \emph{individual}, or possible solution, are changed. Selection is where individuals that have a better \emph{fitness} are chosen over the other individuals. The fitness function determines the quality of a particular individual. For example, in intrusion detection systems the fitness measures the performance of a rule. Crossover is where two individuals swap sequences of bits to form two new individuals.~\cite{DBLP:journals/corr/abs-1204-6416}
+Mutation is where random bits in an \emph{individual}, or possible solution, are changed. Crossover is where two individuals swap sequences of bits to form two new individuals. For example, in an IDS mutation takes the bits of a rule and changes them. Crossover takes two rules and creates new rules by swapping the bits of the old rules.
+
+Selection is where individuals that have better \emph{fitness} are chosen to be parents. The fitness of an individual is specified by the \emph{fitness function}, which determines the quality of a particular individual. For example, in an IDS the fitness measures the performance of a rule. Selection combined with a fitness function directs the search towards an effective solution.~\cite{DBLP:journals/corr/abs-1204-6416}
 
 
 
@@ -144,15 +144,16 @@ The IDS used in~\cite{6496342, 6559603} is able to identify normal network activ
 
 
 \subsection{Fuzzy Logic Rules and Algorithm}
-Attacks on systems do not always have a fixed pattern, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. Fuzzy logic rules are similar to the rules described in Section~\ref{sec:detectionMeth}, except that \emph{consequence} is a certainty factor. For example, if (\emph{duration} = 6) then (\emph{probability of it being an attack is 50\%}). \mycomment{certainty vs probability}
+\label{sec:fuzzyRulesAndAlgorithm}
+Attacks on systems do not always have a fixed pattern, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. Fuzzy logic rules are similar to the rules described in Section~\ref{sec:detectionMeth}, except that \emph{consequence} is a certainty factor. For example, if (\emph{duration} = 6) then (\emph{the degree of certainty of it being an attack is 0.5}).
 
-In order to measure the probability that a record is an attack, a trapezoidal shape was used in~\cite{6496342, 6559603}; this is shown in Figure~\ref{fig:trapFigure}. The trapezoidal shape has four parameters: $a, b, c$, and $d$. Algorithm~\ref{alg:fuzAlg} calculates the probability of a record being an attack.
+To find the degree of certainty of a record being an attack, a trapezoidal shape was used in~\cite{6496342, 6559603}; this is shown in Figure~\ref{fig:trapFigure}. The trapezoidal shape has four parameters: $a, b, c$, and $d$. Algorithm~\ref{alg:fuzAlg} calculates the certainty of a record being an attack.
 
 
 \begin{figure}
+\caption{Illustration of fuzzy rule used to find the degree of certainty of a record being an attack. Also see Algorithm~\ref{alg:fuzAlg}. This is used in~\cite{6496342, 6559603}.}
 \centering
-\psfig{file=TrapezoidFigure.pdf, width=3.3in}
-\caption{Illustration of fuzzy rule used to measure the probability that a record is an attack. Also see Algorithm~\ref{alg:fuzAlg}. This is used in~\cite{6496342, 6559603}.}
+\psfig{file=trapFigExample.pdf, width=3.3in}
 \label{fig:trapFigure}
 \end{figure}
 
@@ -161,39 +162,48 @@ In order to measure the probability that a record is an attack, a trapezoidal sh
 \label{alg:fuzAlg}
 \begin{algorithmic}
 \IF{$b \leq \textrm{data} \leq c$}
-  \STATE{prob = 1.0}
+  \STATE{certainty = 1.0}
 \ELSIF{$a < \textrm{data} < b$}
   \STATE{
-    prob = $(\textrm{data}-a)/(b-a)$
+    certainty = $(\textrm{data}-a)/(b-a)$
   }
 \ELSIF{$c < \textrm{data} < d$}
   \STATE{
-    prob = $(d-\textrm{data})/(d-c)$
+    certainty = $(d-\textrm{data})/(d-c)$
   }
-\ELSE \STATE{prob = 0.0}
+\ELSE \STATE{certainty = 0.0}
 \ENDIF
 \end{algorithmic}
 \end{algorithm}
 
-An example of using the fuzzy logic approach is: suppose that the feature is duration, and suppose it is 6 seconds, so then data = 6. Suppose that $a$ = 1, $b$ = 3, $c$ = 5, $d$ = 7. Because data (6) is between $c$ and $d$, then the probability of an attack is equal to
+An example of using the fuzzy logic approach is: suppose that the feature is duration, and suppose it is 6 seconds, so then data = 6. Suppose that $a$ = 1, $b$ = 3, $c$ = 5, $d$ = 7. Because data (6) is between $c$ and $d$, then the degree of certainty of it being an attack is equal to
 
 \begin{equation*}
 \frac{d-\textrm{data}}{d-c} = \frac{7-6}{7-5} = 0.5.
 \end{equation*}
 
 
-The four parameters $a, b, c$, and $d$ are encoded into blocks of binary strings, where each block is a feature with values between 0 and 7. See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. A rule has one block for each of 12 features followed at the end by a marker indicating the type of attack. An example of this is shown in Figure~\ref{fig:rule}. The authors of~\cite{6496342, 6559603} compute the probability for each of the 12 blocks, and if the sum of those is greater than a threshold, then it will be declared as an attack.
 
-\begin{figure}
-\centering
-\caption{Fuzzy encoding for a feature that is used in~\cite{6496342, 6559603}.}
-\vspace{0.20cm}
-\begin{tabular}{|cccc|} \hline
-010 & 011 & 100 & 101\\
-a=2 & b=3 & c=4 & d=5\\
-\hline\end{tabular}
-\label{fig:fuzEncodingForFeature}
-\end{figure}
+
+\newpage
+
+
+
+
+The four parameters $a, b, c$, and $d$ are encoded into blocks of binary strings, where each block is a feature with values between 0 and 7. 
+%See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. 
+A rule has one block for each of 12 features followed at the end by a marker indicating the type of attack. An example of this is shown in Figure~\ref{fig:rule}. The authors of~\cite{6496342, 6559603} compute the degree of certainty for each of the 12 blocks, and if the sum of those is greater than a threshold, then it will be declared as an attack.
+
+%\begin{figure}
+%\centering
+%\caption{Fuzzy encoding for a feature that is used in~\cite{6496342, 6559603}.}
+%\vspace{0.20cm}
+%\begin{tabular}{|cccc|} \hline
+%010 & 011 & 100 & 101\\
+%a=2 & b=3 & c=4 & d=5\\
+%\hline\end{tabular}
+%\label{fig:fuzEncodingForFeature}
+%\end{figure}
 
 \begin{figure*}
 \centering
@@ -211,21 +221,21 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 
 
 \subsection{Algorithm Overview}
-The algorithm in~\cite{6496342, 6559603} first randomly generates rules. Then the rules are improved in the training phase, which can be seen in Algorithm~\ref{alg:fuzGenAlg}, which describes the fuzzy genetic algorithm that is used. One record (either an attack or normal activity) is passed into a rule. Each feature in a record is matched to one block of the rule. The parameters of each block measure the probability of an attack using the trapezoidal fuzzy rule shape. The sum of the probabilities from each block are then compared with a threshold to determine if the record represents an attack or normal behavior.
+The algorithm in~\cite{6496342, 6559603} first randomly generates rules. Then the rules are improved in the training phase, which can be seen in Algorithm~\ref{alg:fuzGenAlg}, which describes the fuzzy genetic algorithm that is used. One record (either an attack or normal activity) is passed into a rule. Each feature in a record is matched to one block of the rule. The parameters of each block measure the degree of certainty of an attack using the trapezoidal fuzzy rule shape. The sum of the degrees of certainty from each block are then compared with a threshold to determine if the record represents an attack or normal behavior.
 
 \begin{algorithm}[t]
-\caption{Fuzzy Genetic Algorithm that is based on an algorithm used in~\cite{6496342, 6559603}, but a few corrections have been made.}
+\caption{Fuzzy GA that is based on an algorithm used in~\cite{6496342, 6559603}, but a few corrections have been made.}
 \label{alg:fuzGenAlg}
 \begin{algorithmic}
 \FOR{each rule}
 
   \FOR{each record}
     \FOR{each feature}
-      \STATE{prob = fuzzy(); // Algorithm~\ref{alg:fuzAlg}}
-      \STATE{totalprob = totalprob + prob;}
+      \STATE{certainty = fuzzy(); // Algorithm~\ref{alg:fuzAlg}}
+      \STATE{total = total + certainty;}
     \ENDFOR
     
-    \IF{totalprob > threshold} 
+    \IF{total > threshold} 
       \STATE{class is attack;}
       \ELSE \STATE{class is normal;}
     \ENDIF
@@ -255,16 +265,23 @@ A population size of 10 was used for each generation. The two best individuals f
 
 
 
+\newpage
+
+
+
+
+
 \subsection{Experimental Design and Results}
+\label{sec:experimentalDesignResults}
 A variety of experiments were run in~\cite{6496342, 6559603}. Two experiments used just RLD09, and three experiments used KDD99 and RLD09 together.
 
 \subsubsection{Experiments using Only RLD09}
-The experiments using only RLD09 that the authors of~\cite{6496342} used a total of 16,000 records of normal activity and 10,500 records of attack activity. Of the attack records, 4,000 of them were denial of service attacks and 6,500 were probe attacks.
+The experiments using only RLD09 that~\cite{6496342} performed used a total of 16,000 records of normal activity and 10,500 records of attack activity. Of the attack records, 4,000 were denial of service attacks and 6,500 were probe attacks.
 
 In the first experiment, the fuzzy genetic algorithm was used to create separate denial of service and probe detection rules. Both of the denial of service and probe rules were then used together in the testing process to identify attacks from the testing data set; this is shown in Algorithm~\ref{alg:identifyAttacks}. 10,000 records were used for the training set and all 26,500 records were used for the testing set. (The authors of~\cite{6496342} really should not have reused the training data in the testing set because it inflates their results.)
 
 \begin{algorithm}[t]
-\caption{Algorithm that was used to identify attacks in~\cite{6496342}.}
+\caption{This algorithm was used to identify attacks and normal activity in~\cite{6496342}.}
 \label{alg:identifyAttacks}
 \begin{algorithmic}
 \IF{dos\_rule = yes or probe\_rule = yes} 
@@ -274,7 +291,7 @@ In the first experiment, the fuzzy genetic algorithm was used to create separate
 \end{algorithmic}
 \end{algorithm}
 
-\mycomment{Detection rate} To evaluate the accuracy of the fuzzy genetic algorithm, detection rate (DR) was used. Detection rate is the percentage of normal and attack activity correctly classified from the total number of data records. The detection rate of denial of service attacks in training was 91.64\% and the detection rate of probe attacks in training was 94.79\%. The detection rate of the testing data set increased to 97.92\%. Results from this experiment are shown in Table~\ref{tab:fuzGenExp1}.
+To evaluate the accuracy of the fuzzy genetic algorithm, detection rate (DR) was used. Detection rate is defined in~\cite{6496342, 6559603} as the percentage of normal and attack activity correctly classified from the total number of data records. The detection rate of DoS attacks in training was 91.64\% and the detection rate of probe attacks in training was 94.79\%. The detection rate of the testing data set increased to 97.92\%. Results from this experiment are in Table~\ref{tab:fuzGenExp1}.
 
 \begin{table*}
 \center
@@ -294,11 +311,11 @@ In the second experiment,~\cite{6496342} pulled some types of attacks out of the
 
 
 \begin{table}
-\caption{Unknown Attack Experiment, using only RLD09~\cite{6496342}.}
+\caption{Unknown attack experiment, using only the RLD09 data set~\cite{6496342}.}
 \vspace{0.20cm}
 \begin{tabular}{llll}
-Test & Unknown & Decision & Fuzzy\\
-Case & Attacks & Tree DR (\%)  & Genetic DR (\%)\\ \hline
+Test & Unknown & Decision & Fuzzy GA\\
+Case & Attacks & Tree DR (\%)  & DR (\%)\\ \hline
 
 1 & Adv Port Scan (Probe) & Avg = & Avg =\\
   & Ack Scan (Probe)		  & 98.33 & 100\\
@@ -342,8 +359,8 @@ The first experiment used the fuzzy genetic algorithm to classify normal activit
 \begin{table}
 \caption{KDD99 and RLD09 results from the first experiment in~\cite{6559603}.}
 \vspace{0.20cm}
-\begin{tabular}{cccccc}
-Data set & Attack & Normal & FP (\%) & FN (\%) & DR (\%)\\ \hline
+\begin{tabular}{llllll}
+Data set & Attack & Normal & FP(\%) & FN(\%) & DR(\%)\\ \hline
 KDD99 & 160,117 & 39,337 & 0.13 & 1.55 & 98.72\\
 RLD09 & 10,500 & 16,000 & 1.14 & 3.39 & 97.97\\
 \end{tabular}
@@ -356,7 +373,7 @@ The next experiment used the fuzzy genetic algorithm to classify types of attack
 \caption{Results for KDD99 with Certain Attacks. 10 tests were run in total, 5 are shown here.~\cite{6559603}}
 \vspace{0.20cm}
 \begin{tabular}{cccccc}
-Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
+Test & Attack & Type & FP(\%) & FN(\%) & DR(\%)\\ \hline
 1 & Back & DoS & 85.33 & 0.00 & 16.56\\
 2 & Smurf & DoS & 0.76 & 0.10 & 99.73\\
 3 & Neptune & DoS & 0.15 & 0.34 & 99.75\\
@@ -372,7 +389,7 @@ The final experiment that was run used only the RLD09 data set with the fuzzy ge
 \caption{Results for RLD09 with Certain Attacks. 17 tests were run in total, 6 are shown here.~\cite{6559603}}
 \vspace{0.20cm}
 \begin{tabular}{cccccc}
-Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
+Test & Attack & Type & FP(\%) & FN(\%) & DR(\%)\\ \hline
 1 & HTTP Flood & DoS & 0.36 & 3.5 & 99.46\\
 2 & Smurf & DoS & 0.02 & 0 & 99.98\\
 3 & UDP Flood & DoS & 11.06 & 0 & 89.59\\
@@ -399,11 +416,7 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 
 The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used a genetic algorithm to develop an IDS. They didn't explain their research that well and left a lot of things out, so I will just be describing their results.
 
-
-
-
-\subsection{Experimental Design and Results}
-The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used the KDD99 data set. Standard subsets of the KDD99 data set were used for training and testing. The training set had a total of 494,021 records, 396,741 of which were attacks. The test set had a total of 311,029 records, 250,436 of which were attacks. Table~\ref{tab:numberOfRecords} shows the distribution of each type of attack, as well as normal activity, that were in the training and test sets.
+The KDD99 data set was used in the experiments. Standard subsets of set were used for training and testing. The training set had a total of 494,021 records, 396,741 of which were attacks. The test set had a total of 311,029 records, 250,436 of which were attacks. Table~\ref{tab:numberOfRecords} shows the distribution of each type of attack, as well as normal activity, that were in the training and test sets.
 
 \begin{table}
 \center
@@ -425,44 +438,26 @@ Total Records  & 494,021 & 311,029\\
 
 
 
-The results from running the genetic algorithm are shown in Table~\ref{tab:genAlgResults}. Denial of service attacks had the highest detection rate at 99.4\%. A high detection rate on denial of service attacks isn't surprising because there were a lot of denial of service records used compared with the other types of attacks. The accuracy of the genetic algorithm is shown in Table~\ref{tab:genAlgResults2}. The true negative rate was 69.5\%. The false positive rate was 30.5\%. The false negative rate was 5\%. The true positive rate was 94.9\%.
+The results from running the genetic algorithm are shown in Table~\ref{tab:genAlgResults}. Detection rate is defined in~\cite{DBLP:journals/corr/abs-1204-1336} as the ratio between the number of correctly detected intrusions and the total number of intrusions. Denial of service attacks had the highest detection rate at 99.4\%. A high detection rate on denial of service attacks isn't surprising because there were a lot of denial of service records used compared with the other types of attacks. The accuracy of the genetic algorithm is shown in Table~\ref{tab:genAlgResults2}. The true negative rate was 69.5\%. The false positive rate was 30.5\%. The false negative rate was 5\%. The true positive rate was 94.9\%.
 
 \begin{table*}
 \center
 \caption{Results for GA Experiment in~\cite{DBLP:journals/corr/abs-1204-1336}.}
 \vspace{0.20cm}
-\begin{tabular}{cc|cccccc}
-& & & & Predicted & & & \\
-& Actual & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \cline{3-8}
-& Normal & 42138 & 1421 & 15835 & 486 & 713 & 69.5\\
-& Probe & 398 & 2963 & 654 & 2 & 149 & 71.1   \\
-& Dos & 921 & 432 & 228489 & 1 & 10 & 99.4\\
-& U2R & 146 & 21 & 8 & 43 & 10 & 18.9\\
-& R2L & 11191 & 578 & 3398 & 141 & 881 & 5.4\\
-&& &&&&& \\
-& \% Correct &  76.9 & 54.7 & 92.0 & 6.4 & 50.0 & \\
+\begin{tabular}{l|cccccc}
+& & & Predicted & & & \\
+Actual & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \hline
+Normal & 42138 & 1421 & 15835 & 486 & 713 & 69.5\\
+Probe & 398 & 2963 & 654 & 2 & 149 & 71.1   \\
+Dos & 921 & 432 & 228489 & 1 & 10 & 99.4\\
+U2R & 146 & 21 & 8 & 43 & 10 & 18.9\\
+R2L & 11191 & 578 & 3398 & 141 & 881 & 5.4\\
+& &&&&& \\
+\% Correct &  76.9 & 54.7 & 92.0 & 6.4 & 50.0 & \\
 \end{tabular}
 \center
 \label{tab:genAlgResults}
 \end{table*}
-
-
-%\begin{table}
-%\center
-%\caption{Results for GA Experiment in~\cite{DBLP:journals/corr/abs-1204-1336}}
-%\vspace{0.20cm}
-%\begin{tabular}{c|cccc}
-%& & Predicted & & \\
-%Actual & Normal & Probe & DoS & \% Correct \\ \cline{2-5}
-%Normal & 42138 & 1421 & 15835 & 69.5\\
-%Probe & 398 & 2963 & 654 & 71.1   \\
-%Dos & 921 & 432 & 228489 & 99.4\\
-%&&&& \\
-%\% Correct &  76.9 & 54.7 & 92.0 &\\
-%\end{tabular}
-%\center
-%\label{tab:genAlgResults}
-%\end{table}
 
 
 
@@ -470,9 +465,9 @@ The results from running the genetic algorithm are shown in Table~\ref{tab:genAl
 \center
 \caption{Accuracy of the GA in~\cite{DBLP:journals/corr/abs-1204-1336}.}
 \vspace{0.20cm}
+Predicted
 \begin{tabular}{l|ll}
-& & Predicted\\
-Actual & Normal & Attack \\ \cline{2-3}
+Actual & Normal & Attack \\ \hline
 Normal & TN: 42,138. 69.5\% & FP: 18,455. 30.5\% \\
 Attack & FN: 12,528. 5\% & TP: 237,908. 94.9\%  \\
 \end{tabular}
@@ -482,15 +477,14 @@ Attack & FN: 12,528. 5\% & TP: 237,908. 94.9\%  \\
 
 
 The authors of~\cite{DBLP:journals/corr/abs-1204-1336} compared their results (Table~\ref{tab:genAlgResults}) with the winning entry of the KDD99 Classifier Learning Contest~\cite{KDD99Contest}, which can be seen in Table~\ref{tab:winningEntry}. The winning entry used a decision tree algorithm. The winning entry had a higher detection rate for normal activity, probe attacks, and remote to user attacks. The authors of~\cite{DBLP:journals/corr/abs-1204-1336} found that they had a better detection rate for denial of service and user to root attacks than the winning entry. For the winning entry, the detection rate of denial of service was 97.1\%, and for user to root it was 13.2\%. In~\cite{DBLP:journals/corr/abs-1204-1336} the detection rate of denial of service was 99.4\% and for user to root it was 18.9\%. The authors of~\cite{DBLP:journals/corr/abs-1204-1336} provide no information about the statistical significance of these improvements.
-\mycomment{compare~\cite{DBLP:journals/corr/abs-1204-1336} with~\cite{6496342, 6559603}}
 
 \begin{table*}
 \center
 \caption{Results for the Winning Entry of the KDD99 Classifier Learning Contest.}
 \vspace{0.20cm}
-\begin{tabular}{c|cccccc}
-& & & & Predicted & & \\
-Actual & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \cline{2-7}
+\begin{tabular}{l|cccccc}
+& & & Predicted & & &\\
+Actual & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \hline
 Normal &  60262 & 243 & 78 & 4 & 6 & 99.5\\
 Probe &  511 & 3471 & 184 & 0 & 0 & 83.3 \\
 Dos &  5299 & 1328 & 223226 & 0 & 0 & 97.1\\
@@ -503,13 +497,12 @@ R2L &  14527 & 294 & 0 & 8 & 1360 & 8.4\\
 \label{tab:winningEntry}
 \end{table*}
 
-
+The detection rate (as defined in Section~\ref{sec:experimentalDesignResults} and~\cite{6559603}) of the traditional genetic algorithm in~\cite{DBLP:journals/corr/abs-1204-1336} was 90\%, which means that it correctly classified 90\% of the test records. The detection rate of the fuzzy genetic algorithm in~\cite{6559603} was 99\%. I did this comparison and do not know the statistical significance. The system in~\cite{6559603} is not the same as the system in~\cite{DBLP:journals/corr/abs-1204-1336} with fuzzy logic added to it, but it can be said that the system in~\cite{6559603} is better than~\cite{DBLP:journals/corr/abs-1204-1336} however it was built.
 
 \section{Conclusions}
 \label{sec:conclusion}
-This paper showed that the use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks. The genetic algorithm that was used in~\cite{DBLP:journals/corr/abs-1204-1336} had a high detection rate for denial of service attacks. When compared with the winning entry of the KDD99 Classifier Learning Contest, it was shown to have a better detection rate for both denial of service and user to root attacks. The fuzzy genetic algorithm that was used in~\cite{6496342, 6559603} had a higher detection rate than a decision tree algorithm in most cases. It was also shown that fuzzy genetic algorithms are good at detecting unknown attacks. 
+The fuzzy genetic algorithm that was used in~\cite{6496342, 6559603} had a higher detection rate than a decision tree algorithm in most cases, and it was good at detecting unknown attacks. It had a higher detection rate than the traditional genetic algorithm that was used in~\cite{DBLP:journals/corr/abs-1204-1336}. The genetic algorithm in~\cite{DBLP:journals/corr/abs-1204-1336} had a high detection rate for denial of service attacks. When compared with the winning entry of the KDD99 Classifier Learning Contest, it was shown to have a better detection rate for both denial of service and user to root attacks. This paper showed that the use of genetic algorithms and fuzzy genetic algorithms in intrusion detection are effective ways of detecting attacks.
 
-\mycomment{fix references}
 
 %\section{Acknowledgments}
 
