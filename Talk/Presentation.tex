@@ -14,7 +14,7 @@
 % does not look nice, try deleting the line with the fontenc.
 \usepackage{amsmath}
 \usepackage{algorithmic}
-\usepackage{multirow}
+
 
 \newcommand{\linespace}{\vskip 0.25cm}
 
@@ -84,8 +84,8 @@
   \begin{column}{0.6\textwidth}
   \begin{itemize}
   	\item 
-	\item 
-	\item 
+	\item have story here,
+	\item also explain root somewhere
 	\item 
 	\item 
   \end{itemize}
@@ -131,14 +131,35 @@
 \end{frame}
 
 
-\subsection{Detection Methodologies}
+\subsection{Detection Methodologies and Rules}
 \begin{frame}
   \frametitle{Detection Methodologies}
   \begin{itemize}
-  	\item Signature-based detection: compares well-known patterns of attacks that are already in the intrusion detection system against captured events in order to identify a possible attack.
+  	\item Signature-based detection: compares well-known patterns of attacks
+that are already known to the IDS against captured events in order to identify a possible attack.
+	\begin{itemize}
+		\item It is a simple and effective way to detect known attacks, but is ineffective against new kinds of unknown attacks.
+	\end{itemize}
   	\item Anomaly-based detection: looks for patterns of activity that are rare and uncommon.
+	\begin{itemize}
+		\item It is harder to do than signature-based detection, but it can be an effective way to detect new, unknown attacks.
+	\end{itemize}
   \end{itemize}
 \end{frame}
+
+
+\begin{frame}
+  \frametitle{Rules}
+	\begin{itemize}
+		\item A commonly used approach for detecting intrusions is to use rules.
+		\item If-Then format: If (\emph{condition}) then (\emph{consequence}).
+		\begin{itemize}
+			\item The condition is composed of one or more features, and the consequence says if it is an intrusion or not.
+			\item If \emph{duration = 4} then \emph{intrusion}.
+		\end{itemize}				
+	\end{itemize}
+\end{frame}
+
 
 
 \subsection{Data Sets - KDD99 and RLD09}
@@ -161,7 +182,7 @@
 \begin{frame}
   \frametitle{Some Features of KDD99}
 	\begin{itemize}
-		\item duration: length of the normal or attack activity
+		\item duration: length of the record in seconds.
 in seconds.
 		%\item src\_bytes: number of bytes sent from source to destination.
 		\item num\_failed\_logins: number of failed login attempts.
@@ -178,56 +199,74 @@ in seconds.
 \begin{frame}
   \frametitle{RLD09}
 	\begin{itemize}
-		\item RLD09 was created because KDD99 is 14 years old.
+		\item RLD09 was created because KDD99 is 14 years old, and newer attack types are not included in it because of its age.
 		\item Data was captured from a university in Bangkok, Thailand.
-		\item 17 different types of attacks (divided into denial of service and probe attacks), and 12 features.
+		\item 17 different types of attacks (divided into denial of service and probe attacks).
+		
+		
+		
+\linespace
+\linespace
+\linespace
+\linespace
+		\item .............maybe have something like "the authors of [6] used only the numerical features of KDD99 (34 out of 41)." if I decide to explain that paper.
 	\end{itemize}
 \end{frame}
 
 
-\subsection{Rules}
+
 \begin{frame}
-  \frametitle{Rules}
+  \frametitle{Training and Testing Sets}
 	\begin{itemize}
-		\item A commonly used approach for detecting intrusions and to differentiate between normal connections and attacks is to use rules.
-		\item If-Then format: If (\emph{condition}) then (\emph{consequence}).
-		\begin{itemize}
-			\item The condition is composed of one or more features, and the consequence says if it is an intrusion or not.
-			\item If \emph{duration = 4} then \emph{intrusion}.
-		\end{itemize}				
+		\item A common technique is to divide the data set into two subsets, a \emph{training set} and a \emph{testing set}.
+        \item The given algorithm is then trained on the training set to look for patterns.
+        \item These patterns are then verified using the test set.
 	\end{itemize}
 \end{frame}
+
+
+
+\subsection{Determining the Accuracy of an Algorithm}
+\begin{frame}
+  \frametitle{Determining the Accuracy of an Algorithm}
+\centering{Predicted}
+\begin{table}
+Actual
+\begin{tabular}{l|ll}
+ & Not Attack & Attack \\ \hline
+Not Attack & True Negative (TN) & False Positive (FP) \\
+Attack & False Negative (FN) & True Positive (FP)  \\
+\end{tabular}
+\end{table}
+\linespace
+	\begin{itemize}
+		\item Detection rate (DR): the percentage of normal and attack activity correctly classified from the total number of data records.
+		
+		
+		
+		
+		\linespace
+		\linespace
+		\linespace
+		\linespace
+		\linespace
+		\item .........maybe talk about the other paper's DR?
+	\end{itemize}
+\end{frame}
+
 
 
 \subsection{Genetic Algorithms}
 \begin{frame}
   \frametitle{Genetic Algorithms}
 	\begin{itemize}
-		\item Search technique used to find solutions to problems.
-		\item Mutation: random bits in an individual, or possible solution, are changed.
-		\item Selection: individuals that have a better fitness are chosen over the other individuals.
-		\item Fitness function: determines the quality of a particular individual.
-		\item Crossover: Two individuals swap one of their characteristics with the other to form two new individuals.
-	\end{itemize}
-\end{frame}
-
-
-\subsection{Determining the Accuracy of an Algorithm}
-\begin{frame}
-  \frametitle{Determining the Accuracy of an Algorithm}
-\begin{table}
-\begin{tabular}{cccc}
-& & \multicolumn{2}{ c }{Predicted} \\
-& & Not Attack & Attack \\ \cline{3-4}
-\multicolumn{1}{ c }{\multirow{2}{*}{Actual} } &
-\multicolumn{1}{ c| }{Not Attack} & True Negative (TN) & False Positive (FP)\\
-\multicolumn{1}{ c }{} &
-\multicolumn{1}{ c| }{Attack} & False Negative (FN) & True Positive (TP)\\
-\end{tabular}
-\end{table}
-\linespace
-	\begin{itemize}
-		\item Detection rate (DR): 
+		\item GAs are a search technique used to find solutions to problems. Operations analogous to biological mutation, selection, and crossover are used to evolve and improve solutions.
+        \item Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings.
+        \item First, a randomly generated population of potential solutions is created. Then mutation, crossover, and selection are applied to each generation until an acceptable solution is found or some time limit is exceeded.
+        \item Mutation: random bits in an individual, or possible solution, are randomly changed.
+        \item Crossover: Two individuals swap sequences of bits to form two new individuals.
+        \item Selection: individuals that have better fitness are chosen to be parents.
+        \item The fitness of an individual is specified by the fitness function, which determines the quality of a particular individual.
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -245,17 +284,18 @@ in seconds.
 		\item Fuzzy logic rules are similar to the rules described before, except that
 consequence is a certainty factor. 
 		\begin{itemize}
-			\item If (\emph{duration} = 6) then (\emph{probability of it being an attack is 50\%}).
+			\item If (\emph{duration} = 6) then (\emph{the degree of certainty of it being an attack is 0.5}).
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Measuring the Probability of a Record Being an Attack}
-	\begin{itemize}	
-	\item Feature: duration, 6 seconds.
-	\end{itemize}
+  \frametitle{Finding the Degree of Certainty of a Record Being an Attack}
+	%\begin{itemize}	
+	%\item Suppose that the feature is duration, and it is 6 seconds, so then data = 6.
+	%\end{itemize}
+	Suppose that the feature is duration, and it is 6 seconds. Then data=6.
 %  \begin{columns}
 %  \begin{column}{0.6\textwidth}
   \includegraphics[width=0.95\textwidth]{../trapFigExample.pdf}
@@ -279,8 +319,7 @@ consequence is a certainty factor.
 \begin{frame}
 	\frametitle{Encoding of Features and Rules}
 	\begin{itemize}
-	\item The four parameters are encoded into blocks.
-	\item Each block is a feature with values between 0.0 and 7.0.
+	\item The four parameters are encoded into blocks. Each block is a feature with values between 0 and 7.
 	\end{itemize}
 	
 \begin{figure}
@@ -291,7 +330,7 @@ a=2 & b=3 & c=4 & d=5\\
 \end{figure}
 
 	\begin{itemize}
-	\item A rule has 12 blocks of features, at the end is the type of attack.
+	\item A rule has one block for each of 12 features followed at the end by a marker indicating the type of attack.
 	\end{itemize}
 
 \begin{figure}
@@ -305,6 +344,10 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 \end{small}
 \end{figure}
 
+	\begin{itemize}
+		\item The degree of certainty is computed for each of the 12 blocks, and if the sum of those is greater than a threshold, then it will be declared as an attack.
+	\end{itemize}
+
 \end{frame}
 
 
@@ -313,11 +356,11 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 \begin{frame}
 	\frametitle{Algorithm Overview}
 	\begin{itemize}
-		\item The algorithm generates rules, improves rules, then rules are used to classify the data.
+		\item The algorithm generates rules and improves rules.
 		\item One record is passed into a rule.
 		\item Each feature in a record is matched to one block of the rule.
-		\item The parameters of each block measure the probability of an attack using the trapezoidal fuzzy rule shape.
-		\item The probabilities of each block are then compared with a threshold to determine if the record represents an attack or normal behavior.
+		\item The parameters of each block measure the degree of certainty of an attack using the trapezoidal fuzzy rule shape.
+		\item The sum of the degrees of certainty from each block are then compared with a threshold to determine if the record represents an attack or normal behavior.
 	\end{itemize}
 \end{frame}
 
@@ -327,8 +370,8 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 \begin{column}{0.6\textwidth}
 \begin{small}
 \begin{algorithmic}
-\FOR{each record}
-  \FOR{each rule}
+\FOR{each rule}
+  \FOR{each record}
     \FOR{each feature}
       \STATE{prob = fuzzy();}
       \STATE{totalprob = totalprob + prob;}
@@ -350,7 +393,7 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 \end{column}
 
 \begin{column}{0.4\textwidth}
-	Fitness function:
+	The fitness function in the algorithm is:
 	\begin{equation*}
 	\frac{\alpha}{A} - \frac{\beta}{B}
 	\end{equation*}
@@ -382,10 +425,21 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 	\frametitle{Experiments Using Only RLD09}
 	Experiment 1
 	\begin{itemize}
-		\item Fuzzy GA was used to create DoS and probe detection rules, then the rules were verified with known attack types.
-		\item Two steps in the training process: find a DoS rule, find a probe rule. Both of these rules were then used together in the testing process to identify attacks from the testing data set.
+		\item Fuzzy GA was used to create DoS and probe detection rules. Both of the DoS and probe rules were then used together in the testing process to identify attacks from the testing data set.
 		\item 10,000 records were used for the training set, 26,500 records were used for the test set.
 	\end{itemize}
+
+\linespace
+\begin{itemize}
+	\item The following algorithm was used to identify attacks and normal activity in this experiment.
+\end{itemize}
+
+\begin{algorithmic}
+\IF{dos\_rule = yes or probe\_rule = yes}
+	\STATE{This record is an attack;}
+\ELSE \STATE{This record is normal;}
+\ENDIF
+\end{algorithmic}
 \end{frame}
 
 
@@ -418,7 +472,7 @@ Experiment 2
 
 \begin{frame}
 	\frametitle{Experiments Using Only RLD09}
-	Experiment 2 Results
+	Experiment 2 Results (7 tests were run in total, 5 are shown here.)
 	
 \begin{table}
 \begin{footnotesize}
@@ -475,14 +529,16 @@ Experiment 2
 	\begin{itemize}
 		\item Used the fuzzy GA to classify types of attacks in KDD99.
 		\item 158,597 records of DoS attacks. 1,500 records of probe attacks.
+		\item 10 tests were run in total, 5 are shown here.
 	\end{itemize}
 \begin{table}
 \begin{tabular}{cccccc}
 Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 1 & Back & DoS & 85.33 & 0.00 & 16.56\\
 2 & Smurf & DoS & 0.76 & 0.10 & 99.73\\
-3 & Portsweep & Probe & 6.40 & 0.00 & 93.66\\
-4 & Satan & Probe & 0.74 & 3.75 & 99.22\\
+3 & Neptune & DoS & 0.15 & 0.34 & 99.75\\
+4 & Portsweep & Probe & 6.40 & 0.00 & 93.66\\
+5 & Satan & Probe & 0.74 & 3.75 & 99.22\\
 \end{tabular}
 \end{table}
 
@@ -495,85 +551,19 @@ Experiment 3
 	\begin{itemize}
 		\item Used the fuzzy GA to classify types of attacks in RLD09.
 		\item 6,400 records of DoS attacks. 10,400 records of probe attacks.
+		\item 17 tests were run in total, 6 are shown here.
 	\end{itemize}
 \begin{table}
 \begin{tabular}{cccccc}
 Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
-1 & Smurf & DoS & 0.02 & 0 & 99.98\\
-2 & UDP Flood & DoS & 11.06 & 0 & 89.59\\
-3 & Ackscan & Probe & 0.03 & 0 & 99.97\\
-4 & Synscan & Probe & 0.65 & 4.2 & 99.24\\
+1 & HTTP Flood & DoS & 0.36 & 3.5 & 99.46\\
+2 & Smurf & DoS & 0.02 & 0 & 99.98\\
+3 & UDP Flood & DoS & 11.06 & 0 & 89.59\\
+4 & Fin Scan & Probe & 2.58 & 0 & 97.50\\
+5 & IP Scan & Probe & 13.01 & 16.4 & 86.89\\
+6 & Syn Scan & Probe & 0.65 & 4.2 & 99.24\\
 \end{tabular}
 \end{table}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section[Using Genetic Algorithms]{Using Genetic Algorithms}
-\subsection{Experimental Design and Results}
-\begin{frame}
-  \frametitle{Experimental Design}
-  \begin{columns}
-
-  \begin{column}{0.5\textwidth}
-	\begin{itemize}
-		\item KDD99 data set.
-		\item Used only the numerical features of KDD99 (34 out of 41 total features).
-		\item Training set: 494,021 records (396,741 of them are attacks). Test set: 311,029 records (250,436 of them are attacks).
-	\end{itemize}
-  \end{column}
-  
-  \begin{column}{0.5\textwidth}
-  \begin{table}
-\caption{ }
-\begin{tabular}{lll}
-  & Training & Testing \\
-Normal & 97,280 & 60,593\\
-Probe & 4,107 & 4,166\\
-DoS         & 391,458 & 229,853\\
-U2R & 52 & 228\\
-R2L & 1,124 & 16,189\\
-Total & 494,021 & 311,029\\
-\end{tabular}
-\end{table}
-  \end{column}
-  \end{columns}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Results}
-%\begin{table}
-%\begin{small}
-%\begin{tabular}{cccccccc}
-%& & \multicolumn{5}{ c }{Predicted} \\
-%& & Normal & Probe & DoS & U2R & R2L & \% Correct \\ \cline{3-8}
-%\multicolumn{1}{ c }{\multirow{2}{*}{Actual} } &
-%\multicolumn{1}{ c| }{Normal} & 42138 & 1421 & 15835 & 486 & 713 & 69.5\\
-%\multicolumn{1}{ c }{} &
-%\multicolumn{1}{ c| }{Probe} & 398 & 2963 & 654 & 2 & 149 & 71.1 \\
-%\multicolumn{1}{ c }{\multirow{2}{*}{} } &
-%\multicolumn{1}{ c| }{Dos} & 921 & 432 & 228489 & 1 & 10 & 99.4\\
-%\multicolumn{1}{ c }{} &
-%\multicolumn{1}{ c| }{U2R} & 146 & 21 & 8 & 43 & 10 & 18.9\\
-%\multicolumn{1}{ c }{} &
-%\multicolumn{1}{ c| }{R2L} & 11191 & 578 & 3398 & 141 & 881 & 5.4\\
-
-%\multicolumn{1}{ c }{} &
-%\multicolumn{1}{ c| }{} & & & & & & \\
-
-%\multicolumn{1}{ c }{\% Correct} &
-%\multicolumn{1}{ c| }{} & 76.9 & 54.7 & 92.0 & 6.4 & 50.0 \\
-%\end{tabular}
-%\end{small}
-%\end{table}
-
-%	\begin{figure}
-%  \includegraphics[width=0.95\textwidth]{../resultsForGA.JPG}
-%  \caption{From [Hoque-Mukit-Bikas, 2012]}
-%  	\end{figure}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -584,16 +574,13 @@ Total & 494,021 & 311,029\\
 
 \begin{frame}
 \frametitle{Conclusions}
-
-\begin{itemize}
-  \item The use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks.
-%  \item The genetic algorithm had a high detection rate for denial of service attacks.
-  \item The fuzzy genetic algorithm had a higher detection rate than a decision tree algorithm in most cases.
-  \item Fuzzy genetic algorithms are good at detecting unknown attacks.
-\end{itemize}
-
-
+	\begin{itemize}
+		\item The fuzzy genetic algorithm had a higher detection rate than a decision tree algorithm in most cases.
+		\item Fuzzy genetic algorithms are good at detecting unknown attacks.
+		\item The use of fuzzy genetic algorithms in intrusion detection is an effective way of detecting attacks.
+	\end{itemize}
 \end{frame}
+
 
 \begin{frame}
 	\frametitle{Thanks!}
