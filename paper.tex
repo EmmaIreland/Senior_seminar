@@ -102,11 +102,9 @@ In the research discussed in Section~\ref{sec:fuzGenAlgImp}~\cite{6496342, 65596
   \item same\_srv\_rate: the percentage of connections to the same service.
 \end{enumerate}
 
-The KDD99 data set is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09, to use in their experiments. To create the data set, the authors captured network data from a university in Bangkok, Thailand. As well as normal network activity, RLD09 has 17 different types of attacks which can be classified as either denial of service attacks or probe attacks. RLD09 uses 12 features. For further information about the features, see~\cite{6496342}.
+The KDD99 data set is 14 years old, and newer attack types are not included in it because of its age. Because of this, the authors of~\cite{6496342, 6559603} created their own data set, RLD09, to use in their experiments. To create the data set, the authors captured network data from a university in Bangkok, Thailand. As well as normal network activity, RLD09 has 17 different types of attacks which can be classified as either denial of service attacks or probe attacks. RLD09 uses 12 features. For further information about the features, see~\cite{6496342}. In the research discussed in Section~\ref{sec:genAlgImp}, the authors of~\cite{DBLP:journals/corr/abs-1204-1336} used only the numerical features of KDD99 (34 out of 41).
 
-In the research discussed in Section~\ref{sec:genAlgImp}, the authors of ~\cite{DBLP:journals/corr/abs-1204-1336} used only the numerical features of KDD99 (34 out of 41).
-
-In a machine learning experiment, a common technique is to divide the data set into two subsets, a \emph{training set} and a \emph{testing set}. The given algorithm is then trained on the training set to look for patterns. These patterns are then verified using the test set.~\cite{bc1_ecindm}
+In a machine learning experiment, a common technique is to divide the data set into two subsets, a \emph{training set} and a \emph{testing set}. The given algorithm is then trained on the training set to look for patterns. These patterns are then verified using the test set.~\cite{bc1_ecindm} This approach is used in~\cite{6496342, 6559603} and~\cite{DBLP:journals/corr/abs-1204-1336}.
 
 
 
@@ -120,11 +118,11 @@ Four measures are used to determine the accuracy of an algorithm. The \emph{fals
 \label{sec:GA}
 Genetic algorithms (GAs) are a search technique used to find solutions to problems. Operations analogous to biological \emph{mutation}, \emph{selection}, and \emph{crossover} are used to evolve and improve solutions.
 
-Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings. For example, in an IDS rules are represented as bit strings, and then they are used to classify an event as an attack or normal traffic, see Section~\ref{sec:fuzzyRulesAndAlgorithm} for more information. First, a randomly generated population of potential solutions is created. Then mutation, selection, and crossover are applied to each generation until an acceptable solution is found or some time limit is exceeded.
+Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings. For example, IDS rules can be represented as bit strings; see Section~\ref{sec:fuzzyRulesAndAlgorithm} for more information. First, a randomly generated population of potential solutions is created. Then mutation, crossover, and selection are applied to each generation until an acceptable solution is found or some time limit is exceeded.
 
-Mutation is where random bits in an \emph{individual}, or possible solution, are changed. Crossover is where two individuals swap sequences of bits to form two new individuals. For example, in an IDS mutation takes the bits of a rule and changes them. Crossover takes two rules and creates new rules by swapping the bits of the old rules.
+Mutation is where random bits in an \emph{individual}, or possible solution, are randomly changed. Crossover is where two individuals swap sequences of bits to form two new individuals. For example, in an IDS mutation takes the bits of a rule and changes them to form a slightly different rule. Crossover takes two rules and creates new rules by swapping the bits of the old rules.
 
-Selection is where individuals that have better \emph{fitness} are chosen to be parents. The fitness of an individual is specified by the \emph{fitness function}, which determines the quality of a particular individual. For example, in an IDS the fitness measures the performance of a rule. Selection combined with a fitness function directs the search towards an effective solution.~\cite{DBLP:journals/corr/abs-1204-6416}
+Selection is where individuals that have better \emph{fitness} are chosen to be parents. The fitness of an individual is specified by the \emph{fitness function}, which determines the quality of a particular individual. For example, in an IDS the fitness measures how well a rule classifies records as either attacks or normal activity. Selection combined with a fitness function directs the search towards an effective solution.~\cite{DBLP:journals/corr/abs-1204-6416}
 
 
 
@@ -138,7 +136,7 @@ Selection is where individuals that have better \emph{fitness} are chosen to be 
 
 \section{Using Fuzzy Genetic Algorithms}
 \label{sec:fuzGenAlgImp}
-The IDS used in~\cite{6496342, 6559603} is able to identify normal network activity as well as attacks using a fuzzy genetic algorithm. This kind of algorithm is able to learn new attacks.
+The IDS used in~\cite{6496342, 6559603} is able to identify normal network activity as well as attacks using a fuzzy genetic algorithm. This kind of algorithm is able to learn to recognize new attacks.
 
 
 
@@ -181,14 +179,6 @@ An example of using the fuzzy logic approach is: suppose that the feature is dur
 \begin{equation*}
 \frac{d-\textrm{data}}{d-c} = \frac{7-6}{7-5} = 0.5.
 \end{equation*}
-
-
-
-
-\newpage
-
-
-
 
 The four parameters $a, b, c$, and $d$ are encoded into blocks of binary strings, where each block is a feature with values between 0 and 7. 
 %See Figure~\ref{fig:fuzEncodingForFeature} for an example of a block. 
@@ -264,9 +254,7 @@ A population size of 10 was used for each generation. The two best individuals f
 
 
 
-
 \newpage
-
 
 
 
@@ -497,7 +485,7 @@ R2L &  14527 & 294 & 0 & 8 & 1360 & 8.4\\
 \label{tab:winningEntry}
 \end{table*}
 
-The detection rate (as defined in Section~\ref{sec:experimentalDesignResults} and~\cite{6559603}) of the traditional genetic algorithm in~\cite{DBLP:journals/corr/abs-1204-1336} was 90\%, which means that it correctly classified 90\% of the test records. The detection rate of the fuzzy genetic algorithm in~\cite{6559603} was 99\%. I did this comparison and do not know the statistical significance. The system in~\cite{6559603} is not the same as the system in~\cite{DBLP:journals/corr/abs-1204-1336} with fuzzy logic added to it, but it can be said that the system in~\cite{6559603} is better than~\cite{DBLP:journals/corr/abs-1204-1336} however it was built.
+The detection rate (as defined in Section~\ref{sec:experimentalDesignResults} and~\cite{6559603}) of the traditional genetic algorithm in~\cite{DBLP:journals/corr/abs-1204-1336} was 90\% (see Tables~\ref{tab:genAlgResults2} and~\ref{tab:numberOfRecords}). This means that it correctly classified 90\% of the test records. The detection rate of the fuzzy genetic algorithm in~\cite{6559603} was 99\% (see Table~\ref{tab:bothSetsResults}). The fuzzy genetic algorithm in~\cite{6559603} is not the same as the traditional genetic algorithm in~\cite{DBLP:journals/corr/abs-1204-1336} with fuzzy logic added to it, but it can be said that the system in~\cite{6559603} is better than~\cite{DBLP:journals/corr/abs-1204-1336} however it was built.
 
 \section{Conclusions}
 \label{sec:conclusion}
