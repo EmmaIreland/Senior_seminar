@@ -42,7 +42,7 @@ Emma Ireland\\
 
 \maketitle
 \begin{abstract}
-Intrusion detection systems provide one way of detecting attacks on systems, by monitoring network activities for malicious or abnormal behaviors. This paper describes two ways of training an intrusion detection system to recognize possible attacks on a system: genetic algorithms and fuzzy logic. I will describe an approach to using fuzzy genetic algorithms and compare those results with results obtained using a decision tree. I will then describe the results from using a traditional genetic algorithm and compare those with the winning entry of the KDD99 Classifier Learning Contest, as well as with the fuzzy genetic algorithm. These results show that the use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks.
+Intrusion detection systems provide one way of detecting attacks on systems by monitoring network activities for malicious or abnormal behaviors. This paper describes two ways of training an intrusion detection system to recognize possible attacks on a system: genetic algorithms and fuzzy logic. I will describe an approach to using fuzzy genetic algorithms and compare those results with results obtained using a decision tree. I will then describe the results from using a traditional genetic algorithm and compare those with the winning entry of the KDD99 Classifier Learning Contest, as well as with the fuzzy genetic algorithm. These results show that the use of genetic algorithms and fuzzy logic in intrusion detection are effective ways of detecting attacks.
 \end{abstract}
 
 % A category with the (minimum) three required fields
@@ -67,9 +67,9 @@ In Section~\ref{sec:background} I will give some background on intrusion detecti
 
 \subsection{Types of Networking Attacks}
 \label{sec:typesAttacks}
-There are four main types of networking attacks that this paper will address: \emph{denial of service}, \emph{remote to user attacks}, \emph{user to root attacks}, and \emph{probe attacks}. Each attack that happens on a network can be placed into one of these categories.~\cite{DBLP:journals/corr/abs-1204-1336}
+There are four main types of networking attacks that this paper will address: \emph{denial of service attacks}, \emph{remote to user attacks}, \emph{user to root attacks}, and \emph{probe attacks}. Each attack that happens on a network can be placed into one of these categories.~\cite{DBLP:journals/corr/abs-1204-1336}
 
-Denial of service (DoS) attacks happen when an attacker makes a machine inaccessible to a user by making it too busy to serve legitimate requests. For example, many systems lock out a user from an account after a certain number of failed login attempts. An attacker would be able to use this to prevent legitimate users from logging in, by intentionally failing to log in enough times to lock the account~\cite{DoSAttacks}. Remote to user, also known as remote to local (R2L) attacks happen when an attacker sends packets to a machine over the network in order to gain access to things a local user would have on the machine. An example is when an attacker tries to gain access to a machine by guessing possible usernames and passwords. User to root (U2R) attacks happen when an attacker starts out with access on the machine and then tries to gain root access to the system. If an attacker has access to an account on the machine, then they could potentially run programs that take advantage of operating system weaknesses to gain root access. Probe attacks happen when an attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used to compromise the system. For example, the attacker could be trying to determine what version of a software is being run on that machine, and if that version has a known issue then that allows them to attempt to attack that.~\cite{DBLP:journals/corr/abs-1204-1336, typesOfAttacks}
+Denial of service (DoS) attacks happen when an attacker makes a machine inaccessible to a user by making it too busy to serve legitimate requests. For example, many systems lock out a user from an account after a certain number of failed login attempts. An attacker would be able to use this to prevent legitimate users from logging in, by intentionally failing to log in enough times to lock the account~\cite{DoSAttacks}. Remote to user, also known as remote to local (R2L) attacks happen when an attacker sends packets to a machine over the network in order to gain access to things a local user would have on the machine. An example is when an attacker tries to gain access to a machine by guessing possible usernames and passwords. User to root (U2R) attacks happen when an attacker starts out with access on the machine and then tries to gain root access to the system. If an attacker has access to an account on the machine, they could potentially run programs that take advantage of operating system weaknesses to gain root access. Probe attacks happen when an attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used to compromise the system. For example, the attacker could be trying to determine what version of a software is being run on that machine, and if that version has a known issue then that allows them to attempt to attack that.~\cite{DBLP:journals/corr/abs-1204-1336, typesOfAttacks}
 
 
 
@@ -143,7 +143,7 @@ The IDS used in~\cite{6496342, 6559603} is able to identify normal network activ
 
 \subsection{Fuzzy Logic Rules and Algorithm}
 \label{sec:fuzzyRulesAndAlgorithm}
-Attacks on systems do not always have a fixed pattern, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. Fuzzy logic rules are similar to the rules described in Section~\ref{sec:detectionMeth}, except that \emph{consequence} is a certainty factor. For example, if (\emph{duration} = 6) then (\emph{the degree of certainty of it being an attack is 0.5}).
+Attacks on systems do not always have a fixed pattern, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual. Fuzzy logic rules are similar to the rules described in Section~\ref{sec:detectionMeth}, except that \emph{consequence} is a certainty factor. For example, if (\emph{duration} = 6) then (\emph{the degree of certainty of the record being an attack is 0.5}).
 
 To find the degree of certainty of a record being an attack, a trapezoidal shape was used in~\cite{6496342, 6559603}; this is shown in Figure~\ref{fig:trapFigure}. The trapezoidal shape has four parameters: $a, b, c$, and $d$. Algorithm~\ref{alg:fuzAlg} calculates the certainty of a record being an attack.
 
@@ -174,7 +174,7 @@ To find the degree of certainty of a record being an attack, a trapezoidal shape
 \end{algorithmic}
 \end{algorithm}
 
-An example of using the fuzzy logic approach is: suppose that the feature is duration, and suppose it is 6 seconds, so then data = 6. Suppose that $a$ = 1, $b$ = 3, $c$ = 5, $d$ = 7. Because data (6) is between $c$ and $d$, then the degree of certainty of it being an attack is equal to
+An example of using the fuzzy logic approach is: suppose that the feature is duration, and suppose it is 6 seconds, so then data = 6. Suppose that $a$ = 1, $b$ = 3, $c$ = 5, $d$~=~7. Because data (6) is between $c$ and $d$, then the degree of certainty of it being an attack is equal to
 
 \begin{equation*}
 \frac{d-\textrm{data}}{d-c} = \frac{7-6}{7-5} = 0.5.
