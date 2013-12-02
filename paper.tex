@@ -3,8 +3,10 @@
 \usepackage{algorithmic}
 \usepackage{algorithm}
 
-\usepackage{natbib}
-\setlength{\bibsep}{3pt}
+\let\oldbibliography\thebibliography
+\renewcommand{\thebibliography}[1]{\oldbibliography{#1}
+\vspace{0.3cm}
+\setlength{\itemsep}{0pt}}
 
 
 %%%% User-defined macros
@@ -404,7 +406,7 @@ Test & Attack & Type & FP(\%) & FN(\%) & DR(\%)\\ \hline
 
 The authors of~\cite{DBLP:journals/corr/abs-1204-1336} used a genetic algorithm to develop an IDS. They didn't explain their research that well and left a lot of things out, so I will just be describing their results.
 
-The KDD99 data set was used in the experiments. Standard subsets of set were used for training and testing. The training set had a total of 494,021 records, 396,741 of which were attacks. The test set had a total of 311,029 records, 250,436 of which were attacks. Table~\ref{tab:numberOfRecords} shows the distribution of each type of attack, as well as normal activity, that were in the training and test sets.
+The KDD99 data set was used in the experiments. Standard subsets of the set were used for training and testing. The training set had a total of 494,021 records, 396,741 of which were attacks. The test set had a total of 311,029 records, 250,436 of which were attacks. Table~\ref{tab:numberOfRecords} shows the distribution of each type of attack, as well as normal activity, that were in the training and test sets.
 
 \begin{table}
 \center
