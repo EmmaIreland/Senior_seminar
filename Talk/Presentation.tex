@@ -104,21 +104,29 @@
   \frametitle{Types of Networking Attacks}
   \begin{itemize}
   	\item Denial of Service (DoS): attacker makes a machine inaccessible to a user by making it too busy to serve legitimate requests.
-
-  	\linespace
-  	\linespace
-
-  	\item Remote to User (R2L): attacker tries to gain access to things a local user would have on the machine.
-
-  	\linespace
-  	\linespace
   	
-  	\item User to Root (U2R): attacker starts out with access on the machine and then tries to gain root access to the system.
+  	\begin{itemize}
+  		\item Many systems lock out a user from an account after a certain number of failed login attempts. An attacker would be able to use this to prevent legitimate users from logging in, by intentionally failing to log in enough times to lock the account.
+  	\end{itemize}
+
+%  	\linespace
+%  	\linespace
+
+%  	\item Remote to User (R2L): attacker tries to gain access to things a local user would have on the machine.
+
+%  	\linespace
+%  	\linespace
+  	
+%  	\item User to Root (U2R): attacker starts out with access on the machine and then tries to gain root access to the system.
 
   	\linespace
   	\linespace
   	
   	\item Probe: attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used to compromise the system.
+  	
+  	\begin{itemize}
+  		\item An attack could be trying to determine what version of a software is being run on that machine, and if that version has a known issue then that allows them to attempt to attack that.
+  	\end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -171,11 +179,11 @@ that are already known to the IDS against captured events in order to identify a
 			\begin{itemize}
 				\item A record is a sequence of TCP packets, between which data flows to and from a source IP address to a target IP address.
 			\end{itemize}
-		\item Data in the set is classified as normal or attack activity.
+		\item Each record is classified as either normal or attack activity.
 
 \linespace
 
-		\item Uses 41 \emph{features}, which are properties of a record that are used to describe the activity and help to distinguish normal connections from attacks.
+		\item KDD99 uses 41 \emph{features}, which are properties of a record that are used to describe the activity and help to distinguish normal connections from attacks.
 
 	\end{itemize}
 \end{frame}
@@ -185,7 +193,6 @@ that are already known to the IDS against captured events in order to identify a
   \frametitle{Some Features of KDD99}
 	\begin{itemize}
 		\item duration: length of the record in seconds.
-in seconds.
 		%\item src\_bytes: number of bytes sent from source to destination.
 		\item num\_failed\_logins: number of failed login attempts.
 		\item root\_shell: returns 1 if root shell is obtained, else returns 0.
@@ -203,7 +210,7 @@ in seconds.
 	\begin{itemize}
 		\item RLD09 was created because KDD99 is 14 years old, and newer attack types are not included in KDD99 because of its age.
 		\item Data was captured from a university in Bangkok, Thailand.
-		\item 17 different types of attacks (divided into denial of service and probe attacks).
+		\item As well as normal network activity, RLD09 has 17 different types of attacks (divided into denial of service and probe attacks).
 	\end{itemize}
 \end{frame}
 
@@ -212,7 +219,7 @@ in seconds.
 \begin{frame}
   \frametitle{Training and Testing Sets}
 	\begin{itemize}
-		\item A common technique is to divide the data set into two subsets, a \emph{training set} and a \emph{testing set}.
+		\item In a machine learning experiment, a common technique is to divide the data set into two subsets, a \emph{training set} and a \emph{testing set}.
         \item The given algorithm is then trained on the training set to look for patterns.
         \item These patterns are then verified using the test set.
 	\end{itemize}
@@ -246,6 +253,12 @@ Attack & False Negative (FN) & True Positive (FP)  \\
 	\begin{itemize}
 		\item GAs are a search technique used to find solutions to problems.
         \item Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings.
+        
+        \begin{itemize}
+        	\item IDS rules can be represented as bit strings.
+        \end{itemize}
+        
+        \linespace
         \item First, a randomly generated population of potential solutions is created. Then mutation, crossover, and selection are applied to each generation until an acceptable solution is found or some time limit is exceeded.
 	\end{itemize}
 \end{frame}
@@ -256,8 +269,26 @@ Attack & False Negative (FN) & True Positive (FP)  \\
 	\begin{itemize}
         \item Mutation: random bits in an individual, or possible solution, are randomly changed.
         \item Crossover: two individuals swap sequences of bits to form two new individuals.
+        
+        \linespace
+        \linespace
+        
+       	\item In an IDS: mutation takes the bits of a rule and changes them to form a slightly different rule. Crossover takes 2 rules and creates new rules by swapping the bits of the old rules.
+
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Genetic Algorithms}
+	\begin{itemize}
         \item Selection: individuals that have better fitness are chosen to be parents.
         \item The fitness of an individual is specified by the fitness function, which determines the quality of a particular individual.
+        
+        \linespace
+        \linespace
+        
+       	\item In an IDS: fitness measures how well a rule classifies records as either attacks or normal activity. Selection combined with a fitness function directs the search towards an effective solution.
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -275,7 +306,7 @@ Attack & False Negative (FN) & True Positive (FP)  \\
 		\item Fuzzy logic rules are similar to the rules described before, except that
 consequence is a certainty factor. 
 		\begin{itemize}
-			\item If (\emph{duration} = 6) then (\emph{the degree of certainty of it being an attack is 0.5}).
+			\item If (\emph{duration} = 6) then (\emph{the degree of certainty of the record being an attack is 0.5}).
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -356,48 +387,46 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 
 \begin{frame}
 	\frametitle{Algorithm}
-\begin{columns}
-\begin{column}{0.6\textwidth}
-\begin{small}
-\begin{algorithmic}
-\FOR{each rule}
-  \FOR{each record}
-    \FOR{each feature}
-      \STATE{prob = fuzzy();}
-      \STATE{totalprob = totalprob + prob;}
-    \ENDFOR    
-    \IF{totalprob > threshold} 
-      \STATE{class is attack;}
-      \ELSE \STATE{class is normal;}
-    \ENDIF
-  \ENDFOR
-  \STATE{find $A$, $B$, $\alpha$, and $\beta$  %// $A$: \# of attack records. $B$: \# of normal records. $\alpha$: \# of attack records correctly identified as attack. $\beta$: \# of normal records incorrectly classified as attack.}
-  
-  } 
-\ENDFOR
-\STATE{calculate fitness}
-\STATE{crossover(), mutation()}
+%\begin{columns}
+%\begin{column}{0.6\textwidth}
+%\begin{small}
+%\begin{algorithmic}
+%\FOR{each rule}
+%  \FOR{each record}
+%    \FOR{each feature}
+%      \STATE{prob = fuzzy();}
+%      \STATE{totalprob = totalprob + prob;}
+%    \ENDFOR    
+%    \IF{totalprob > threshold} 
+%      \STATE{class is attack;}
+%      \ELSE \STATE{class is normal;}
+%    \ENDIF
+%  \ENDFOR
+%  \STATE{find $A$, $B$, $\alpha$, and $\beta$} 
+%\ENDFOR
+%\STATE{calculate fitness}
+%\STATE{crossover(), mutation()}
 
-\end{algorithmic}
-\end{small}
-\end{column}
+%\end{algorithmic}
+%\end{small}
+%\end{column}
 
-\begin{column}{0.4\textwidth}
+%\begin{column}{0.4\textwidth}
 	The fitness function in the algorithm is:
 	\begin{equation*}
 	\frac{\alpha}{A} - \frac{\beta}{B}
 	\end{equation*}
 
-	$A$: \# of attack records.
-	
-	$B$: \# of normal records. 
-
 	$\alpha$: \# of attack records correctly identified as attack.
+
+	$A$: \# of attack records.
 
 	$\beta$: \# of normal records incorrectly classified as attack.
 	
-\end{column}
-\end{columns}
+	$B$: \# of normal records. 
+	
+%\end{column}
+%\end{columns}
 \end{frame}
 
 
@@ -419,7 +448,7 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 		\item 10,000 records in the training set, 26,500 records in the test set.
 	\end{itemize}
 
-\linespace
+
 \begin{itemize}
 	\item The following algorithm was used to identify attacks and normal activity in this experiment.
 \end{itemize}
@@ -454,8 +483,8 @@ Testing & 10500 & 16000 & 26500 & 1.13 & 4.10 & 97.92\\
 Experiment 2
 	\begin{itemize}
 		\item Attacks were pulled out of the training set and kept for unknown data testing. This was to test that the fuzzy GA could detect unknown attacks.
-		\item Used fuzzy GA and a decision tree algorithm.
-		\item For each test case there were 13 attack types plus normal activity that were in the training data set. Three attack types were used for the unknown testing data set.
+		\item Used fuzzy GA and a decision tree algorithm, which is another common algorithm for classification problems.
+		\item 7 tests were run, and for each test case there were 13 attack types plus normal activity that were in the training data set. Three attack types were used for the unknown testing data set.
 	\end{itemize}
 \end{frame}
 
@@ -498,6 +527,11 @@ Case & Attacks & Tree DR (\%) & Genetic DR (\%)\\ \hline
 
 \begin{frame}
 	\frametitle{Experiments Using Both RLD09 and KDD99}
+Three experiments used both RLD09 and KDD99.
+
+\linespace
+\linespace
+
 Experiment 1
 	\begin{itemize}
 		\item Used fuzzy GA to classify normal activity and attacks from KDD99 and RLD09.
@@ -525,12 +559,16 @@ Experiment 2
 \begin{tabular}{cccccc}
 Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 1 & Back & DoS & 85.33 & 0.00 & 16.56\\
-2 & Smurf & DoS & 0.76 & 0.10 & 99.73\\
-3 & Neptune & DoS & 0.15 & 0.34 & 99.75\\
+2 & PoD & DoS & 84.66 & 0.00 & 15.58\\
+3 & Smurf & DoS & 0.76 & 0.10 & 99.73\\
 4 & Portsweep & Probe & 6.40 & 0.00 & 93.66\\
 5 & Satan & Probe & 0.74 & 3.75 & 99.22\\
 \end{tabular}
 \end{table}
+
+\begin{itemize}
+	\item 8 test cases had DR greater than 93\%. Only 2 cases had low DR.
+\end{itemize}
 
 \end{frame}
 
@@ -554,6 +592,10 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 6 & Syn Scan & Probe & 0.65 & 4.2 & 99.24\\
 \end{tabular}
 \end{table}
+
+\begin{itemize}
+	\item 15 cases had DR greater than 97\%. 2 cases had low DR, (cases 3 and 5).
+\end{itemize}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
