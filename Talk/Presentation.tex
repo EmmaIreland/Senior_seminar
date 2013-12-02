@@ -2,8 +2,9 @@
 
 \mode<presentation>
 {
-  \usetheme{CambridgeUS}
+  \usetheme{Frankfurt}
   \setbeamercovered{transparent}
+  %\usecolortheme{whale}
 }
 
 \usepackage[english]{babel}
@@ -230,11 +231,12 @@ that are already known to the IDS against captured events in order to identify a
 \subsection{Determining the Accuracy of an Algorithm}
 \begin{frame}
   \frametitle{Determining the Accuracy of an Algorithm}
-\centering{Predicted}
+%\centering{Predicted}
 \begin{table}
-Actual
+%Actual
+Predicted
 \begin{tabular}{l|ll}
- & Not Attack & Attack \\ \hline
+Actual   & Not Attack & Attack \\ \hline
 Not Attack & True Negative (TN) & False Positive (FP) \\
 Attack & False Negative (FN) & True Positive (FP)  \\
 \end{tabular}
@@ -342,16 +344,16 @@ consequence is a certainty factor.
 	\frametitle{Encoding of Features and Rules}
 	\begin{itemize}
 	\item The four parameters are encoded into blocks. Each block is a feature with values between 0 and 7.
-	\end{itemize}
+%	\end{itemize}
 	
-\begin{figure}
-\begin{tabular}{|cccc|} \hline
-010 & 011 & 100 & 101\\
-a=2 & b=3 & c=4 & d=5\\
-\hline\end{tabular}
-\end{figure}
+%\begin{figure}
+%\begin{tabular}{|cccc|} \hline
+%010 & 011 & 100 & 101\\
+%a=2 & b=3 & c=4 & d=5\\
+%\hline\end{tabular}
+%\end{figure}
 
-	\begin{itemize}
+%	\begin{itemize}
 	\item A rule has one block for each of 12 features followed at the end by a marker indicating the type of attack.
 	\end{itemize}
 
@@ -362,7 +364,7 @@ a=2 & b=3 & c=4 & d=5\\
 a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\ 
     &     & Block 1&    &        &     & Block 12& &       & Type\\
 \hline\end{tabular}
-\caption{Based on [Jongsuebsuk-Wattanapongsakorn-Charnsripinyo, 2013]}
+\caption{Based on [Jongsuebsuk \emph{et al.}, 2013]}
 \end{small}
 \end{figure}
 
