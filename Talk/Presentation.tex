@@ -82,10 +82,14 @@
   \frametitle{The Big Picture}
   \begin{itemize}
   	\item Computer lab gets large numbers of login attempts that are attempts at intrusion.
-	\item An attack could be trying to gain root access to the system.
-	\item With an intrusion detection system (IDS), it would be possible to classify those attempts into legitimate and illegitimate attempts to login.
+	\begin{itemize}
+		\item Trying to gain root access to the system.
+		\item Delete files of other users and change user passwords.
+	\end{itemize}
+	\linespace
+	\item With an intrusion detection system (IDS) -> classify those attempts.
 	\item Intrusion detection systems provide one way of detecting attacks by monitoring network activities for malicious or abnormal behaviors and then producing reports, alerts, and actions.
-	\item A way of training an IDS about possible threats is by using a fuzzy genetic algorithm.
+	\item Training an IDS: use a fuzzy genetic algorithm.
   \end{itemize}
 \end{frame}
 
@@ -99,47 +103,43 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section[Background]{Background}
+\section[Intrusion Detection]{Intrusion Detection}
 \subsection{Types of Networking Attacks}
 \begin{frame}
   \frametitle{Types of Networking Attacks}
   \begin{itemize}
-  	\item Denial of Service (DoS): attacker makes a machine inaccessible to a user by making it too busy to serve legitimate requests.
+  	\item Denial of Service (DoS): 
+  	
+  	makes machine inaccessible to user by making it too busy to serve legitimate requests.
   	
   	\begin{itemize}
-  		\item Many systems lock out a user from an account after a certain number of failed login attempts. An attacker would be able to use this to prevent legitimate users from logging in, by intentionally failing to log in enough times to lock the account.
+  		\item  Systems lock out user from account after certain number of failed login attempts. Attacker would be able to use this to prevent users from logging in, by failing to log in enough times to lock the account.
   	\end{itemize}
 
-%  	\linespace
-%  	\linespace
-
-%  	\item Remote to User (R2L): attacker tries to gain access to things a local user would have on the machine.
-
-%  	\linespace
-%  	\linespace
-  	
-%  	\item User to Root (U2R): attacker starts out with access on the machine and then tries to gain root access to the system.
-
   	\linespace
   	\linespace
   	
-  	\item Probe: attacker examines a machine in order to collect information about weaknesses or vulnerabilities that in the future could be used to compromise the system.
+  	\item Probe: 
+  	
+  	examines machine in order to collect information about weaknesses that in the future could be used to compromise the system.
   	
   	\begin{itemize}
-  		\item An attack could be trying to determine what version of a software is being run on that machine, and if that version has a known issue then that allows them to attempt to attack that.
+  		\item Attacker could be trying to determine what version of a software is being run on that machine, and if that version has a known issue then that allows them to attempt to attack that.
   	\end{itemize}
   \end{itemize}
 \end{frame}
 
 
-\subsection{Detection Methodologies and Rules}
+\subsection{Detection Methodologies}
 \begin{frame}
   \frametitle{Detection Methodologies}
   \begin{itemize}
   	\item Signature-based detection: compares well-known patterns of attacks
 that are already known to the IDS against captured events in order to identify a possible attack.
 	\begin{itemize}
-		\item Simple and effective way to detect known attacks, but is ineffective against new kinds of unknown attacks.
+		\item Simple and effective way to detect known attacks, 
+		
+		ineffective against new kinds of unknown attacks.
 	\end{itemize}
 
 \linespace
@@ -147,24 +147,12 @@ that are already known to the IDS against captured events in order to identify a
 
   	\item Anomaly-based detection: looks for patterns of activity that are rare and uncommon.
 	\begin{itemize}
-		\item Harder to do than signature-based detection, but it can be an effective way to detect new, unknown attacks.
+		\item Harder to do than signature-based detection, 
+		
+		can be an effective way to detect new, unknown attacks.
 	\end{itemize}
   \end{itemize}
 \end{frame}
-
-
-\begin{frame}
-  \frametitle{Rules}
-	\begin{itemize}
-		\item A commonly used approach for detecting intrusions is to use rules.
-		\item If-Then format: If (\emph{condition}) then (\emph{consequence}).
-		\begin{itemize}
-			\item The condition is composed of one or more features, and the consequence says if it is an intrusion or not.
-			\item If \emph{duration = 4} then \emph{intrusion}.
-		\end{itemize}				
-	\end{itemize}
-\end{frame}
-
 
 
 \subsection{Data Sets - KDD99 and RLD09}
@@ -181,26 +169,21 @@ that are already known to the IDS against captured events in order to identify a
 				\item A record is a sequence of TCP packets, between which data flows to and from a source IP address to a target IP address.
 			\end{itemize}
 		\item Each record is classified as either normal or attack activity.
-
-\linespace
-
-		\item KDD99 uses 41 \emph{features}, which are properties of a record that are used to describe the activity and help to distinguish normal connections from attacks.
-
 	\end{itemize}
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Some Features of KDD99}
+  \frametitle{Features of KDD99}
 	\begin{itemize}
+		\item KDD99 uses 41 \emph{features}, which are properties of a record that are used to describe the activity and help to distinguish normal connections from attacks.
+		
+		\linespace
+		\linespace
+		
 		\item duration: length of the record in seconds.
-		%\item src\_bytes: number of bytes sent from source to destination.
 		\item num\_failed\_logins: number of failed login attempts.
 		\item root\_shell: returns 1 if root shell is obtained, else returns 0.
-		%\item num\_access\_files: number of operations on access control files.
-		%\item srv\_count: number of connections to the same service as the current connection in the past two seconds.
-		%\item serror\_rate: percentage of connections that have ``SYN" errors.
-		%\item same\_srv\_rate: percentage of connections to the same service.
 	\end{itemize}
 \end{frame}
 
@@ -209,9 +192,25 @@ that are already known to the IDS against captured events in order to identify a
 \begin{frame}
   \frametitle{RLD09}
 	\begin{itemize}
-		\item RLD09 was created because KDD99 is 14 years old, and newer attack types are not included in KDD99 because of its age.
+		\item RLD09 was created because KDD99 is 14 years old, 
+		
+		newer attack types are not in KDD99 because of its age.
 		\item Data was captured from a university in Bangkok, Thailand.
-		\item As well as normal network activity, RLD09 has 17 different types of attacks (divided into denial of service and probe attacks).
+		\item As well as normal network activity, has 17 different types of attacks (divided into denial of service and probe attacks).
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Rules}
+	\begin{itemize}
+		\item A commonly used approach for detecting intrusions is to use rules.
+		\item If-Then format: If (\emph{condition}) then (\emph{consequence}).
+		\begin{itemize}
+			\item The condition is composed of one or more features, and the consequence says if it is an intrusion or not.
+			\item If \emph{duration = 4} then \emph{intrusion}.
+		\end{itemize}				
 	\end{itemize}
 \end{frame}
 
@@ -220,7 +219,7 @@ that are already known to the IDS against captured events in order to identify a
 \begin{frame}
   \frametitle{Training and Testing Sets}
 	\begin{itemize}
-		\item In a machine learning experiment, a common technique is to divide the data set into two subsets, a \emph{training set} and a \emph{testing set}.
+		\item The authors divided the data set into two subsets, a \emph{training set} and a \emph{test set}.
         \item The given algorithm is then trained on the training set to look for patterns.
         \item These patterns are then verified using the test set.
 	\end{itemize}
@@ -238,73 +237,23 @@ Predicted
 \begin{tabular}{l|ll}
 Actual   & Not Attack & Attack \\ \hline
 Not Attack & True Negative (TN) & False Positive (FP) \\
-Attack & False Negative (FN) & True Positive (FP)  \\
+Attack & False Negative (FN) & True Positive (TP)  \\
 \end{tabular}
 \end{table}
 \linespace
-	\begin{itemize}
-		\item Detection rate (DR): the percentage of normal and attack activity correctly classified from the total number of data records.
-	\end{itemize}
-\end{frame}
-
-
-
-\subsection{Genetic Algorithms}
-\begin{frame}
-  \frametitle{Genetic Algorithms}
-	\begin{itemize}
-		\item GAs are a search technique used to find solutions to problems.
-        \item Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings.
-        
-        \begin{itemize}
-        	\item IDS rules can be represented as bit strings.
-        \end{itemize}
-        
-        \linespace
-        \item First, a randomly generated population of potential solutions is created. Then mutation, crossover, and selection are applied to each generation until an acceptable solution is found or some time limit is exceeded.
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Genetic Algorithms}
-	\begin{itemize}
-        \item Mutation: random bits in an individual, or possible solution, are randomly changed.
-        \item Crossover: two individuals swap sequences of bits to form two new individuals.
-        
-        \linespace
-        \linespace
-        
-       	\item In an IDS: mutation takes the bits of a rule and changes them to form a slightly different rule. Crossover takes 2 rules and creates new rules by swapping the bits of the old rules.
-
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Genetic Algorithms}
-	\begin{itemize}
-        \item Selection: individuals that have better fitness are chosen to be parents.
-        \item The fitness of an individual is specified by the fitness function, which determines the quality of a particular individual.
-        
-        \linespace
-        \linespace
-        
-       	\item In an IDS: fitness measures how well a rule classifies records as either attacks or normal activity. Selection combined with a fitness function directs the search towards an effective solution.
-	\end{itemize}
+\linespace
+\begin{center}
+Detection rate (DR): percentage of normal and attack activity correctly classified from the total number of data records.
+\end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section[Using Fuzzy Genetic Algorithms]{Using Fuzzy Genetic Algorithms}
-
-\subsection{Fuzzy Algorithm}
-
+\section[Fuzzy Algorithm]{Fuzzy Algorithm}
+\subsection{Fuzzy Logic}
 \begin{frame}
 	\frametitle{Fuzzy Logic}
 	\begin{itemize}
-		\item Attacks on systems do not always have a fixed pattern, so fuzzy logic is used to detect patterns that have a behavior that is between normal and unusual.
+		\item Fuzzy logic is used in intrusion detection systems to find the degree of certainty of a record being an attack.
 		\item Fuzzy logic rules are similar to the rules described before, except that
 consequence is a certainty factor. 
 		\begin{itemize}
@@ -313,55 +262,27 @@ consequence is a certainty factor.
 	\end{itemize}
 \end{frame}
 
-
+\subsection{Finding the Degree of Certainty}
 \begin{frame}
   \frametitle{Finding the Degree of Certainty of a Record Being an Attack}
-	%\begin{itemize}	
-	%\item Suppose that the feature is duration, and it is 6 seconds, so then data = 6.
-	%\end{itemize}
 	Suppose that the feature is duration, and it is 6 seconds. Then data=6.
-%  \begin{columns}
-%  \begin{column}{0.6\textwidth}
   \includegraphics[width=0.95\textwidth]{../trapFigExample.pdf}
-%  \end{column}
-
-%  \begin{column}{0.4\textwidth}
-%  Example:
-%  \begin{itemize}
-%  	\item Feature: duration (length of the activity in seconds).
-%  	\item a=1, b=3, c=5, d=7
-%  	\item The length of the activity is 6 seconds (between c and d).
-%  	\linespace
-%  	\item prob = $\frac{d-\textrm{data}}{d-c}$ = $\frac{7-6}{7-5}$ = 0.5
-%  \end{itemize}
-
-%  \end{column}
-%  \end{columns}
 \end{frame}
 
 
+\subsection{Encoding of Features and Rules}
 \begin{frame}
 	\frametitle{Encoding of Features and Rules}
 	\begin{itemize}
 	\item The four parameters are encoded into blocks. Each block is a feature with values between 0 and 7.
-%	\end{itemize}
-	
-%\begin{figure}
-%\begin{tabular}{|cccc|} \hline
-%010 & 011 & 100 & 101\\
-%a=2 & b=3 & c=4 & d=5\\
-%\hline\end{tabular}
-%\end{figure}
-
-%	\begin{itemize}
 	\item A rule has one block for each of 12 features followed at the end by a marker indicating the type of attack.
 	\end{itemize}
 
 \begin{figure}
 \begin{small}
 \begin{tabular}{|cccc|c|cccc|c|} \hline
-010 & 011 & 100 & 101   & ...... & 010 & 011 & 101 & 111   & DoS\\
-a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\ 
+010 & 011 & 100 & 101   & ... & 010 & 011 & 101 & 111   & Attack\\
+a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\ 
     &     & Block 1&    &        &     & Block 12& &       & Type\\
 \hline\end{tabular}
 \caption{Based on [Jongsuebsuk \emph{et al.}, 2013]}
@@ -373,47 +294,89 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 	\end{itemize}
 
 \end{frame}
-
-
-\subsection{Algorithm Overview}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Genetic Algorithms]{Genetic Algorithms}
+\subsection{GA Overview}
 \begin{frame}
-	\frametitle{Algorithm Overview}
+  \frametitle{Genetic Algorithms}
 	\begin{itemize}
-		\item One record is passed into a rule.
-		\item Each feature in a record is matched to one block of the rule.
-		\item The parameters of each block measure the degree of certainty of an attack using the trapezoidal fuzzy rule shape.
-		\item The sum of the degrees of certainty from each block are then compared with a threshold to determine if the record represents an attack or normal behavior.
+		\item GAs: search technique used to find solutions to problems.
+        \item Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings.
+        
+        \begin{itemize}
+        	\item IDS rules can be represented as bit strings.
+        \end{itemize}
+        
+        \linespace
+        \item First, randomly generated population of potential solutions is created. Mutation, crossover, selection are applied to each generation until acceptable solution is found or some time limit is exceeded.
 	\end{itemize}
 \end{frame}
 
+
+\subsection{Mutation and Crossover}
 \begin{frame}
-	\frametitle{Algorithm}
-%\begin{columns}
-%\begin{column}{0.6\textwidth}
-%\begin{small}
-%\begin{algorithmic}
-%\FOR{each rule}
-%  \FOR{each record}
-%    \FOR{each feature}
-%      \STATE{prob = fuzzy();}
-%      \STATE{totalprob = totalprob + prob;}
-%    \ENDFOR    
-%    \IF{totalprob > threshold} 
-%      \STATE{class is attack;}
-%      \ELSE \STATE{class is normal;}
-%    \ENDIF
-%  \ENDFOR
-%  \STATE{find $A$, $B$, $\alpha$, and $\beta$} 
-%\ENDFOR
-%\STATE{calculate fitness}
-%\STATE{crossover(), mutation()}
+  \frametitle{Mutation and Crossover}
+	\begin{itemize}
+        \item Mutation: random bits in an individual, or possible solution, are randomly changed.
+        \begin{itemize}
+        	\item Takes bits of rule and changes them to form slightly different rule.
+        	
+        	\begin{figure}
+			\begin{tabular}{|cccc|} \hline
+			010 & 011 & 100 & \textbf{101}\\
+			a=2 & b=3 & c=4 & \textbf{d=5}\\
+			\hline\end{tabular}
+			$\rightarrow$
+			\quad
+			\begin{tabular}{|cccc|} \hline
+			010 & 011 & 100 & \textbf{111}\\
+			a=2 & b=3 & c=4 & \textbf{d=7}\\
+			\hline\end{tabular}			
+			\end{figure}
+        \end{itemize}
+        
+        \linespace
+        \linespace
+        \linespace
+        
+        \item Crossover: two individuals swap sequences of bits to form two new individuals.
+        \begin{itemize}
+        	\item Take 2 rules and creates new rules by swapping bits of old rules.
+        	
+        	\begin{figure}
+			\begin{tabular}{|cccc|} \hline
+			001 & 011 & 101 & 111\\
+			a=1 & b=3 & c=5 & d=7\\
+			\hline\end{tabular}
+			\quad
+			\begin{tabular}{|cccc|} \hline
+			010 & 100 & 110 & 111\\
+			a=2 & b=4 & c=6 & d=7\\
+			\hline\end{tabular}			
+			\end{figure}
+        \end{itemize}
+	\end{itemize}
+\end{frame}
 
-%\end{algorithmic}
-%\end{small}
-%\end{column}
 
-%\begin{column}{0.4\textwidth}
+\subsection{Selection and Fitness}
+\begin{frame}
+  \frametitle{Selection and Fitness}
+	\begin{itemize}
+        \item Selection: individuals that have better fitness are chosen to be parents.
+        \item The fitness of an individual is specified by the fitness function, which determines the quality of a particular individual.
+        
+        \linespace
+        \linespace
+        
+       	\item In an IDS: fitness measures how well a rule classifies records as either attacks or normal activity. Selection combined with fitness function directs search towards effective solution.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Fitness function}
 	The fitness function in the algorithm is:
 	\begin{equation*}
 	\frac{\alpha}{A} - \frac{\beta}{B}
@@ -425,42 +388,34 @@ a=2 & b=3 & c=4 & d=5   & ...... & a=2 & b=3 & c=5 & d=7   &\\
 
 	$\beta$: \# of normal records incorrectly classified as attack.
 	
-	$B$: \# of normal records. 
-	
-%\end{column}
-%\end{columns}
+	$B$: \# of normal records.
 \end{frame}
-
-
-\subsection{Experimental Design and Results}
-
-\begin{frame}
-	\frametitle{Experiments}
-	\begin{itemize}
-		\item A variety of experiments were run. Two experiments used just RLD09. Three experiments used both RLD09 and KDD99 in order to compare how the fuzzy GA would perform on both.
-	\end{itemize}
-\end{frame}
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Experiments and Results]{Experiments and Results}
+\subsection{Two Experiments using Only RLD09}
 \begin{frame}
 	\frametitle{Experiments Using Only RLD09}
 	Experiment 1
 	\begin{itemize}
-		\item Fuzzy GA was used to create DoS and probe detection rules. Both the DoS and probe rules were then used together in the testing process to identify attacks from the testing data set.
-		\item 10,000 records in the training set, 26,500 records in the test set.
-	\end{itemize}
+		\item Fuzzy GA was used to create DoS and probe detection rules. 
+		
+		Both rules were then used together in testing process to identify attacks from testing data set.
+		
+		\linespace
+		\linespace
+		
+		\item Training set: 10,000 records.
+		
+		Test set: 26,500 records.
 
+		\linespace
+		\linespace
 
-\begin{itemize}
-	\item The following algorithm was used to identify attacks and normal activity in this experiment.
+		\item If the record is either a DoS rule or a Probe rule, it is classified as an attack; else it is normal.
 \end{itemize}
-
-\begin{algorithmic}
-\IF{dos\_rule = yes or probe\_rule = yes}
-	\STATE{This record is an attack;}
-\ELSE \STATE{This record is normal;}
-\ENDIF
-\end{algorithmic}
 \end{frame}
 
 
@@ -484,9 +439,13 @@ Testing & 10500 & 16000 & 26500 & 1.13 & 4.10 & 97.92\\
 	\frametitle{Experiments Using Only RLD09}
 Experiment 2
 	\begin{itemize}
-		\item Attacks were pulled out of the training set and kept for unknown data testing. This was to test that the fuzzy GA could detect unknown attacks.
+		\item Attacks pulled out of training set and kept for unknown data testing, to test that fuzzy GA could detect unknown attacks.
 		\item Used fuzzy GA and a decision tree algorithm, which is another common algorithm for classification problems.
-		\item 7 tests were run, and for each test case there were 13 attack types plus normal activity that were in the training data set. Three attack types were used for the unknown testing data set.
+		\item 7 tests were run. 
+		
+		For each test case there were 13 attack types plus normal activity that were in the training data set. 
+		
+		3 attack types were used for the unknown testing data set.
 	\end{itemize}
 \end{frame}
 
@@ -523,10 +482,11 @@ Case & Attacks & Tree DR (\%) & Genetic DR (\%)\\ \hline
 \hline\end{tabular}
 \end{footnotesize}
 \end{table}
-	
 \end{frame}
 
 
+
+\subsection{Three Experiments using Both RLD09 and KDD99}
 \begin{frame}
 	\frametitle{Experiments Using Both RLD09 and KDD99}
 Three experiments used both RLD09 and KDD99.
@@ -534,10 +494,7 @@ Three experiments used both RLD09 and KDD99.
 \linespace
 \linespace
 
-Experiment 1
-	\begin{itemize}
-		\item Used fuzzy GA to classify normal activity and attacks from KDD99 and RLD09.
-	\end{itemize}
+Experiment 1 - Used fuzzy GA to classify normal activity and attacks from KDD99 and RLD09.
 	
 \begin{table}
 \begin{tabular}{cccccc}
@@ -554,7 +511,6 @@ RLD09 & 10,500 & 16,000 & 1.14 & 3.39 & 97.97\\
 Experiment 2
 	\begin{itemize}
 		\item Used the fuzzy GA to classify types of attacks in KDD99.
-		\item 158,597 records of DoS attacks. 1,500 records of probe attacks.
 		\item 10 tests were run in total, 5 are shown here.
 	\end{itemize}
 \begin{table}
@@ -569,7 +525,7 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 \end{table}
 
 \begin{itemize}
-	\item 8 test cases had DR greater than 93\%. Only 2 cases had low DR.
+	\item 8 test cases had DR greater than 93\%. Only 2 cases had low DR, (cases 1 and 2).
 \end{itemize}
 
 \end{frame}
@@ -580,7 +536,6 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 Experiment 3
 	\begin{itemize}
 		\item Used the fuzzy GA to classify types of attacks in RLD09.
-		\item 6,400 records of DoS attacks. 10,400 records of probe attacks.
 		\item 17 tests were run in total, 6 are shown here.
 	\end{itemize}
 \begin{table}
@@ -625,8 +580,39 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 	\linespace
 	
 	\begin{center}
-	{\huge Questions?}
+	{\Large Questions?}
 	\end{center}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Probe Attacks}
+	\begin{itemize}
+		\item Advance Port Scan
+		\item Ack Scan
+		\item Xmas Tree
+		\item Host Scan
+		\item UDP Scan
+		\item Syn Scan
+		\item Fin Scan
+		\item RCP Scan
+		\item Portsweep
+		\item Satan
+		\item IP Scan
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{DoS Attacks}
+	\begin{itemize}
+		\item UDP Flood
+		\item Jping
+		\item HTTP Flood
+		\item Back
+		\item PoD
+		\item Smurf
+	\end{itemize}
 \end{frame}
 
 \section*{References}
@@ -647,12 +633,6 @@ Jongsuebsuk, P. and Wattanapongsakorn, N. and Charnsripinyo, C.
 Jongsuebsuk, P. and Wattanapongsakorn, N. and Charnsripinyo, C.
 \newblock Real-time intrusion detection with fuzzy genetic algorithm.
 \newblock In \emph{2013 10th International Conference on Electrical Engineering/Electronics, Computer, Telecommunications and Information Technology (ECTI-CON)}, pages 1-6, 2013.
-	
-	
-%	\bibitem{DBLP:journals/corr/abs-1204-1336}
-%Mohammad Sazzadul Hoque, Md. Abdul Mukit, Md. Abu Naser Bikas.
-%\newblock An Implementation of Intrusion Detection System Using Genetic Algorithm.
-%\newblock \emph{CoRR}, abs/1204.1336, 2012.
 	\end{small}
 	
   	\end{thebibliography}
