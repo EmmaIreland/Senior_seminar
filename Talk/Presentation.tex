@@ -84,11 +84,11 @@
   	\item Computer lab gets large numbers of login attempts that are attempts at intrusion.
 	\begin{itemize}
 		\item Trying to gain root access to the system.
-		\item Delete files of other users and change user passwords.
+		\item Delete files of users and change user passwords.
 	\end{itemize}
 	\linespace
-	\item With an intrusion detection system (IDS) -> classify those attempts.
-	\item Intrusion detection systems provide one way of detecting attacks by monitoring network activities for malicious or abnormal behaviors and then producing reports, alerts, and actions.
+	\item With intrusion detection system (IDS): classify attempts.
+	\item Intrusion detection systems provide way of detecting attacks by monitoring network activities for malicious or abnormal behaviors then producing reports, alerts, actions.
 	\item Training an IDS: use a fuzzy genetic algorithm.
   \end{itemize}
 \end{frame}
@@ -113,7 +113,9 @@
   	makes machine inaccessible to user by making it too busy to serve legitimate requests.
   	
   	\begin{itemize}
-  		\item  Systems lock out user from account after certain number of failed login attempts. Attacker would be able to use this to prevent users from logging in, by failing to log in enough times to lock the account.
+  		\item  Systems lock out user from account after certain number of failed login attempts. 
+  		
+  		Use this to prevent users from logging in, by failing to log in enough times to lock account.
   	\end{itemize}
 
   	\linespace
@@ -121,10 +123,10 @@
   	
   	\item Probe: 
   	
-  	examines machine in order to collect information about weaknesses that in the future could be used to compromise the system.
+  	examines machine in order to collect info about weaknesses that in future could be used to compromise system.
   	
   	\begin{itemize}
-  		\item Attacker could be trying to determine what version of a software is being run on that machine, and if that version has a known issue then that allows them to attempt to attack that.
+  		\item Trying to determine what version of software is being run, if version has known issue it allows attacker to attempt to attack that.
   	\end{itemize}
   \end{itemize}
 \end{frame}
@@ -135,7 +137,7 @@
   \frametitle{Detection Methodologies}
   \begin{itemize}
   	\item Signature-based detection: compares well-known patterns of attacks
-that are already known to the IDS against captured events in order to identify a possible attack.
+that are already known to IDS against captured events in order to identify possible attack.
 	\begin{itemize}
 		\item Simple and effective way to detect known attacks, 
 		
@@ -168,7 +170,7 @@ that are already known to the IDS against captured events in order to identify a
 			\begin{itemize}
 				\item A record is a sequence of TCP packets, between which data flows to and from a source IP address to a target IP address.
 			\end{itemize}
-		\item Each record is classified as either normal or attack activity.
+		\item Each record: classified as either normal or attack.
 	\end{itemize}
 \end{frame}
 
@@ -176,7 +178,7 @@ that are already known to the IDS against captured events in order to identify a
 \begin{frame}
   \frametitle{Features of KDD99}
 	\begin{itemize}
-		\item KDD99 uses 41 \emph{features}, which are properties of a record that are used to describe the activity and help to distinguish normal connections from attacks.
+		\item KDD99 uses 41 \emph{features} - properties of record that are used to describe activity, help to distinguish normal connections from attacks.
 		
 		\linespace
 		\linespace
@@ -192,11 +194,11 @@ that are already known to the IDS against captured events in order to identify a
 \begin{frame}
   \frametitle{RLD09}
 	\begin{itemize}
-		\item RLD09 was created because KDD99 is 14 years old, 
+		\item RLD09: created because KDD99 is 14 years old, 
 		
-		newer attack types are not in KDD99 because of its age.
-		\item Data was captured from a university in Bangkok, Thailand.
-		\item As well as normal network activity, has 17 different types of attacks (divided into denial of service and probe attacks).
+		newer attack types not in KDD99 because of age.
+		\item Data was captured from university in Bangkok, Thailand.
+		\item Has normal network activity, and 17 different types of attacks (divided into denial of service and probe attacks).
 	\end{itemize}
 \end{frame}
 
@@ -208,7 +210,9 @@ that are already known to the IDS against captured events in order to identify a
 		\item A commonly used approach for detecting intrusions is to use rules.
 		\item If-Then format: If (\emph{condition}) then (\emph{consequence}).
 		\begin{itemize}
-			\item The condition is composed of one or more features, and the consequence says if it is an intrusion or not.
+			\item Condition: one or more features
+			\item Consequence: says if it is an intrusion or not.
+			\linespace
 			\item If \emph{duration = 4} then \emph{intrusion}.
 		\end{itemize}				
 	\end{itemize}
@@ -253,9 +257,9 @@ Detection rate (DR): percentage of normal and attack activity correctly classifi
 \begin{frame}
 	\frametitle{Fuzzy Logic}
 	\begin{itemize}
-		\item Fuzzy logic is used in intrusion detection systems to find the degree of certainty of a record being an attack.
-		\item Fuzzy logic rules are similar to the rules described before, except that
-consequence is a certainty factor. 
+		\item Fuzzy logic: used in intrusion detection systems to find degree of certainty of record being attack.
+		\item Fuzzy logic rules: similar to rules described before, except that
+consequence is certainty factor. 
 		\begin{itemize}
 			\item If (\emph{duration} = 6) then (\emph{the degree of certainty of the record being an attack is 0.5}).
 		\end{itemize}
@@ -274,8 +278,8 @@ consequence is a certainty factor.
 \begin{frame}
 	\frametitle{Encoding of Features and Rules}
 	\begin{itemize}
-	\item The four parameters are encoded into blocks. Each block is a feature with values between 0 and 7.
-	\item A rule has one block for each of 12 features followed at the end by a marker indicating the type of attack.
+	\item Four parameters are encoded into blocks. Each block is feature with values 0-7.
+	\item Rule has 1 block for each of 12 features followed at end by marker indicating type of attack.
 	\end{itemize}
 
 \begin{figure}
@@ -290,7 +294,7 @@ a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\
 \end{figure}
 
 	\begin{itemize}
-		\item The degree of certainty is computed for each of the 12 blocks, and if the sum of those is greater than a threshold, then it will be declared as an attack.
+		\item Degree of certainty is computed for each of 12 blocks, if sum of those is greater than threshold, declared as attack.
 	\end{itemize}
 
 \end{frame}
@@ -302,14 +306,14 @@ a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\
   \frametitle{Genetic Algorithms}
 	\begin{itemize}
 		\item GAs: search technique used to find solutions to problems.
-        \item Possible solutions to problems can be represented in a variety of problem dependent ways, such as bit strings.
+        \item Possible solutions to problems: represented in a variety of problem dependent ways.
         
         \begin{itemize}
         	\item IDS rules can be represented as bit strings.
         \end{itemize}
         
         \linespace
-        \item First, randomly generated population of potential solutions is created. Mutation, crossover, selection are applied to each generation until acceptable solution is found or some time limit is exceeded.
+        \item Randomly generated population of potential solutions is created. Mutation, crossover, selection applied to each generation until acceptable solution is found or time limit is exceeded.
 	\end{itemize}
 \end{frame}
 
@@ -365,7 +369,7 @@ a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\
   \frametitle{Selection and Fitness}
 	\begin{itemize}
         \item Selection: individuals that have better fitness are chosen to be parents.
-        \item The fitness of an individual is specified by the fitness function, which determines the quality of a particular individual.
+        \item Fitness of individual is specified by fitness function, which determines quality of particular individual.
         
         \linespace
         \linespace
@@ -414,7 +418,7 @@ a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\
 		\linespace
 		\linespace
 
-		\item If the record is either a DoS rule or a Probe rule, it is classified as an attack; else it is normal.
+		\item If record is either DoS rule or Probe rule, it is classified as attack; else normal.
 \end{itemize}
 \end{frame}
 
@@ -439,13 +443,13 @@ Testing & 10500 & 16000 & 26500 & 1.13 & 4.10 & 97.92\\
 	\frametitle{Experiments Using Only RLD09}
 Experiment 2
 	\begin{itemize}
-		\item Attacks pulled out of training set and kept for unknown data testing, to test that fuzzy GA could detect unknown attacks.
+		\item Attacks pulled out of training set, kept for unknown data testing, to test that fuzzy GA could detect unknown attacks.
 		\item Used fuzzy GA and a decision tree algorithm, which is another common algorithm for classification problems.
 		\item 7 tests were run. 
 		
-		For each test case there were 13 attack types plus normal activity that were in the training data set. 
+		Each test case: 13 attack types plus normal activity that were in training set. 
 		
-		3 attack types were used for the unknown testing data set.
+		3 attack types used for unknown testing data set.
 	\end{itemize}
 \end{frame}
 
