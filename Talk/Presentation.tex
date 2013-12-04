@@ -49,8 +49,8 @@
 }
 
 % The text in square brackets is the short version of the date if you need that.
-\date[December 2013] % (optional)
-{December 2013 \\ UMM CSci Senior Seminar Conference}
+\date[December 7, 2013] % (optional)
+{December 7, 2013 \\ UMM CSci Senior Seminar Conference}
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
@@ -108,25 +108,21 @@
 \begin{frame}
   \frametitle{Types of Networking Attacks}
   \begin{itemize}
-  	\item Denial of Service (DoS): 
-  	
-  	makes machine inaccessible to user by making it too busy to serve legitimate requests.
+  	\item Denial of Service (DoS) - makes machine inaccessible to user by making it too busy to serve legitimate requests.
   	
   	\begin{itemize}
-  		\item  Systems lock out user from account after certain number of failed login attempts. 
-  		
-  		Use this to prevent users from logging in, by failing to log in enough times to lock account.
+  		\item Systems lockout user from account after failed login attempts. 
+  		\item Use this to prevent users from logging in, by failing to log in enough times to lock account.
   	\end{itemize}
 
   	\linespace
   	\linespace
+  	\linespace
   	
-  	\item Probe: 
-  	
-  	examines machine in order to collect info about weaknesses that in future could be used to compromise system.
+  	\item Probe - examines machine to collect info about weaknesses, could be used to compromise system.
   	
   	\begin{itemize}
-  		\item Trying to determine what version of software is being run, if version has known issue it allows attacker to attempt to attack that.
+  		\item Trying to determine version of software is being run, if it has known issue it allows attacker to attempt to attack that.
   	\end{itemize}
   \end{itemize}
 \end{frame}
@@ -144,6 +140,7 @@ that are already known to IDS against captured events in order to identify possi
 		ineffective against new kinds of unknown attacks.
 	\end{itemize}
 
+\linespace
 \linespace
 \linespace
 
@@ -223,9 +220,12 @@ that are already known to IDS against captured events in order to identify possi
 \begin{frame}
   \frametitle{Training and Testing Sets}
 	\begin{itemize}
-		\item The authors divided the data set into two subsets, a \emph{training set} and a \emph{test set}.
-        \item The given algorithm is then trained on the training set to look for patterns.
+		\item Divide data set into 2 subsets: \emph{training set} and \emph{test set}.
+        \item The given algorithm is trained on the training set to look for patterns.
         \item These patterns are then verified using the test set.
+        \linespace
+        \linespace
+		\item Algorithm used runs risk of memorizing the data in training set, so important to keep some data separate, as unseen data for testing.        
 	\end{itemize}
 \end{frame}
 
@@ -258,18 +258,38 @@ Detection rate (DR): percentage of normal and attack activity correctly classifi
 	\frametitle{Fuzzy Logic}
 	\begin{itemize}
 		\item Fuzzy logic: used in intrusion detection systems to find degree of certainty of record being attack.
+			\begin{itemize}
+				\item If it's not clear if activity is an attack, fuzzy logic says where on a spectrum it is, how certain it is of being an attack.
+			\end{itemize}
+		\linespace
+		\linespace
+		\linespace
 		\item Fuzzy logic rules: similar to rules described before, except that
 consequence is certainty factor. 
 		\begin{itemize}
-			\item If (\emph{duration} = 6) then (\emph{the degree of certainty of the record being an attack is 0.5}).
+			\item If (\emph{duration} = 5.4) then (\emph{the degree of certainty of the record being an attack is 0.8}).
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \subsection{Finding the Degree of Certainty}
 \begin{frame}
+  \frametitle{Trapezoidal Shape}
+	\begin{itemize}
+		\item Used to decide how certain a record is of being an attack.
+		\item Described with 4 numbers, used to determine what the trapezoid looks like.
+		\begin{center}
+		  \includegraphics[width=0.85\textwidth]{../trapFigTemplate.pdf}		
+		\end{center}
+		\item Certain in middle, not as certain in triangle areas.
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
   \frametitle{Finding the Degree of Certainty of a Record Being an Attack}
-	Suppose that the feature is duration, and it is 6 seconds. Then data=6.
+	Suppose that the feature is duration, and it is 5.4 seconds. Then data=5.4.
   \includegraphics[width=0.95\textwidth]{../trapFigExample.pdf}
 \end{frame}
 
@@ -436,6 +456,10 @@ Testing & 10500 & 16000 & 26500 & 1.13 & 4.10 & 97.92\\
 \end{tabular}
 \end{small}
 \end{table}
+
+\begin{center}
+Testing has higher DR; it's more likely to classify attacks because it can match either attack type.
+\end{center}
 \end{frame}
 
 
@@ -555,7 +579,7 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 \end{table}
 
 \begin{itemize}
-	\item 15 cases had DR greater than 97\%. 2 cases had low DR, (cases 3 and 5).
+	\item 15 cases had DR greater than 97\%. 2 cases had lower DR, (cases 3 and 5).
 \end{itemize}
 
 \end{frame}
@@ -590,6 +614,28 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 
 
 \begin{frame}
+	\frametitle{DoS Attacks}
+	\begin{itemize}
+		\item Back: attack against the Apache web server. Attacker submits requests with URL's containing many front slashes. As server tries to process these requests it will slow down, becomes unable to process other requests.
+		\linespace
+		\linespace
+		\item PoD: involves sending a malformed/malicious ping to computer. Historically, many systems could not handle a ping packet larger than the maximum IPv4 packet size (65,535 bytes). Sending a ping of this size could crash the target computer.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{DoS Attacks}
+	\begin{itemize}
+		\item UDP Flood
+		\item Jping
+		\item HTTP Flood
+		\item Smurf
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
 	\frametitle{Probe Attacks}
 	\begin{itemize}
 		\item Advance Port Scan
@@ -606,18 +652,6 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 	\end{itemize}
 \end{frame}
 
-
-\begin{frame}
-	\frametitle{DoS Attacks}
-	\begin{itemize}
-		\item UDP Flood
-		\item Jping
-		\item HTTP Flood
-		\item Back
-		\item PoD
-		\item Smurf
-	\end{itemize}
-\end{frame}
 
 \section*{References}
 
