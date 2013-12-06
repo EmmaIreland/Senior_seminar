@@ -83,12 +83,12 @@
   \begin{itemize}
   	\item Computer lab gets large numbers of login attempts that are attempts at intrusion.
 	\begin{itemize}
-		\item Trying to gain root access to the system.
-		\item Delete files of users and change user passwords.
+		\item Trying to gain root access to the system
+		%\item Delete files of users and change user passwords.
 	\end{itemize}
 	\linespace
 	\item With intrusion detection system (IDS): classify attempts.
-	\item Intrusion detection systems provide way of detecting attacks by monitoring network activities for malicious or abnormal behaviors then producing reports, alerts, actions.
+	\item Intrusion detection systems provide a way of detecting attacks by monitoring network activities for malicious or abnormal behaviors then producing reports, alerts, actions.
 	\item Training an IDS: use a fuzzy genetic algorithm.
   \end{itemize}
 \end{frame}
@@ -133,7 +133,7 @@
   \frametitle{Detection Methodologies}
   \begin{itemize}
   	\item Signature-based detection: compares well-known patterns of attacks
-that are already known to IDS against captured events in order to identify possible attack.
+that are already known to IDS against captured events in order to identify possible attacks.
 	\begin{itemize}
 		\item Simple and effective way to detect known attacks, 
 		
@@ -195,7 +195,7 @@ that are already known to IDS against captured events in order to identify possi
 		
 		newer attack types not in KDD99 because of age.
 		\item Data was captured from university in Bangkok, Thailand.
-		\item Has normal network activity, and 17 different types of attacks (divided into denial of service and probe attacks).
+		\item Has normal network activity, and 17 different types of attacks
 	\end{itemize}
 \end{frame}
 
@@ -220,12 +220,12 @@ that are already known to IDS against captured events in order to identify possi
 \begin{frame}
   \frametitle{Training and Testing Sets}
 	\begin{itemize}
+		\item Algorithm used runs risk of memorizing the data in training set, so important to keep some data separate, as unseen data for testing.
+        \linespace
+        \linespace
 		\item Divide data set into 2 subsets: \emph{training set} and \emph{test set}.
         \item The given algorithm is trained on the training set to look for patterns.
         \item These patterns are then verified using the test set.
-        \linespace
-        \linespace
-		\item Algorithm used runs risk of memorizing the data in training set, so important to keep some data separate, as unseen data for testing.        
 	\end{itemize}
 \end{frame}
 
@@ -234,9 +234,7 @@ that are already known to IDS against captured events in order to identify possi
 \subsection{Determining the Accuracy of an Algorithm}
 \begin{frame}
   \frametitle{Determining the Accuracy of an Algorithm}
-%\centering{Predicted}
 \begin{table}
-%Actual
 Predicted
 \begin{tabular}{l|ll}
 Actual   & Not Attack & Attack \\ \hline
@@ -259,7 +257,7 @@ Detection rate (DR): percentage of normal and attack activity correctly classifi
 	\begin{itemize}
 		\item Fuzzy logic: used in intrusion detection systems to find degree of certainty of record being attack.
 			\begin{itemize}
-				\item If it's not clear if activity is an attack, fuzzy logic says where on a spectrum it is, how certain it is of being an attack.
+				\item If it's not clear if activity is an attack, fuzzy logic says where on a spectrum it is and how certain it is of being an attack.
 			\end{itemize}
 		\linespace
 		\linespace
@@ -267,7 +265,7 @@ Detection rate (DR): percentage of normal and attack activity correctly classifi
 		\item Fuzzy logic rules: similar to rules described before, except that
 consequence is certainty factor. 
 		\begin{itemize}
-			\item If (\emph{duration} = 5.4) then (\emph{the degree of certainty of the record being an attack is 0.8}).
+			\item If (\emph{duration} = 6.2) then (\emph{the degree of certainty of the record being an attack is 0.8}).
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -277,7 +275,7 @@ consequence is certainty factor.
   \frametitle{Trapezoidal Shape}
 	\begin{itemize}
 		\item Used to decide how certain a record is of being an attack.
-		\item Described with 4 numbers, used to determine what the trapezoid looks like.
+		\item Described with 4 numbers that are used to determine what the trapezoid looks like.
 		\begin{center}
 		  \includegraphics[width=0.85\textwidth]{../trapFigTemplate.pdf}		
 		\end{center}
@@ -289,7 +287,7 @@ consequence is certainty factor.
 
 \begin{frame}
   \frametitle{Finding the Degree of Certainty of a Record Being an Attack}
-	Suppose that the feature is duration, and it is 5.4 seconds. Then data=5.4.
+	Suppose that the feature is duration, and it is 6.2 seconds. Then data=6.2.
   \includegraphics[width=0.95\textwidth]{../trapFigExample.pdf}
 \end{frame}
 
@@ -329,58 +327,82 @@ a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\
         \item Possible solutions to problems: represented in a variety of problem dependent ways.
         
         \begin{itemize}
-        	\item IDS rules can be represented as bit strings.
+        	\item IDS rules are represented as bit strings.
         \end{itemize}
         
         \linespace
-        \item Randomly generated population of potential solutions is created. Mutation, crossover, selection applied to each generation until acceptable solution is found or time limit is exceeded.
+        \item A randomly generated population of potential solutions is created. Mutation, crossover, selection applied to each generation until acceptable solution is found or time limit is exceeded.
 	\end{itemize}
 \end{frame}
 
 
 \subsection{Mutation and Crossover}
 \begin{frame}
-  \frametitle{Mutation and Crossover}
-	\begin{itemize}
-        \item Mutation: random bits in an individual, or possible solution, are randomly changed.
-        \begin{itemize}
-        	\item Takes bits of rule and changes them to form slightly different rule.
-        	
-        	\begin{figure}
-			\begin{tabular}{|cccc|} \hline
-			010 & 011 & 100 & \textbf{101}\\
-			a=2 & b=3 & c=4 & \textbf{d=5}\\
-			\hline\end{tabular}
-			$\rightarrow$
-			\quad
-			\begin{tabular}{|cccc|} \hline
-			010 & 011 & 100 & \textbf{111}\\
-			a=2 & b=3 & c=4 & \textbf{d=7}\\
-			\hline\end{tabular}			
-			\end{figure}
-        \end{itemize}
-        
-        \linespace
-        \linespace
-        \linespace
-        
-        \item Crossover: two individuals swap sequences of bits to form two new individuals.
-        \begin{itemize}
-        	\item Take 2 rules and creates new rules by swapping bits of old rules.
-        	
-        	\begin{figure}
-			\begin{tabular}{|cccc|} \hline
-			001 & 011 & 101 & 111\\
-			a=1 & b=3 & c=5 & d=7\\
-			\hline\end{tabular}
-			\quad
-			\begin{tabular}{|cccc|} \hline
-			010 & 100 & 110 & 111\\
-			a=2 & b=4 & c=6 & d=7\\
-			\hline\end{tabular}			
-			\end{figure}
-        \end{itemize}
-	\end{itemize}
+  \frametitle{Mutation}
+Mutation: random bits in an individual, or possible solution, are randomly changed. Mutation takes bits of rule and changes them to form slightly different rule.  
+\begin{figure}
+\begin{small}
+	\begin{tabular}{|cccc|} \hline
+	010 & 011 & 100 & \textbf{101}\\
+	a=2 & b=3 & c=4 & \textbf{d=5}\\
+	\hline\end{tabular}
+	$\rightarrow$
+	\quad
+	\begin{tabular}{|cccc|} \hline
+	010 & 011 & 100 & \textbf{111}\\
+	a=2 & b=3 & c=4 & \textbf{d=7}\\
+	\hline\end{tabular}
+\end{small}
+\end{figure}
+	\includegraphics[width=0.50\textwidth]{../Talk/MutCrossTrapezoids/mut2345.pdf}
+	\includegraphics[width=0.55\textwidth]{../Talk/MutCrossTrapezoids/mut2347.pdf}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Crossover}
+  \begin{itemize}
+  	\item Crossover: two individuals swap sequences of bits to form two new individuals.
+  	\item Crossover takes 2 rules and creates new rules by swapping bits of old rules.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Crossover}
+\begin{figure}
+\begin{small}
+\textbf{Before}
+	\begin{tabular}{|cccc|} \hline
+	001 & \textbf{011} & 101 & 111\\
+	a=1 & \textbf{b=3} & c=5 & d=7\\
+	\hline\end{tabular}
+	\quad
+	\begin{tabular}{|cccc|} \hline
+	010 & \textbf{100} & 110 & 111\\
+	a=2 & \textbf{b=4} & c=6 & d=7\\
+	\hline\end{tabular}
+\end{small}
+\end{figure}
+	\includegraphics[width=0.50\textwidth]{../Talk/MutCrossTrapezoids/cross1357.pdf}
+	\includegraphics[width=0.55\textwidth]{../Talk/MutCrossTrapezoids/cross2467.pdf}
+	
+\begin{figure}
+\begin{small}
+\textbf{After}
+	\begin{tabular}{|cccc|} \hline
+	001 & \textbf{100} & 101 & 111\\
+	a=1 & \textbf{b=4} & c=5 & d=7\\
+	\hline\end{tabular}
+	\quad
+	\begin{tabular}{|cccc|} \hline
+	010 & \textbf{011} & 110 & 111\\
+	a=2 & \textbf{b=3} & c=6 & d=7\\
+	\hline\end{tabular}
+\end{small}
+\end{figure}
+	\includegraphics[width=0.50\textwidth]{../Talk/MutCrossTrapezoids/cross1457.pdf}
+	\includegraphics[width=0.55\textwidth]{../Talk/MutCrossTrapezoids/cross2367.pdf}
 \end{frame}
 
 
@@ -438,7 +460,7 @@ a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\
 		\linespace
 		\linespace
 
-		\item If record is either DoS rule or Probe rule, it is classified as attack; else normal.
+		\item If record is classified as either DoS rule or Probe rule, it is classified as attack; else normal.
 \end{itemize}
 \end{frame}
 
@@ -457,9 +479,12 @@ Testing & 10500 & 16000 & 26500 & 1.13 & 4.10 & 97.92\\
 \end{small}
 \end{table}
 
-\begin{center}
-Testing has higher DR; it's more likely to classify attacks because it can match either attack type.
-\end{center}
+\linespace
+Testing has:
+\begin{itemize}
+	\item Higher DR: IDS is more likely to classify attacks because it can match either attack type.
+	\item Lower FN: IDS is less likely to predict that it's not an attack when it really is.
+\end{itemize}
 \end{frame}
 
 
@@ -468,12 +493,11 @@ Testing has higher DR; it's more likely to classify attacks because it can match
 Experiment 2
 	\begin{itemize}
 		\item Attacks pulled out of training set, kept for unknown data testing, to test that fuzzy GA could detect unknown attacks.
-		\item Used fuzzy GA and a decision tree algorithm, which is another common algorithm for classification problems.
-		\item 7 tests were run. 
-		
-		Each test case: 13 attack types plus normal activity that were in training set. 
+		\item Fuzzy GA and decision tree algorithm, which is another common algorithm for classification problems.
+		\item 7 tests were run. Each test case: 13 attack types plus normal activity that were in training set. 
 		
 		3 attack types used for unknown testing data set.
+		\item Anomaly-based detection
 	\end{itemize}
 \end{frame}
 
@@ -594,7 +618,7 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 	\begin{itemize}
 		\item The fuzzy genetic algorithm had a higher detection rate than a decision tree algorithm in most cases.
 		\item Fuzzy genetic algorithms are good at detecting unknown attacks.
-		\item The use of fuzzy genetic algorithms in intrusion detection is an effective way of detecting attacks.
+		\item The use of fuzzy genetic algorithms in intrusion detection is an effective way of detecting attacks - DR in experiments was in the high 90s.
 	\end{itemize}
 \end{frame}
 
@@ -610,46 +634,6 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 	\begin{center}
 	{\Large Questions?}
 	\end{center}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{DoS Attacks}
-	\begin{itemize}
-		\item Back: attack against the Apache web server. Attacker submits requests with URL's containing many front slashes. As server tries to process these requests it will slow down, becomes unable to process other requests.
-		\linespace
-		\linespace
-		\item PoD: involves sending a malformed/malicious ping to computer. Historically, many systems could not handle a ping packet larger than the maximum IPv4 packet size (65,535 bytes). Sending a ping of this size could crash the target computer.
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{DoS Attacks}
-	\begin{itemize}
-		\item UDP Flood
-		\item Jping
-		\item HTTP Flood
-		\item Smurf
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Probe Attacks}
-	\begin{itemize}
-		\item Advance Port Scan
-		\item Ack Scan
-		\item Xmas Tree
-		\item Host Scan
-		\item UDP Scan
-		\item Syn Scan
-		\item Fin Scan
-		\item RCP Scan
-		\item Portsweep
-		\item Satan
-		\item IP Scan
-	\end{itemize}
 \end{frame}
 
 
@@ -684,6 +668,33 @@ Jongsuebsuk, P. and Wattanapongsakorn, N. and Charnsripinyo, C.
   	\end{center}
 	
 \end{frame} 
+
+
+\begin{frame}
+	\frametitle{DoS Attacks}
+	\begin{itemize}
+		\item Back: Attacker submits requests with URL's containing many front slashes. As server tries to process these requests it will slow down, becomes unable to process other requests.
+		\linespace
+		\linespace
+		\item PoD: involves sending a malformed/malicious ping to computer. Historically, many systems could not handle a ping packet larger than the maximum IPv4 packet size (65,535 bytes). Sending a ping of this size could crash the target computer.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Features of KDD99}
+	\begin{itemize}
+	\begin{small}
+  \item src\_bytes: number of bytes sent from source to destination. Source is user who may or may not be attacker, destination is server being potentially attacked.
+
+  \linespace
+  \linespace
+  
+  \item serror\_rate: percentage of connections that have ``SYN" errors. When client attempts to connect to server, it first sends a SYN (synchronize) message to server. The server then acknowledges the request by sending a SYN-ACK to client. The connection is established when client sends an ACK back to server. A SYN error is a failure to get an ACK back.
+  \end{small}
+	\end{itemize}
+\end{frame}
+
 
 \end{document}
 
