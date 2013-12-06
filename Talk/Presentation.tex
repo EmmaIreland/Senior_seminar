@@ -16,6 +16,7 @@
 \usepackage{amsmath}
 \usepackage{algorithmic}
 
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
 
 \newcommand{\linespace}{\vskip 0.25cm}
 
@@ -191,7 +192,7 @@ that are already known to IDS against captured events in order to identify possi
 \begin{frame}
   \frametitle{RLD09}
 	\begin{itemize}
-		\item RLD09: created because KDD99 is 14 years old, 
+		\item RLD09: created because KDD99 was 10 years old, 
 		
 		newer attack types not in KDD99 because of age.
 		\item Data was captured from university in Bangkok, Thailand.
@@ -210,7 +211,7 @@ that are already known to IDS against captured events in order to identify possi
 			\item Condition: one or more features
 			\item Consequence: says if it is an intrusion or not.
 			\linespace
-			\item If \emph{duration = 4} then \emph{intrusion}.
+			\item If \emph{duration $\leq$ 4} then \emph{intrusion}.
 		\end{itemize}				
 	\end{itemize}
 \end{frame}
@@ -250,7 +251,7 @@ Detection rate (DR): percentage of normal and attack activity correctly classifi
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section[Fuzzy Algorithm]{Fuzzy Algorithm}
+\section[Fuzzy Classification]{Fuzzy Classification}
 \subsection{Fuzzy Logic}
 \begin{frame}
 	\frametitle{Fuzzy Logic}
@@ -303,18 +304,32 @@ consequence is certainty factor.
 \begin{figure}
 \begin{small}
 \begin{tabular}{|cccc|c|cccc|c|} \hline
-010 & 011 & 100 & 101   & ... & 010 & 011 & 101 & 111   & Attack\\
-a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\ 
+010 & 011 & 100 & 101   & ... & 001 & 100 & 101 & 111   & Attack\\
+a=2 & b=3 & c=4 & d=5   & ... & a=1 & b=4 & c=5 & d=7   &\\  
     &     & Block 1&    &        &     & Block 12& &       & Type\\
 \hline\end{tabular}
 \caption{Based on [Jongsuebsuk \emph{et al.}, 2013]}
 \end{small}
 \end{figure}
+\end{frame}
 
-	\begin{itemize}
-		\item Degree of certainty is computed for each of 12 blocks, if sum of those is greater than threshold, declared as attack.
-	\end{itemize}
 
+\begin{frame}
+	\frametitle{Encoding of Features and Rules}
+\begin{figure}
+\begin{small}
+\begin{tabular}{|cccc|c|cccc|c|} \hline
+010 & 011 & 100 & 101   & ... & 001 & 100 & 101 & 111   & Attack\\
+a=2 & b=3 & c=4 & d=5   & ... & a=1 & b=4 & c=5 & d=7   &\\ 
+    &     & Block 1&    &        &     & Block 12& &       & Type\\
+\hline\end{tabular}
+\end{small}
+\end{figure}
+\tab{$\downarrow$} \tab{} \tab{} \tab{$\downarrow$}
+  \includegraphics[width=0.50\textwidth]{../Talk/MutCrossTrapezoids/mut2345.pdf}
+  \includegraphics[width=0.58\textwidth]{../Talk/MutCrossTrapezoids/cross1457.pdf}
+
+Degree of certainty is computed for each of 12 blocks, if sum of those is greater than a threshold, declared as attack.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -339,7 +354,8 @@ a=2 & b=3 & c=4 & d=5   & ... & a=2 & b=3 & c=5 & d=7   &\\
 \subsection{Mutation and Crossover}
 \begin{frame}
   \frametitle{Mutation}
-Mutation: random bits in an individual, or possible solution, are randomly changed. Mutation takes bits of rule and changes them to form slightly different rule.  
+Mutation: random bits in an individual, or possible solution, are randomly changed. Mutation takes bits of rule and changes them to form slightly different rule.
+
 \begin{figure}
 \begin{small}
 	\begin{tabular}{|cccc|} \hline
@@ -354,8 +370,11 @@ Mutation: random bits in an individual, or possible solution, are randomly chang
 	\hline\end{tabular}
 \end{small}
 \end{figure}
+
 	\includegraphics[width=0.50\textwidth]{../Talk/MutCrossTrapezoids/mut2345.pdf}
 	\includegraphics[width=0.55\textwidth]{../Talk/MutCrossTrapezoids/mut2347.pdf}
+	
+After mutation: transition from c to d is more gradual.
 \end{frame}
 
 
@@ -363,7 +382,7 @@ Mutation: random bits in an individual, or possible solution, are randomly chang
   \frametitle{Crossover}
   \begin{itemize}
   	\item Crossover: two individuals swap sequences of bits to form two new individuals.
-  	\item Crossover takes 2 rules and creates new rules by swapping bits of old rules.
+  	\item In IDS: crossover takes 2 rules and creates new rules by swapping bits of old rules.
   \end{itemize}
 \end{frame}
 
@@ -423,7 +442,7 @@ Mutation: random bits in an individual, or possible solution, are randomly chang
 
 \begin{frame}
 	\frametitle{Fitness function}
-	The fitness function in the algorithm is:
+	The fitness function to be maximized is:
 	\begin{equation*}
 	\frac{\alpha}{A} - \frac{\beta}{B}
 	\end{equation*}
@@ -435,6 +454,15 @@ Mutation: random bits in an individual, or possible solution, are randomly chang
 	$\beta$: \# of normal records incorrectly classified as attack.
 	
 	$B$: \# of normal records.
+
+\linespace
+\linespace
+\linespace
+\linespace
+Best possible value of $\beta$ is 0.
+It's good if $\alpha$ = $A$.
+
+Best possible fitness value is 1.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -448,19 +476,19 @@ Mutation: random bits in an individual, or possible solution, are randomly chang
 	\begin{itemize}
 		\item Fuzzy GA was used to create DoS and probe detection rules. 
 		
-		Both rules were then used together in testing process to identify attacks from testing data set.
+		\item Both rules were then used together in testing process to identify attacks from testing data set.
 		
+		\linespace
+		\linespace
+		
+		\item If record is classified as either DoS rule or Probe rule, it is classified as attack; else normal.
+
 		\linespace
 		\linespace
 		
 		\item Training set: 10,000 records.
 		
 		Test set: 26,500 records.
-
-		\linespace
-		\linespace
-
-		\item If record is classified as either DoS rule or Probe rule, it is classified as attack; else normal.
 \end{itemize}
 \end{frame}
 
@@ -618,7 +646,11 @@ Test & Attack & Type & FP (\%) & FN (\%) & DR (\%)\\ \hline
 	\begin{itemize}
 		\item The fuzzy genetic algorithm had a higher detection rate than a decision tree algorithm in most cases.
 		\item Fuzzy genetic algorithms are good at detecting unknown attacks.
-		\item The use of fuzzy genetic algorithms in intrusion detection is an effective way of detecting attacks - DR in experiments was in the high 90s.
+		\begin{itemize}
+			\item Fuzzy GA DR: 99.8\%, Decision Tree DR: 46.7\%
+		\end{itemize}
+
+		\item The use of fuzzy genetic algorithms in intrusion detection is an effective way of detecting attacks - DR in all experiments was in the high 90s.
 	\end{itemize}
 \end{frame}
 
