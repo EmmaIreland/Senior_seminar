@@ -139,7 +139,7 @@
   	\item Probe - examines machine to collect info about weaknesses, could be used to compromise system.
   	
   	\begin{itemize}
-  		\item Trying to determine version of software is being run, if it has known issue it allows attacker to attempt to attack that.
+  		\item Trying to determine what version of software is being run, if that version has known issue, it allows attacker to attempt to attack that.
   	\end{itemize}
   \end{itemize}
 \end{frame}
@@ -272,9 +272,9 @@ Detection rate (DR): percentage of normal and attack activity correctly classifi
 \begin{frame}
 	\frametitle{Fuzzy Logic}
 	\begin{itemize}
-		\item Fuzzy logic: used in intrusion detection systems to find degree of certainty of record being attack.
+		\item Fuzzy logic: used in intrusion detection systems to find degree of certainty of a record being attack.
 			\begin{itemize}
-				\item If it's not clear if activity is an attack, fuzzy logic says where on a spectrum it is and how certain it is of being an attack.
+				\item If it's not clear if the activity is an attack, fuzzy logic says where on a spectrum it is and how certain it is of being an attack.
 			\end{itemize}
 		\linespace
 		\linespace
@@ -313,8 +313,8 @@ consequence is certainty factor.
 \begin{frame}
 	\frametitle{Encoding of Features and Rules}
 	\begin{itemize}
-	\item Four parameters are encoded into blocks. Each block is feature with values 0-7.
-	\item Rule has 1 block for each of 12 features followed at end by marker indicating type of attack.
+	\item Four parameters are encoded into blocks. Each block is a feature with values 0-7.
+	\item A rule has 1 block for each of 12 features followed at end by a marker indicating type of attack.
 	\end{itemize}
 
 \begin{figure}
@@ -345,7 +345,7 @@ a=2 & b=3 & c=4 & d=5   & ... & a=1 & b=4 & c=5 & d=7   &\\
   \includegraphics[width=0.50\textwidth]{../Talk/MutCrossTrapezoids/mut2345.pdf}
   \includegraphics[width=0.58\textwidth]{../Talk/MutCrossTrapezoids/cross1457.pdf}
 
-Degree of certainty is computed for each of 12 blocks, if sum of those is greater than a threshold, declared as attack.
+Degree of certainty is computed for each of the 12 blocks, if sum of those is greater than a threshold, declared as an attack.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -362,7 +362,7 @@ Degree of certainty is computed for each of 12 blocks, if sum of those is greate
         \end{itemize}
         
         \linespace
-        \item A randomly generated population of potential solutions is created. Mutation, crossover, selection applied to each generation until acceptable solution is found or time limit is exceeded.
+        \item A randomly generated population of potential solutions is created. Mutation, crossover, selection are applied to each generation until acceptable solution is found or time limit is exceeded.
 	\end{itemize}
 \end{frame}
 
@@ -526,6 +526,7 @@ Testing & 10500 & 16000 & 26500 & 1.13 & 4.10 & 97.92\\
 \linespace
 Testing has:
 \begin{itemize}
+	\item Both DoS and Probe. If it sees either type of attack, it just classifies it as an attack.
 	\item Higher DR: IDS is more likely to classify attacks because it can match either attack type.
 	\item Lower FN: IDS is less likely to predict that it's not an attack when it really is.
 \end{itemize}
