@@ -15,6 +15,7 @@
 % does not look nice, try deleting the line with the fontenc.
 \usepackage{amsmath}
 \usepackage{algorithmic}
+\usenavigationsymbolstemplate{}
 
 \newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
 
@@ -95,7 +96,7 @@
 	\item Number of login attempts (for failed passwords or for users that don't exist) over period of 6 days (12/1 - 12/6):
 	\begin{itemize}
 		\item Lab box (avenger): 1,834 attacks
-		\item Lab box, more recently added than avenger (kenshiro): 1,887 attacks
+		\item Lab box (kenshiro): 1,887 attacks
 	\end{itemize}
   \end{itemize}
 \end{frame}
@@ -727,6 +728,15 @@ Jongsuebsuk, P. and Wattanapongsakorn, N. and Charnsripinyo, C.
 		\linespace
 		\item PoD: involves sending a malformed/malicious ping to computer. Historically, many systems could not handle a ping packet larger than the maximum IPv4 packet size (65,535 bytes). Sending a ping of this size could crash the target computer.
 	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Decision Tree}
+\begin{figure}
+  \includegraphics[width=0.99\textwidth]{../Talk/decisionTree.jpg}
+\caption{From http://tinyurl.com/louy9s3}
+\end{figure}
 \end{frame}
 
 
